@@ -1,6 +1,6 @@
 """The root query for an OSM API gatway which gives access points into the OSM universe."""
 type Query {
-  bbox(a: Float!, b: Float!, c: Float!, d: Float!): Query
+  bbox(w: Float!, s: Float!, e: Float!, n: Float!): Query
   area(q: String!): Query
   thing(uri: ID!): NWR
 
@@ -27,12 +27,23 @@ type Tag {
   wikidata: WikidataEntity
 }
 
+input TagCondition {
+  """Checks for equality with the tag's key field."""
+  k: String
+
+  """Checks for equality with the tags’s value field."""
+  v: String
+}
+
 scalar Point
 scalar LineString
 scalar Polygon
 scalar BBox
+scalar Geometry
 
-union Geometry = Point | LineString | Polygon
+# :-( https://spec.graphql.org/June2018/#sec-Unions
+# > Scalar, Interface and Union types must not be member types of a Union.
+# union Geometry = Point | LineString | Polygon
 
 type Node {
   id: ID!
@@ -61,7 +72,7 @@ type Way {
   changesetId: ID!
   changeset: Changeset
   tag(key: String!): String # | [String]
-  wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: TagCondition, filter: WayTagFilter): [Tag!]!
+  wayTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
 }
 
 # TODO
@@ -149,7 +160,6 @@ type Site implements Relation {
   relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
 }
 
-
 type GenericRelation implements Relation {
   id: ID!
   version: Int!
@@ -164,9 +174,11 @@ type GenericRelation implements Relation {
   relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
 }
 
-union NWR = Node | Way | Relation
+union AllRelations = Boundary | Route | Network | PublicTransport | Site | GenericRelation
+
 union NW = Node | Way
-union WR = Way | Relation
+union NWR = Node | Way | GenericRelation #Boundary | Route | Network | PublicTransport | Site | GenericRelation
+union WR = Way | Boundary | GenericRelation #Route | Network | PublicTransport | Site | GenericRelation
 
 interface RelationMember {
   memberType: NwrEnum!
@@ -199,8 +211,8 @@ type RelationMemberRelation implements RelationMember {
   memberId: ID!
   memberRole: String
   sequenceId: Int!
-  ref: Relation
-  relation: Relation
+  ref: GenericRelation
+  relation: GenericRelation
 }
 
 enum NwrEnum {
@@ -226,7 +238,7 @@ type Changeset {
   user: User
   changesetTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
   comments(first: Int, offset: Int, orderBy: [ChangesetCommentsOrderBy!], condition: ChangesetCommentCondition, filter: ChangesetCommentFilter): [ChangesetComment!]!
-  redactions(first: Int, offset: Int, orderBy: [RedactionsOrderBy!], condition: RedactionCondition, filter: RedactionFilter): [Redaction!]!
+  #redactions(first: Int, offset: Int, orderBy: [RedactionsOrderBy!], condition: RedactionCondition, filter: RedactionFilter): [Redaction!]!
 }
 
 type ChangesetComment {
@@ -1567,6 +1579,26 @@ enum TagsOrderBy {
   V_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+}
+
+"""
+A filter to be used against `WayTag` object types. All fields are combined with a logical ‘and.’
+"""
+input TagFilter {
+  """Filter by the object’s `k` field."""
+  k: StringFilter
+
+  """Filter by the object’s `v` field."""
+  v: StringFilter
+
+  """Checks for all expressions in this list."""
+  and: [TagFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [TagFilter!]
+
+  """Negates the expression."""
+  not: TagFilter
 }
 
 
