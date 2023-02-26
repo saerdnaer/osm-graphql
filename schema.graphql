@@ -48,8 +48,8 @@ scalar Geometry
 type Node {
   id: ID!
   version: Int!
-  latitude: Float!
-  longitude: Float!
+  lat: Float!
+  lon: Float!
   geom: Point
   tags: JSON
   changesetId: ID!
@@ -355,8 +355,8 @@ enum NoteEventEnum {
 
 type Note {
   id: ID!
-  latitude: Float!
-  longitude: Float!
+  lat: Float!
+  lon: Float!
   updatedAt: Datetime!
   createdAt: Datetime!
   status: NoteStatusEnum!
@@ -1499,11 +1499,11 @@ input NoteFilter {
   """Filter by the object’s `id` field."""
   id: IDFilter
 
-  """Filter by the object’s `latitude` field."""
-  latitude: IntFilter
+  """Filter by the object’s `lat` field."""
+  lat: IntFilter
 
-  """Filter by the object’s `longitude` field."""
-  longitude: IntFilter
+  """Filter by the object’s `lon` field."""
+  lon: IntFilter
 
   """Filter by the object’s `updatedAt` field."""
   updatedAt: DatetimeFilter
@@ -1720,11 +1720,11 @@ input NodeCondition {
   """Checks for equality with the object’s `id` field."""
   id: ID
 
-  """Checks for equality with the object’s `latitude` field."""
-  latitude: Int
+  """Checks for equality with the object’s `lat` field."""
+  lat: Int
 
-  """Checks for equality with the object’s `longitude` field."""
-  longitude: Int
+  """Checks for equality with the object’s `lon` field."""
+  lon: Int
 
   """Checks for equality with the object’s `changesetId` field."""
   changesetId: ID
@@ -1746,11 +1746,11 @@ input NodeFilter {
   """Filter by the object’s `id` field."""
   id: IDFilter
 
-  """Filter by the object’s `latitude` field."""
-  latitude: IntFilter
+  """Filter by the object’s `lat` field."""
+  lat: IntFilter
 
-  """Filter by the object’s `longitude` field."""
-  longitude: IntFilter
+  """Filter by the object’s `lon` field."""
+  lon: IntFilter
 
   """Filter by the object’s `changesetId` field."""
   changesetId: IDFilter
