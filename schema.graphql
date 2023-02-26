@@ -1,18 +1,31 @@
-"""The root query for an OSM API gatway which gives access points into the OSM universe."""
+"""The root query for an OSM API gateway which gives access points into the OSM universe."""
 type Query {
+  query(bbox: [Float!]): Query
   bbox(w: Float!, s: Float!, e: Float!, n: Float!): Query
-  area(q: String!): Query
+  point(lat: Float!, lon: Float!): Query
+  area(name: String!, ref:String): Query
+  around(m: Float = 100): Query
+
   thing(uri: ID!): NWR
 
-  node(id: ID!): Node
-  nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]
-  way(id: ID!): Way
-  ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]
   relation(id: ID!): Relation
-  relations(first: Int, offset: Int, orderBy: [RelationsOrderBy!], condition: RelationCondition, filter: RelationFilter): [Relation!]
-
+  way(id: ID!): Way
+  node(id: ID!): Node
   user(id: ID!): User
   changeset(id: ID!): Changeset
+
+  relations(type: RelationType, first: Int, offset: Int, orderBy: [RelationsOrderBy!], condition: RelationCondition, filter: RelationFilter): [Relation!]
+  ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]
+  nodes(
+    first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter,
+    type: String
+    amenity: String
+    name: String
+    ref: String
+    operator: String
+    highway: String
+  ): [Node!]
+
   issue(id: Int!): Issue
   issues(first: Int, offset: Int, orderBy: [IssuesOrderBy!], condition: IssueCondition, filter: IssueFilter): [Issue!]
   languages(first: Int, offset: Int, orderBy: [LanguagesOrderBy!], condition: LanguageCondition, filter: LanguageFilter): [Language!]
@@ -20,6 +33,15 @@ type Query {
   notes(first: Int, offset: Int, orderBy: [NotesOrderBy!], condition: NoteCondition, filter: NoteFilter): [Note!]
 }
 
+scalar Point
+scalar LineString
+scalar Polygon
+scalar BBox
+scalar Geometry
+
+# :-( https://spec.graphql.org/June2018/#sec-Unions
+# > Scalar, Interface and Union types must not be member types of a Union.
+# union Geometry = Point | LineString | Polygon
 
 type Tag {
   k: String!
@@ -35,16 +57,6 @@ input TagCondition {
   v: String
 }
 
-scalar Point
-scalar LineString
-scalar Polygon
-scalar BBox
-scalar Geometry
-
-# :-( https://spec.graphql.org/June2018/#sec-Unions
-# > Scalar, Interface and Union types must not be member types of a Union.
-# union Geometry = Point | LineString | Polygon
-
 type Node {
   id: ID!
   version: Int!
@@ -52,9 +64,9 @@ type Node {
   lon: Float!
   geom: Point
   tags: JSON
-  changesetId: ID!
   visible: Boolean!
   timestamp: Datetime!
+  #changesetId: ID!
   changeset: Changeset
   tag(key: String!): String
   nodeTags(first: Int, offset: Int, orderBy: [TagsOrderBy!]): [Tag!]!
@@ -69,7 +81,7 @@ type Way {
   nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]!
   timestamp: Datetime!
   visible: Boolean!
-  changesetId: ID!
+  #changesetId: ID!
   changeset: Changeset
   tag(key: String!): String # | [String]
   wayTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
