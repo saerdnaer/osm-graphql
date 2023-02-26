@@ -24,6 +24,7 @@ type Query {
 type Tag {
   k: String!
   v: String!
+  wikidata: WikidataEntity
 }
 
 scalar Point
@@ -384,7 +385,10 @@ type Redaction {
 }
 
 
-
+type WikidataEntity {
+  uri: ID
+  # TODO
+}
 
 
 """
