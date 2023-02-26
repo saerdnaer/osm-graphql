@@ -1,5 +1,9 @@
-"""The root query type which gives access points into the data universe."""
+"""The root query for an OSM API gatway which gives access points into the OSM universe."""
 type Query {
+  bbox(a: Float!, b: Float!, c: Float!, d: Float!): Query
+  area(q: String!): Query
+  thing(uri: ID!): NWR
+
   node(id: ID!): Node
   nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]
   way(id: ID!): Way
@@ -22,12 +26,19 @@ type Tag {
   v: String!
 }
 
+scalar Point
+scalar LineString
+scalar Polygon
+scalar BBox
+
+union Geometry = Point | LineString | Polygon
 
 type Node {
   id: ID!
   version: Int!
   latitude: Float!
   longitude: Float!
+  geom: Point
   tags: JSON
   changesetId: ID!
   visible: Boolean!
@@ -42,6 +53,7 @@ type Way {
   id: ID!
   version: Int!
   tags: JSON
+  geom: LineString
   nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]!
   timestamp: Datetime!
   visible: Boolean!
@@ -50,6 +62,15 @@ type Way {
   tag(key: String!): String # | [String]
   wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: TagCondition, filter: WayTagFilter): [Tag!]!
 }
+
+# TODO
+type Area {
+  id: ID!
+  version: Int!
+  tags: JSON
+  geom: Polygon
+}
+
 # TODO: should this be an dynamic Enum generated via taginfo.openstreetmap.org?
 scalar RelationType
 
