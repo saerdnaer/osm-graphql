@@ -10,7 +10,7 @@ import FilterPlugin from 'postgraphile-plugin-connection-filter';
 // import InflectorPlugin from './plugins/InflectorPlugin';
 // import TimeoutPlugin from './plugins/TimeoutPlugin';
 // import ExtendSchemaPlugin from './plugins/ExtendSchemaPlugin';
-// import DefaultOrderPlugin from './plugins/DefaultOrderPlugin';
+import DefaultOrderPlugin from './plugins/DefaultOrderPlugin';
 
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
