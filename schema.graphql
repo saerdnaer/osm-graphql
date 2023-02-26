@@ -50,12 +50,85 @@ type Way {
   tag(key: String!): String # | [String]
   wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: TagCondition, filter: WayTagFilter): [Tag!]!
 }
-}
+# TODO: should this be an dynamic Enum generated via taginfo.openstreetmap.org?
+scalar RelationType
 
-type Relation {
+interface Relation {
   id: ID!
   version: Int!
-type RelationType {
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+}
+
+type Boundary implements Relation {
+  id: ID!
+  version: Int!
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
+}
+
+type Route implements Relation {
+  id: ID!
+  version: Int!
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
+}
+
+type Network implements Relation {
+  id: ID!
+  version: Int!
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
+}
+
+type PublicTransport implements Relation {
+  id: ID!
+  version: Int!
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
+}
+
+
+type Site implements Relation {
+  id: ID!
+  version: Int!
+  type: RelationType
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
+}
+
+
+type GenericRelation implements Relation {
   id: ID!
   version: Int!
   type: RelationType
@@ -69,7 +142,9 @@ type RelationType {
   relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
 }
 
-union NWR = Node | Way | Relation;
+union NWR = Node | Way | Relation
+union NW = Node | Way
+union WR = Way | Relation
 
 interface RelationMember {
   memberType: NwrEnum!
@@ -79,7 +154,7 @@ interface RelationMember {
   ref: NWR
 }
 
-type RelationMemberNode {
+type RelationMemberNode implements RelationMember {
   memberType: NwrEnum!
   memberId: ID!
   memberRole: String
@@ -88,7 +163,7 @@ type RelationMemberNode {
   node: Node
 }
 
-type RelationMemberWay {
+type RelationMemberWay implements RelationMember {
   memberType: NwrEnum!
   memberId: ID!
   memberRole: String
@@ -97,7 +172,7 @@ type RelationMemberWay {
   way: Way
 }
 
-type RelationMemberRelation {
+type RelationMemberRelation implements RelationMember {
   memberType: NwrEnum!
   memberId: ID!
   memberRole: String
