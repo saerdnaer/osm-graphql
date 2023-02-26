@@ -1,0 +1,29 @@
+query ExampleQuery {
+  node(id: "312915889") {
+    latitude
+    longitude
+    tags
+    nodeTagsByNodeId {
+      k
+      v
+    }
+  }
+  way(id:"261741010") {
+    tags
+    nodes: nodesByWayNodeWayIdAndNodeIdList {
+      latitude
+      longitude
+    }
+  }
+  relation(id: "174632") {
+    id
+    tags
+		members: relationMembersByRelationId(orderBy: SEQUENCE_ID_ASC) {
+      memberType
+      memberRole
+      memberId
+      sequenceId
+    }
+  }
+
+}

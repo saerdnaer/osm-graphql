@@ -1,0 +1,1005 @@
+{
+  "data": {
+    "node": {
+      "latitude": 490096060,
+      "longitude": 83902072,
+      "tags": {
+        "addr:city": "Karlsruhe",
+        "addr:housenumber": "44",
+        "addr:postcode": "76133",
+        "addr:street": "Amalienstraße",
+        "check_date": "2022-05-11",
+        "company": "software_development",
+        "email": "info@geofabrik.de",
+        "fax": "+49-721-1803560-9",
+        "internet_access": "wlan",
+        "level": "4",
+        "name": "Geofabrik",
+        "office": "company",
+        "phone": "+49-721-1803560-0",
+        "website": "https://geofabrik.de",
+        "wheelchair": "no"
+      },
+      "nodeTagsByNodeId": [
+        {
+          "k": "addr:city",
+          "v": "Karlsruhe"
+        },
+        {
+          "k": "addr:housenumber",
+          "v": "44"
+        },
+        {
+          "k": "addr:postcode",
+          "v": "76133"
+        },
+        {
+          "k": "addr:street",
+          "v": "Amalienstraße"
+        },
+        {
+          "k": "check_date",
+          "v": "2022-05-11"
+        },
+        {
+          "k": "company",
+          "v": "software_development"
+        },
+        {
+          "k": "email",
+          "v": "info@geofabrik.de"
+        },
+        {
+          "k": "fax",
+          "v": "+49-721-1803560-9"
+        },
+        {
+          "k": "internet_access",
+          "v": "wlan"
+        },
+        {
+          "k": "level",
+          "v": "4"
+        },
+        {
+          "k": "name",
+          "v": "Geofabrik"
+        },
+        {
+          "k": "office",
+          "v": "company"
+        },
+        {
+          "k": "phone",
+          "v": "+49-721-1803560-0"
+        },
+        {
+          "k": "website",
+          "v": "https://geofabrik.de"
+        },
+        {
+          "k": "wheelchair",
+          "v": "no"
+        }
+      ]
+    },
+    "way": {
+      "tags": {
+        "cycleway:both": "no",
+        "highway": "secondary",
+        "lanes": "2",
+        "lcn": "yes",
+        "lit": "yes",
+        "maxspeed": "30",
+        "name": "Amalienstraße",
+        "name:etymology:wikidata": "Q237730",
+        "note": "im SHP des NVK: III, Verkehrsstärke 1996 spricht aber für II",
+        "surface": "asphalt"
+      },
+      "nodes": [
+        {
+          "latitude": 490096012,
+          "longitude": 83897411
+        },
+        {
+          "latitude": 490089447,
+          "longitude": 83916473
+        },
+        {
+          "latitude": 490095169,
+          "longitude": 83899914
+        },
+        {
+          "latitude": 490091579,
+          "longitude": 83910337
+        },
+        {
+          "latitude": 490090650,
+          "longitude": 83912973
+        },
+        {
+          "latitude": 490086979,
+          "longitude": 83923503
+        },
+        {
+          "latitude": 490085837,
+          "longitude": 83926903
+        },
+        {
+          "latitude": 490085098,
+          "longitude": 83929360
+        },
+        {
+          "latitude": 490085978,
+          "longitude": 83926491
+        },
+        {
+          "latitude": 490090463,
+          "longitude": 83913517
+        }
+      ]
+    },
+    "relation": {
+      "id": "174632",
+      "tags": {
+        "colour": "#ffcb04",
+        "destination": "Waldstadt",
+        "from": "Oberreut Badeniaplatz",
+        "interval": "20",
+        "name": "Straßenbahn 4: Oberreut => Waldstadt",
+        "network": "Karlsruher Verkehrsverbund",
+        "network:short": "KVV",
+        "network:wikidata": "Q1733986",
+        "operator": "Verkehrsbetriebe Karlsruhe GmbH",
+        "operator:wikidata": "Q644958",
+        "public_transport:version": "2",
+        "ref": "4",
+        "route": "tram",
+        "to": "Europäische Schule",
+        "type": "route"
+      },
+      "members": [
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1516245098",
+          "sequenceId": 1
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "158022617",
+          "sequenceId": 2
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1516246113",
+          "sequenceId": 3
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "35995209",
+          "sequenceId": 4
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1516245040",
+          "sequenceId": 5
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "35995211",
+          "sequenceId": 6
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1516245034",
+          "sequenceId": 7
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "158582315",
+          "sequenceId": 8
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1516245038",
+          "sequenceId": 9
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "35995215",
+          "sequenceId": 10
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1717771258",
+          "sequenceId": 11
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "253084755",
+          "sequenceId": 12
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "26460212",
+          "sequenceId": 13
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "35995218",
+          "sequenceId": 14
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1697628747",
+          "sequenceId": 15
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "157525291",
+          "sequenceId": 16
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "26043058",
+          "sequenceId": 17
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "230761865",
+          "sequenceId": 18
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "3383740016",
+          "sequenceId": 19
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "427713211",
+          "sequenceId": 20
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "3383740032",
+          "sequenceId": 21
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "150939225",
+          "sequenceId": 22
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1637996711",
+          "sequenceId": 23
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "221060836",
+          "sequenceId": 24
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "3181300892",
+          "sequenceId": 25
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "312276686",
+          "sequenceId": 26
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "9332286107",
+          "sequenceId": 27
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "981377870",
+          "sequenceId": 28
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "9332302160",
+          "sequenceId": 29
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "981386145",
+          "sequenceId": 30
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "6775697760",
+          "sequenceId": 31
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "937994900",
+          "sequenceId": 32
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "6037870927",
+          "sequenceId": 33
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "627247617",
+          "sequenceId": 34
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1144940824",
+          "sequenceId": 35
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "172133015",
+          "sequenceId": 36
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1480007541",
+          "sequenceId": 37
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "134631650",
+          "sequenceId": 38
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1146407757",
+          "sequenceId": 39
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "251653714",
+          "sequenceId": 40
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1146443857",
+          "sequenceId": 41
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "159063857",
+          "sequenceId": 42
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690784411",
+          "sequenceId": 43
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "159054285",
+          "sequenceId": 44
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1711482088",
+          "sequenceId": 45
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "159044576",
+          "sequenceId": 46
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690784427",
+          "sequenceId": 47
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "159042154",
+          "sequenceId": 48
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690784918",
+          "sequenceId": 49
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "159030559",
+          "sequenceId": 50
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690441749",
+          "sequenceId": 51
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "156819954",
+          "sequenceId": 52
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690847745",
+          "sequenceId": 53
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "359668626",
+          "sequenceId": 54
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690847765",
+          "sequenceId": 55
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "52583426",
+          "sequenceId": 56
+        },
+        {
+          "memberType": "NODE",
+          "memberRole": "stop",
+          "memberId": "1690153864",
+          "sequenceId": 57
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "platform",
+          "memberId": "172135259",
+          "sequenceId": 58
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "138293847",
+          "sequenceId": 59
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "534055935",
+          "sequenceId": 60
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "138293860",
+          "sequenceId": 61
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "150939185",
+          "sequenceId": 62
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "534077582",
+          "sequenceId": 63
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "3531927",
+          "sequenceId": 64
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "534068470",
+          "sequenceId": 65
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "534068469",
+          "sequenceId": 66
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "534068471",
+          "sequenceId": 67
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "166990257",
+          "sequenceId": 68
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "165380406",
+          "sequenceId": 69
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "150939212",
+          "sequenceId": 70
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "150939213",
+          "sequenceId": 71
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "150939162",
+          "sequenceId": 72
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "150939195",
+          "sequenceId": 73
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "397798529",
+          "sequenceId": 74
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "438021816",
+          "sequenceId": 75
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "419030769",
+          "sequenceId": 76
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "438021817",
+          "sequenceId": 77
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "419030770",
+          "sequenceId": 78
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "531061132",
+          "sequenceId": 79
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "412543354",
+          "sequenceId": 80
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "419030768",
+          "sequenceId": 81
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "297369892",
+          "sequenceId": 82
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "308727888",
+          "sequenceId": 83
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "167081409",
+          "sequenceId": 84
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "364582560",
+          "sequenceId": 85
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "1013196764",
+          "sequenceId": 86
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "309066201",
+          "sequenceId": 87
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "4256612",
+          "sequenceId": 88
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "287678176",
+          "sequenceId": 89
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "180236100",
+          "sequenceId": 90
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "397840194",
+          "sequenceId": 91
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "51736770",
+          "sequenceId": 92
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "793869266",
+          "sequenceId": 93
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "928488839",
+          "sequenceId": 94
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "822870402",
+          "sequenceId": 95
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "1011837433",
+          "sequenceId": 96
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "884386311",
+          "sequenceId": 97
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "822870400",
+          "sequenceId": 98
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "1011837432",
+          "sequenceId": 99
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "741118323",
+          "sequenceId": 100
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "625322796",
+          "sequenceId": 101
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "442894749",
+          "sequenceId": 102
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "1011837431",
+          "sequenceId": 103
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "532742974",
+          "sequenceId": 104
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "1011837437",
+          "sequenceId": 105
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "191735761",
+          "sequenceId": 106
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "134499487",
+          "sequenceId": 107
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "504304869",
+          "sequenceId": 108
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "191735765",
+          "sequenceId": 109
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "638610484",
+          "sequenceId": 110
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "141198179",
+          "sequenceId": 111
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "428288643",
+          "sequenceId": 112
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "180237893",
+          "sequenceId": 113
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "642287287",
+          "sequenceId": 114
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "642287284",
+          "sequenceId": 115
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "191735757",
+          "sequenceId": 116
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "638610486",
+          "sequenceId": 117
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "293064063",
+          "sequenceId": 118
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "180237891",
+          "sequenceId": 119
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "135746811",
+          "sequenceId": 120
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "157016086",
+          "sequenceId": 121
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "135746803",
+          "sequenceId": 122
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "640065372",
+          "sequenceId": 123
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "640065374",
+          "sequenceId": 124
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377113",
+          "sequenceId": 125
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "766764218",
+          "sequenceId": 126
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "766764221",
+          "sequenceId": 127
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377101",
+          "sequenceId": 128
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "244832793",
+          "sequenceId": 129
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "412800819",
+          "sequenceId": 130
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "496293904",
+          "sequenceId": 131
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377108",
+          "sequenceId": 132
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377133",
+          "sequenceId": 133
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "428936260",
+          "sequenceId": 134
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377109",
+          "sequenceId": 135
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377104",
+          "sequenceId": 136
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377107",
+          "sequenceId": 137
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377103",
+          "sequenceId": 138
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "317816408",
+          "sequenceId": 139
+        },
+        {
+          "memberType": "WAY",
+          "memberRole": "",
+          "memberId": "379377121",
+          "sequenceId": 140
+        }
+      ]
+    }
+  }
+}
