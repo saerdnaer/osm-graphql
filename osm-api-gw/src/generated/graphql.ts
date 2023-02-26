@@ -807,11 +807,10 @@ export type NetworkRelationTagsArgs = {
 export type Node = {
   __typename?: 'Node';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
   geom?: Maybe<Scalars['Point']>;
   id: Scalars['ID'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  lat: Scalars['Float'];
+  lon: Scalars['Float'];
   nodeTags: Array<Tag>;
   tag?: Maybe<Scalars['String']>;
   tags?: Maybe<Scalars['JSON']>;
@@ -844,44 +843,212 @@ export type NodeWaysArgs = {
 
 /** A condition to be used against `Node` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type NodeCondition = {
+  access?: InputMaybe<Scalars['String']>;
+  admin_level?: InputMaybe<Scalars['String']>;
+  aerialway?: InputMaybe<Scalars['String']>;
+  aeroway?: InputMaybe<Scalars['String']>;
+  amenity?: InputMaybe<Scalars['String']>;
+  barrier?: InputMaybe<Scalars['String']>;
+  bench?: InputMaybe<Scalars['String']>;
+  bicycle?: InputMaybe<Scalars['String']>;
+  bicycle_parking?: InputMaybe<Scalars['String']>;
+  brand?: InputMaybe<Scalars['String']>;
+  building?: InputMaybe<Scalars['String']>;
+  bus?: InputMaybe<Scalars['String']>;
+  capacity?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `changesetId` field. */
   changesetId?: InputMaybe<Scalars['ID']>;
+  colour?: InputMaybe<Scalars['String']>;
+  construction?: InputMaybe<Scalars['String']>;
+  covered?: InputMaybe<Scalars['String']>;
+  craft?: InputMaybe<Scalars['String']>;
+  crossing?: InputMaybe<Scalars['String']>;
+  cuisine?: InputMaybe<Scalars['String']>;
+  delivery?: InputMaybe<Scalars['String']>;
+  denomination?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  direction?: InputMaybe<Scalars['String']>;
+  door?: InputMaybe<Scalars['String']>;
+  drinking_water?: InputMaybe<Scalars['String']>;
+  ele?: InputMaybe<Scalars['String']>;
+  emergency?: InputMaybe<Scalars['String']>;
+  entrance?: InputMaybe<Scalars['String']>;
+  fee?: InputMaybe<Scalars['String']>;
+  fixme?: InputMaybe<Scalars['String']>;
+  foot?: InputMaybe<Scalars['String']>;
+  healthcare?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['String']>;
+  highway?: InputMaybe<Scalars['String']>;
+  historic?: InputMaybe<Scalars['String']>;
+  horse?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['ID']>;
-  /** Checks for equality with the object’s `latitude` field. */
-  latitude?: InputMaybe<Scalars['Int']>;
-  /** Checks for equality with the object’s `longitude` field. */
-  longitude?: InputMaybe<Scalars['Int']>;
+  indoor?: InputMaybe<Scalars['String']>;
+  information?: InputMaybe<Scalars['String']>;
+  inscription?: InputMaybe<Scalars['String']>;
+  internet_access?: InputMaybe<Scalars['String']>;
+  junction?: InputMaybe<Scalars['String']>;
+  kerb?: InputMaybe<Scalars['String']>;
+  landuse?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `lat` field. */
+  lat?: InputMaybe<Scalars['Int']>;
+  layer?: InputMaybe<Scalars['String']>;
+  leisure?: InputMaybe<Scalars['String']>;
+  level?: InputMaybe<Scalars['String']>;
+  lit?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  /** Checks for equality with the object’s `lon` field. */
+  lon?: InputMaybe<Scalars['Int']>;
+  man_made?: InputMaybe<Scalars['String']>;
+  material?: InputMaybe<Scalars['String']>;
+  maxspeed?: InputMaybe<Scalars['String']>;
+  memorial?: InputMaybe<Scalars['String']>;
+  military?: InputMaybe<Scalars['String']>;
+  motor_vehicle?: InputMaybe<Scalars['String']>;
+  motorcar?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  natural?: InputMaybe<Scalars['String']>;
+  network?: InputMaybe<Scalars['String']>;
+  office?: InputMaybe<Scalars['String']>;
+  operator?: InputMaybe<Scalars['String']>;
+  parking?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+  power?: InputMaybe<Scalars['String']>;
+  public_transport?: InputMaybe<Scalars['String']>;
+  railway?: InputMaybe<Scalars['String']>;
+  recycling_type?: InputMaybe<Scalars['String']>;
+  ref?: InputMaybe<Scalars['String']>;
+  religion?: InputMaybe<Scalars['String']>;
+  shelter?: InputMaybe<Scalars['String']>;
+  shop?: InputMaybe<Scalars['String']>;
+  sport?: InputMaybe<Scalars['String']>;
+  surface?: InputMaybe<Scalars['String']>;
+  tactile_paving?: InputMaybe<Scalars['String']>;
+  takeaway?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `timestamp` field. */
   timestamp?: InputMaybe<Scalars['Datetime']>;
+  tourism?: InputMaybe<Scalars['String']>;
+  traffic_sign?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  vending?: InputMaybe<Scalars['String']>;
   /** Checks for equality with the object’s `version` field. */
   version?: InputMaybe<Scalars['Int']>;
   /** Checks for equality with the object’s `visible` field. */
   visible?: InputMaybe<Scalars['Boolean']>;
+  waterway?: InputMaybe<Scalars['String']>;
+  website?: InputMaybe<Scalars['String']>;
+  wheelchair?: InputMaybe<Scalars['String']>;
+  wikidata?: InputMaybe<Scalars['String']>;
+  wikipedia?: InputMaybe<Scalars['String']>;
 };
 
 /** A filter to be used against `Node` object types. All fields are combined with a logical ‘and.’ */
 export type NodeFilter = {
+  access?: InputMaybe<StringFilter>;
+  admin_level?: InputMaybe<StringFilter>;
+  aerialway?: InputMaybe<StringFilter>;
+  aeroway?: InputMaybe<StringFilter>;
+  amenity?: InputMaybe<StringFilter>;
   /** Checks for all expressions in this list. */
   and?: InputMaybe<Array<NodeFilter>>;
+  barrier?: InputMaybe<StringFilter>;
+  bench?: InputMaybe<StringFilter>;
+  bicycle?: InputMaybe<StringFilter>;
+  bicycle_parking?: InputMaybe<StringFilter>;
+  brand?: InputMaybe<StringFilter>;
+  building?: InputMaybe<StringFilter>;
+  bus?: InputMaybe<StringFilter>;
+  capacity?: InputMaybe<StringFilter>;
   /** Filter by the object’s `changesetId` field. */
   changesetId?: InputMaybe<IdFilter>;
+  colour?: InputMaybe<StringFilter>;
+  construction?: InputMaybe<StringFilter>;
+  covered?: InputMaybe<StringFilter>;
+  craft?: InputMaybe<StringFilter>;
+  crossing?: InputMaybe<StringFilter>;
+  cuisine?: InputMaybe<StringFilter>;
+  delivery?: InputMaybe<StringFilter>;
+  denomination?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  direction?: InputMaybe<StringFilter>;
+  door?: InputMaybe<StringFilter>;
+  drinking_water?: InputMaybe<StringFilter>;
+  ele?: InputMaybe<StringFilter>;
+  emergency?: InputMaybe<StringFilter>;
+  entrance?: InputMaybe<StringFilter>;
+  fee?: InputMaybe<StringFilter>;
+  fixme?: InputMaybe<StringFilter>;
+  foot?: InputMaybe<StringFilter>;
+  healthcare?: InputMaybe<StringFilter>;
+  height?: InputMaybe<StringFilter>;
+  highway?: InputMaybe<StringFilter>;
+  historic?: InputMaybe<StringFilter>;
+  horse?: InputMaybe<StringFilter>;
   /** Filter by the object’s `id` field. */
   id?: InputMaybe<IdFilter>;
-  /** Filter by the object’s `latitude` field. */
-  latitude?: InputMaybe<IntFilter>;
-  /** Filter by the object’s `longitude` field. */
-  longitude?: InputMaybe<IntFilter>;
+  indoor?: InputMaybe<StringFilter>;
+  information?: InputMaybe<StringFilter>;
+  inscription?: InputMaybe<StringFilter>;
+  internet_access?: InputMaybe<StringFilter>;
+  junction?: InputMaybe<StringFilter>;
+  kerb?: InputMaybe<StringFilter>;
+  landuse?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `lat` field. */
+  lat?: InputMaybe<IntFilter>;
+  layer?: InputMaybe<StringFilter>;
+  leisure?: InputMaybe<StringFilter>;
+  level?: InputMaybe<StringFilter>;
+  lit?: InputMaybe<StringFilter>;
+  location?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `lon` field. */
+  lon?: InputMaybe<IntFilter>;
+  man_made?: InputMaybe<StringFilter>;
+  material?: InputMaybe<StringFilter>;
+  maxspeed?: InputMaybe<StringFilter>;
+  memorial?: InputMaybe<StringFilter>;
+  military?: InputMaybe<StringFilter>;
+  motor_vehicle?: InputMaybe<StringFilter>;
+  motorcar?: InputMaybe<StringFilter>;
+  name?: InputMaybe<StringFilter>;
+  natural?: InputMaybe<StringFilter>;
+  network?: InputMaybe<StringFilter>;
   /** Negates the expression. */
   not?: InputMaybe<NodeFilter>;
+  office?: InputMaybe<StringFilter>;
+  operator?: InputMaybe<StringFilter>;
   /** Checks for any expressions in this list. */
   or?: InputMaybe<Array<NodeFilter>>;
+  parking?: InputMaybe<StringFilter>;
+  phone?: InputMaybe<StringFilter>;
+  place?: InputMaybe<StringFilter>;
+  power?: InputMaybe<StringFilter>;
+  public_transport?: InputMaybe<StringFilter>;
+  railway?: InputMaybe<StringFilter>;
+  recycling_type?: InputMaybe<StringFilter>;
+  ref?: InputMaybe<StringFilter>;
+  religion?: InputMaybe<StringFilter>;
+  shelter?: InputMaybe<StringFilter>;
+  shop?: InputMaybe<StringFilter>;
+  sport?: InputMaybe<StringFilter>;
+  surface?: InputMaybe<StringFilter>;
+  tactile_paving?: InputMaybe<StringFilter>;
+  takeaway?: InputMaybe<StringFilter>;
   /** Filter by the object’s `timestamp` field. */
   timestamp?: InputMaybe<DatetimeFilter>;
+  tourism?: InputMaybe<StringFilter>;
+  traffic_sign?: InputMaybe<StringFilter>;
+  type?: InputMaybe<StringFilter>;
+  vending?: InputMaybe<StringFilter>;
   /** Filter by the object’s `version` field. */
   version?: InputMaybe<IntFilter>;
   /** Filter by the object’s `visible` field. */
   visible?: InputMaybe<BooleanFilter>;
+  waterway?: InputMaybe<StringFilter>;
+  website?: InputMaybe<StringFilter>;
+  wheelchair?: InputMaybe<StringFilter>;
+  wikidata?: InputMaybe<StringFilter>;
+  wikipedia?: InputMaybe<StringFilter>;
 };
 
 /** Methods to use when ordering `Node`. */
@@ -890,8 +1057,6 @@ export enum NodesOrderBy {
   ChangesetIdDesc = 'CHANGESET_ID_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
-  LatitudeAsc = 'LATITUDE_ASC',
-  LatitudeDesc = 'LATITUDE_DESC',
   LongitudeAsc = 'LONGITUDE_ASC',
   LongitudeDesc = 'LONGITUDE_DESC',
   Natural = 'NATURAL',
@@ -902,7 +1067,9 @@ export enum NodesOrderBy {
   VersionAsc = 'VERSION_ASC',
   VersionDesc = 'VERSION_DESC',
   VisibleAsc = 'VISIBLE_ASC',
-  VisibleDesc = 'VISIBLE_DESC'
+  VisibleDesc = 'VISIBLE_DESC',
+  LatAsc = 'lat_ASC',
+  LatDesc = 'lat_DESC'
 }
 
 export type Note = {
@@ -912,8 +1079,8 @@ export type Note = {
   comments: Array<NoteComment>;
   createdAt: Scalars['Datetime'];
   id: Scalars['ID'];
-  latitude: Scalars['Float'];
-  longitude: Scalars['Float'];
+  lat: Scalars['Float'];
+  lon: Scalars['Float'];
   status: NoteStatusEnum;
   updatedAt: Scalars['Datetime'];
 };
@@ -1067,10 +1234,10 @@ export type NoteFilter = {
   createdAt?: InputMaybe<DatetimeFilter>;
   /** Filter by the object’s `id` field. */
   id?: InputMaybe<IdFilter>;
-  /** Filter by the object’s `latitude` field. */
-  latitude?: InputMaybe<IntFilter>;
-  /** Filter by the object’s `longitude` field. */
-  longitude?: InputMaybe<IntFilter>;
+  /** Filter by the object’s `lat` field. */
+  lat?: InputMaybe<IntFilter>;
+  /** Filter by the object’s `lon` field. */
+  lon?: InputMaybe<IntFilter>;
   /** Negates the expression. */
   not?: InputMaybe<NoteFilter>;
   /** Checks for any expressions in this list. */
@@ -1121,8 +1288,6 @@ export enum NotesOrderBy {
   CreatedAtDesc = 'CREATED_AT_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
-  LatitudeAsc = 'LATITUDE_ASC',
-  LatitudeDesc = 'LATITUDE_DESC',
   LongitudeAsc = 'LONGITUDE_ASC',
   LongitudeDesc = 'LONGITUDE_DESC',
   Natural = 'NATURAL',
@@ -1131,7 +1296,9 @@ export enum NotesOrderBy {
   StatusAsc = 'STATUS_ASC',
   StatusDesc = 'STATUS_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
-  UpdatedAtDesc = 'UPDATED_AT_DESC'
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  LatAsc = 'lat_ASC',
+  LatDesc = 'lat_DESC'
 }
 
 export enum NwrEnum {
@@ -1198,10 +1365,11 @@ export type PublicTransportRelationTagsArgs = {
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type Query = {
   __typename?: 'Query';
   area?: Maybe<Query>;
+  around?: Maybe<Query>;
   bbox?: Maybe<Query>;
   changeset?: Maybe<Changeset>;
   issue?: Maybe<Issue>;
@@ -1211,6 +1379,8 @@ export type Query = {
   nodes?: Maybe<Array<Node>>;
   note?: Maybe<Note>;
   notes?: Maybe<Array<Note>>;
+  point?: Maybe<Query>;
+  query?: Maybe<Query>;
   relation?: Maybe<Relation>;
   relations?: Maybe<Array<Relation>>;
   thing?: Maybe<Nwr>;
@@ -1220,34 +1390,41 @@ export type Query = {
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryAreaArgs = {
-  q: Scalars['String'];
+  name: Scalars['String'];
+  ref?: InputMaybe<Scalars['String']>;
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
+export type QueryAroundArgs = {
+  m?: InputMaybe<Scalars['Float']>;
+};
+
+
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryBboxArgs = {
-  a: Scalars['Float'];
-  b: Scalars['Float'];
-  c: Scalars['Float'];
-  d: Scalars['Float'];
+  e: Scalars['Float'];
+  n: Scalars['Float'];
+  s: Scalars['Float'];
+  w: Scalars['Float'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryChangesetArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryIssueArgs = {
   id: Scalars['Int'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryIssuesArgs = {
   condition?: InputMaybe<IssueCondition>;
   filter?: InputMaybe<IssueFilter>;
@@ -1257,7 +1434,7 @@ export type QueryIssuesArgs = {
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryLanguagesArgs = {
   condition?: InputMaybe<LanguageCondition>;
   filter?: InputMaybe<LanguageFilter>;
@@ -1267,29 +1444,113 @@ export type QueryLanguagesArgs = {
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNodeArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNodesArgs = {
+  access?: InputMaybe<Scalars['String']>;
+  admin_level?: InputMaybe<Scalars['String']>;
+  aerialway?: InputMaybe<Scalars['String']>;
+  aeroway?: InputMaybe<Scalars['String']>;
+  amenity?: InputMaybe<Scalars['String']>;
+  barrier?: InputMaybe<Scalars['String']>;
+  bench?: InputMaybe<Scalars['String']>;
+  bicycle?: InputMaybe<Scalars['String']>;
+  bicycle_parking?: InputMaybe<Scalars['String']>;
+  brand?: InputMaybe<Scalars['String']>;
+  building?: InputMaybe<Scalars['String']>;
+  bus?: InputMaybe<Scalars['String']>;
+  capacity?: InputMaybe<Scalars['String']>;
+  colour?: InputMaybe<Scalars['String']>;
   condition?: InputMaybe<NodeCondition>;
+  construction?: InputMaybe<Scalars['String']>;
+  covered?: InputMaybe<Scalars['String']>;
+  craft?: InputMaybe<Scalars['String']>;
+  crossing?: InputMaybe<Scalars['String']>;
+  cuisine?: InputMaybe<Scalars['String']>;
+  delivery?: InputMaybe<Scalars['String']>;
+  denomination?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']>;
+  direction?: InputMaybe<Scalars['String']>;
+  door?: InputMaybe<Scalars['String']>;
+  drinking_water?: InputMaybe<Scalars['String']>;
+  ele?: InputMaybe<Scalars['String']>;
+  emergency?: InputMaybe<Scalars['String']>;
+  entrance?: InputMaybe<Scalars['String']>;
+  fee?: InputMaybe<Scalars['String']>;
   filter?: InputMaybe<NodeFilter>;
   first?: InputMaybe<Scalars['Int']>;
+  fixme?: InputMaybe<Scalars['String']>;
+  foot?: InputMaybe<Scalars['String']>;
+  healthcare?: InputMaybe<Scalars['String']>;
+  height?: InputMaybe<Scalars['String']>;
+  highway?: InputMaybe<Scalars['String']>;
+  historic?: InputMaybe<Scalars['String']>;
+  horse?: InputMaybe<Scalars['String']>;
+  indoor?: InputMaybe<Scalars['String']>;
+  information?: InputMaybe<Scalars['String']>;
+  inscription?: InputMaybe<Scalars['String']>;
+  internet_access?: InputMaybe<Scalars['String']>;
+  junction?: InputMaybe<Scalars['String']>;
+  kerb?: InputMaybe<Scalars['String']>;
+  landuse?: InputMaybe<Scalars['String']>;
+  layer?: InputMaybe<Scalars['String']>;
+  leisure?: InputMaybe<Scalars['String']>;
+  level?: InputMaybe<Scalars['String']>;
+  lit?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  man_made?: InputMaybe<Scalars['String']>;
+  material?: InputMaybe<Scalars['String']>;
+  maxspeed?: InputMaybe<Scalars['String']>;
+  memorial?: InputMaybe<Scalars['String']>;
+  military?: InputMaybe<Scalars['String']>;
+  motor_vehicle?: InputMaybe<Scalars['String']>;
+  motorcar?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  natural?: InputMaybe<Scalars['String']>;
+  network?: InputMaybe<Scalars['String']>;
+  office?: InputMaybe<Scalars['String']>;
   offset?: InputMaybe<Scalars['Int']>;
+  operator?: InputMaybe<Scalars['String']>;
   orderBy?: InputMaybe<Array<NodesOrderBy>>;
+  parking?: InputMaybe<Scalars['String']>;
+  phone?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
+  power?: InputMaybe<Scalars['String']>;
+  public_transport?: InputMaybe<Scalars['String']>;
+  railway?: InputMaybe<Scalars['String']>;
+  recycling_type?: InputMaybe<Scalars['String']>;
+  ref?: InputMaybe<Scalars['String']>;
+  religion?: InputMaybe<Scalars['String']>;
+  shelter?: InputMaybe<Scalars['String']>;
+  shop?: InputMaybe<Scalars['String']>;
+  sport?: InputMaybe<Scalars['String']>;
+  surface?: InputMaybe<Scalars['String']>;
+  tactile_paving?: InputMaybe<Scalars['String']>;
+  takeaway?: InputMaybe<Scalars['String']>;
+  tourism?: InputMaybe<Scalars['String']>;
+  traffic_sign?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']>;
+  vending?: InputMaybe<Scalars['String']>;
+  waterway?: InputMaybe<Scalars['String']>;
+  website?: InputMaybe<Scalars['String']>;
+  wheelchair?: InputMaybe<Scalars['String']>;
+  wikidata?: InputMaybe<Scalars['String']>;
+  wikipedia?: InputMaybe<Scalars['String']>;
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNoteArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNotesArgs = {
   condition?: InputMaybe<NoteCondition>;
   filter?: InputMaybe<NoteFilter>;
@@ -1299,41 +1560,55 @@ export type QueryNotesArgs = {
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
+export type QueryPointArgs = {
+  lat: Scalars['Float'];
+  lon: Scalars['Float'];
+};
+
+
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
+export type QueryQueryArgs = {
+  bbox?: InputMaybe<Array<Scalars['Float']>>;
+};
+
+
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryRelationArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryRelationsArgs = {
   condition?: InputMaybe<RelationCondition>;
   filter?: InputMaybe<RelationFilter>;
   first?: InputMaybe<Scalars['Int']>;
   offset?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<RelationsOrderBy>>;
+  type?: InputMaybe<Scalars['RelationType']>;
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryThingArgs = {
   uri: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryUserArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryWayArgs = {
   id: Scalars['ID'];
 };
 
 
-/** The root query for an OSM API gatway which gives access points into the OSM universe. */
+/** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryWaysArgs = {
   condition?: InputMaybe<WayCondition>;
   filter?: InputMaybe<WayFilter>;
@@ -1802,7 +2077,6 @@ export type Wr = Boundary | GenericRelation | Way;
 export type Way = {
   __typename?: 'Way';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
   geom?: Maybe<Scalars['LineString']>;
   id: Scalars['ID'];
   nodes: Array<Node>;
@@ -2325,11 +2599,10 @@ export type NetworkResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
   changeset?: Resolver<Maybe<ResolversTypes['Changeset']>, ParentType, ContextType>;
-  changesetId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   geom?: Resolver<Maybe<ResolversTypes['Point']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  lon?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   nodeTags?: Resolver<Array<ResolversTypes['Tag']>, ParentType, ContextType, Partial<NodeNodeTagsArgs>>;
   tag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<NodeTagArgs, 'key'>>;
   tags?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
@@ -2346,8 +2619,8 @@ export type NoteResolvers<ContextType = any, ParentType extends ResolversParentT
   comments?: Resolver<Array<ResolversTypes['NoteComment']>, ParentType, ContextType, Partial<NoteCommentsArgs>>;
   createdAt?: Resolver<ResolversTypes['Datetime'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  lat?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  lon?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   status?: Resolver<ResolversTypes['NoteStatusEnum'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Datetime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -2389,8 +2662,9 @@ export type PublicTransportResolvers<ContextType = any, ParentType extends Resol
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  area?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryAreaArgs, 'q'>>;
-  bbox?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryBboxArgs, 'a' | 'b' | 'c' | 'd'>>;
+  area?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryAreaArgs, 'name'>>;
+  around?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryAroundArgs, 'm'>>;
+  bbox?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryBboxArgs, 'e' | 'n' | 's' | 'w'>>;
   changeset?: Resolver<Maybe<ResolversTypes['Changeset']>, ParentType, ContextType, RequireFields<QueryChangesetArgs, 'id'>>;
   issue?: Resolver<Maybe<ResolversTypes['Issue']>, ParentType, ContextType, RequireFields<QueryIssueArgs, 'id'>>;
   issues?: Resolver<Maybe<Array<ResolversTypes['Issue']>>, ParentType, ContextType, Partial<QueryIssuesArgs>>;
@@ -2399,6 +2673,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   nodes?: Resolver<Maybe<Array<ResolversTypes['Node']>>, ParentType, ContextType, Partial<QueryNodesArgs>>;
   note?: Resolver<Maybe<ResolversTypes['Note']>, ParentType, ContextType, RequireFields<QueryNoteArgs, 'id'>>;
   notes?: Resolver<Maybe<Array<ResolversTypes['Note']>>, ParentType, ContextType, Partial<QueryNotesArgs>>;
+  point?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryPointArgs, 'lat' | 'lon'>>;
+  query?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, Partial<QueryQueryArgs>>;
   relation?: Resolver<Maybe<ResolversTypes['Relation']>, ParentType, ContextType, RequireFields<QueryRelationArgs, 'id'>>;
   relations?: Resolver<Maybe<Array<ResolversTypes['Relation']>>, ParentType, ContextType, Partial<QueryRelationsArgs>>;
   thing?: Resolver<Maybe<ResolversTypes['NWR']>, ParentType, ContextType, RequireFields<QueryThingArgs, 'uri'>>;
@@ -2530,7 +2806,6 @@ export type WrResolvers<ContextType = any, ParentType extends ResolversParentTyp
 
 export type WayResolvers<ContextType = any, ParentType extends ResolversParentTypes['Way'] = ResolversParentTypes['Way']> = {
   changeset?: Resolver<Maybe<ResolversTypes['Changeset']>, ParentType, ContextType>;
-  changesetId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   geom?: Resolver<Maybe<ResolversTypes['LineString']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nodes?: Resolver<Array<ResolversTypes['Node']>, ParentType, ContextType, Partial<WayNodesArgs>>;
