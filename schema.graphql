@@ -181,8 +181,6 @@ type Language {
   code: String!
   englishName: String!
   nativeName: String
-  diaryEntriesByLanguageCode(first: Int, offset: Int, orderBy: [DiaryEntriesOrderBy!], condition: DiaryEntryCondition, filter: DiaryEntryFilter): [DiaryEntry!]!
-  usersByDiaryEntryLanguageCodeAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
 }
 
 
@@ -200,12 +198,6 @@ type Issue {
   createdAt: Datetime!
   updatedAt: Datetime!
   reportedUser: User
-  userByResolvedBy: User
-  userByUpdatedBy: User
-  reports(first: Int, offset: Int, orderBy: [ReportsOrderBy!], condition: ReportCondition, filter: ReportFilter): [Report!]!
-  issueComments(first: Int, offset: Int, orderBy: [IssueCommentsOrderBy!], condition: IssueCommentCondition, filter: IssueCommentFilter): [IssueComment!]!
-  usersByReportIssueIdAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
-  usersByIssueCommentIssueIdAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
 }
 
 enum IssueStatusEnum {
@@ -1046,9 +1038,6 @@ A condition to be used against `ChangesetComment` object types. All fields are
 tested for equality and combined with a logical ‘and.’
 """
 input ChangesetCommentCondition {
-  """Checks for equality with the object’s `id` field."""
-  id: Int
-
   """Checks for equality with the object’s `changesetId` field."""
   changesetId: ID
 
@@ -1069,9 +1058,6 @@ input ChangesetCommentCondition {
 A filter to be used against `ChangesetComment` object types. All fields are combined with a logical ‘and.’
 """
 input ChangesetCommentFilter {
-  """Filter by the object’s `id` field."""
-  id: IntFilter
-
   """Filter by the object’s `changesetId` field."""
   changesetId: IDFilter
 
@@ -1121,9 +1107,6 @@ A condition to be used against `IssueComment` object types. All fields are
 tested for equality and combined with a logical ‘and.’
 """
 input IssueCommentCondition {
-  """Checks for equality with the object’s `id` field."""
-  id: Int
-
   """Checks for equality with the object’s `issueId` field."""
   issueId: Int
 
@@ -1132,21 +1115,12 @@ input IssueCommentCondition {
 
   """Checks for equality with the object’s `body` field."""
   body: String
-
-  """Checks for equality with the object’s `createdAt` field."""
-  createdAt: Datetime
-
-  """Checks for equality with the object’s `updatedAt` field."""
-  updatedAt: Datetime
 }
 
 """
 A filter to be used against `IssueComment` object types. All fields are combined with a logical ‘and.’
 """
 input IssueCommentFilter {
-  """Filter by the object’s `id` field."""
-  id: IntFilter
-
   """Filter by the object’s `issueId` field."""
   issueId: IntFilter
 
@@ -1207,9 +1181,6 @@ enum IssuesOrderBy {
 A condition to be used against `Issue` object types. All fields are tested for equality and combined with a logical ‘and.’
 """
 input IssueCondition {
-  """Checks for equality with the object’s `id` field."""
-  id: Int
-
   """Checks for equality with the object’s `reportableType` field."""
   reportableType: String
 
@@ -1225,9 +1196,6 @@ input IssueCondition {
   """Checks for equality with the object’s `assignedRole` field."""
   assignedRole: UserRoleEnum
 
-  """Checks for equality with the object’s `resolvedAt` field."""
-  resolvedAt: Datetime
-
   """Checks for equality with the object’s `resolvedBy` field."""
   resolvedBy: Int
 
@@ -1236,21 +1204,12 @@ input IssueCondition {
 
   """Checks for equality with the object’s `reportsCount` field."""
   reportsCount: Int
-
-  """Checks for equality with the object’s `createdAt` field."""
-  createdAt: Datetime
-
-  """Checks for equality with the object’s `updatedAt` field."""
-  updatedAt: Datetime
 }
 
 """
 A filter to be used against `Issue` object types. All fields are combined with a logical ‘and.’
 """
 input IssueFilter {
-  """Filter by the object’s `id` field."""
-  id: IntFilter
-
   """Filter by the object’s `reportableType` field."""
   reportableType: StringFilter
 
@@ -1262,9 +1221,6 @@ input IssueFilter {
 
   """Filter by the object’s `status` field."""
   status: IssueStatusEnumFilter
-
-  """Filter by the object’s `assignedRole` field."""
-  assignedRole: UserRoleEnumFilter
 
   """Filter by the object’s `resolvedAt` field."""
   resolvedAt: DatetimeFilter
@@ -1396,8 +1352,6 @@ enum NotesOrderBy {
   LATITUDE_DESC
   LONGITUDE_ASC
   LONGITUDE_DESC
-  TILE_ASC
-  TILE_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
   CREATED_AT_ASC
@@ -1414,27 +1368,8 @@ enum NotesOrderBy {
 A condition to be used against `Note` object types. All fields are tested for equality and combined with a logical ‘and.’
 """
 input NoteCondition {
-  """Checks for equality with the object’s `id` field."""
-  id: ID
-
-  """Checks for equality with the object’s `latitude` field."""
-  latitude: Int
-
-  """Checks for equality with the object’s `longitude` field."""
-  longitude: Int
-
-  """Checks for equality with the object’s `tile` field."""
-  """Checks for equality with the object’s `updatedAt` field."""
-  updatedAt: Datetime
-
-  """Checks for equality with the object’s `createdAt` field."""
-  createdAt: Datetime
-
   """Checks for equality with the object’s `status` field."""
   status: NoteStatusEnum
-
-  """Checks for equality with the object’s `closedAt` field."""
-  closedAt: Datetime
 }
 
 """
@@ -1449,8 +1384,6 @@ input NoteFilter {
 
   """Filter by the object’s `longitude` field."""
   longitude: IntFilter
-
-  """Filter by the object’s `tile` field."""ilter
 
   """Filter by the object’s `updatedAt` field."""
   updatedAt: DatetimeFilter
@@ -1517,11 +1450,9 @@ input NoteStatusEnumFilter {
 }
 
 
-"""Methods to use when ordering `WayTag`."""
-enum WayTagsOrderBy {
+"""Methods to use when ordering `Tag`."""
+enum TagsOrderBy {
   NATURAL
-  WAY_ID_ASC
-  WAY_ID_DESC
   K_ASC
   K_DESC
   V_ASC
@@ -1530,19 +1461,6 @@ enum WayTagsOrderBy {
   PRIMARY_KEY_DESC
 }
 
-"""
-A condition to be used against `WayTag` object types. All fields are tested for equality and combined with a logical ‘and.’
-"""
-input WayTagCondition {
-  """Checks for equality with the object’s `wayId` field."""
-  wayId: ID
-
-  """Checks for equality with the object’s `k` field."""
-  k: String
-
-  """Checks for equality with the object’s `v` field."""
-  v: String
-}
 
 """
 A filter to be used against `WayTag` object types. All fields are combined with a logical ‘and.’
@@ -1649,8 +1567,6 @@ enum NodesOrderBy {
   VISIBLE_DESC
   TIMESTAMP_ASC
   TIMESTAMP_DESC
-  TILE_ASC
-  TILE_DESC
   VERSION_ASC
   VERSION_DESC
   PRIMARY_KEY_ASC
@@ -1679,7 +1595,6 @@ input NodeCondition {
   """Checks for equality with the object’s `timestamp` field."""
   timestamp: Datetime
 
-  """Checks for equality with the object’s `tile` field."""
   """Checks for equality with the object’s `version` field."""
   version: Int
 }
@@ -1705,8 +1620,6 @@ input NodeFilter {
 
   """Filter by the object’s `timestamp` field."""
   timestamp: DatetimeFilter
-
-  """Filter by the object’s `tile` field."""ilter
 
   """Filter by the object’s `version` field."""
   version: IntFilter
