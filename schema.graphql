@@ -33,7 +33,8 @@ type Node {
   visible: Boolean!
   timestamp: Datetime!
   changeset: Changeset
-  nodeTags(first: Int, offset: Int, orderBy: [NodeTagsOrderBy!]): [Tag!]!
+  tag(key: String!): String
+  nodeTags(first: Int, offset: Int, orderBy: [TagsOrderBy!]): [Tag!]!
   ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]!
 }
 
@@ -46,19 +47,26 @@ type Way {
   visible: Boolean!
   changesetId: ID!
   changeset: Changeset
-  wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: WayTagCondition, filter: WayTagFilter): [Tag!]!
+  tag(key: String!): String # | [String]
+  wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: TagCondition, filter: WayTagFilter): [Tag!]!
+}
 }
 
 type Relation {
   id: ID!
   version: Int!
+type RelationType {
+  id: ID!
+  version: Int!
+  type: RelationType
   tags: JSON
   members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
   changesetId: ID!
   timestamp: Datetime!
   visible: Boolean!
   changeset: Changeset
-  relationTags(first: Int, offset: Int, orderBy: [RelationTagsOrderBy!], condition: RelationTagCondition, filter: RelationTagFilter): [Tag!]!
+  tag(key: String!): String
+  relationTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
 }
 
 union NWR = Node | Way | Relation;
@@ -119,7 +127,7 @@ type Changeset {
   relations(first: Int, offset: Int, orderBy: [RelationsOrderBy!], condition: RelationCondition, filter: RelationFilter): [Relation!]!
   tags: JSON
   user: User
-  changesetTags(first: Int, offset: Int, orderBy: [ChangesetTagsOrderBy!], condition: ChangesetTagCondition, filter: ChangesetTagFilter): [ChangesetTag!]!
+  changesetTags(first: Int, offset: Int, orderBy: [TagsOrderBy!], condition: TagCondition, filter: TagFilter): [Tag!]!
   comments(first: Int, offset: Int, orderBy: [ChangesetCommentsOrderBy!], condition: ChangesetCommentCondition, filter: ChangesetCommentFilter): [ChangesetComment!]!
   redactions(first: Int, offset: Int, orderBy: [RedactionsOrderBy!], condition: RedactionCondition, filter: RedactionFilter): [Redaction!]!
 }
@@ -187,17 +195,17 @@ type Language {
 type Issue {
   id: Int!
   reportableType: String!
-  reportableId: Int!
-  reportedUserId: Int
+  reportableId: ID!
   status: IssueStatusEnum!
   assignedRole: UserRoleEnum!
   resolvedAt: Datetime
-  resolvedBy: Int
-  updatedBy: Int
   reportsCount: Int
   createdAt: Datetime!
   updatedAt: Datetime!
   reportedUser: User
+  resolvedBy: User
+  updatedBy: User
+  comments(first: Int, offset: Int, orderBy: [IssueCommentsOrderBy!], condition: IssueCommentCondition, filter: IssueCommentFilter): [IssueComment!]!
 }
 
 enum IssueStatusEnum {
@@ -244,8 +252,8 @@ type Note {
   createdAt: Datetime!
   status: NoteStatusEnum!
   closedAt: Datetime
-  comments(first: Int, offset: Int, orderBy: [NoteCommentsOrderBy!], condition: NoteCommentCondition, filter: NoteCommentFilter): [NoteComment!]!
-  authors(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
+  comments(first: Int, offset: Int, orderBy: [NoteCommentsOrderBy!]): [NoteComment!]!
+  authors(first: Int, offset: Int, orderBy: [UsersOrderBy!]): [User!]!
 }
 
 type NoteComment {
@@ -275,8 +283,8 @@ type Redaction {
   userId: ID!
   descriptionFormat: FormatEnum!
   user: User
-  nodesHistories(first: Int, offset: Int, orderBy: [NodesHistoriesOrderBy!], condition: NodesHistoryCondition, filter: NodesHistoryFilter): [NodesHistory!]!
-  changesetsByNodesHistoryRedactionIdAndChangesetIdList(first: Int, offset: Int, orderBy: [ChangesetsOrderBy!], condition: ChangesetCondition, filter: ChangesetFilter): [Changeset!]!
+  nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]!
+  changesets(first: Int, offset: Int, orderBy: [ChangesetsOrderBy!], condition: ChangesetCondition, filter: ChangesetFilter): [Changeset!]!
 }
 
 
@@ -1747,7 +1755,7 @@ input NwrEnumFilter {
 
 
 """
-A filter to be used against `RelationTag` object types. All fields are combined with a logical ‘and.’
+A filter to be used against `Tag` object types. All fields are combined with a logical ‘and.’
 """
 input TagFilter {
   """Filter by the object’s `k` field."""
@@ -1757,13 +1765,13 @@ input TagFilter {
   v: StringFilter
 
   """Checks for all expressions in this list."""
-  and: [RelationTagFilter!]
+  and: [TagFilter!]
 
   """Checks for any expressions in this list."""
-  or: [RelationTagFilter!]
+  or: [TagFilter!]
 
   """Negates the expression."""
-  not: RelationTagFilter
+  not: TagFilter
 }
 
 """Methods to use when ordering `Relation`."""
