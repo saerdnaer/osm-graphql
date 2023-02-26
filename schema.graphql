@@ -1,0 +1,1921 @@
+"""The root query type which gives access points into the data universe."""
+type Query {
+  node(id: ID!): Node
+  nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]
+  way(id: ID!): Way
+  ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]
+  relation(id: ID!): Relation
+  relations(first: Int, offset: Int, orderBy: [RelationsOrderBy!], condition: RelationCondition, filter: RelationFilter): [Relation!]
+
+  user(id: ID!): User
+  changeset(id: ID!): Changeset
+  issue(id: Int!): Issue
+  issues(first: Int, offset: Int, orderBy: [IssuesOrderBy!], condition: IssueCondition, filter: IssueFilter): [Issue!]
+  languages(first: Int, offset: Int, orderBy: [LanguagesOrderBy!], condition: LanguageCondition, filter: LanguageFilter): [Language!]
+  note(id: ID!): Note
+  notes(first: Int, offset: Int, orderBy: [NotesOrderBy!], condition: NoteCondition, filter: NoteFilter): [Note!]
+}
+
+
+type Tag {
+  k: String!
+  v: String!
+}
+
+
+type Node {
+  id: ID!
+  version: Int!
+  latitude: Float!
+  longitude: Float!
+  tags: JSON
+  changesetId: ID!
+  visible: Boolean!
+  timestamp: Datetime!
+  changeset: Changeset
+  nodeTags(first: Int, offset: Int, orderBy: [NodeTagsOrderBy!]): [Tag!]!
+  ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]!
+}
+
+type Way {
+  id: ID!
+  version: Int!
+  tags: JSON
+  nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]!
+  timestamp: Datetime!
+  visible: Boolean!
+  changesetId: ID!
+  changeset: Changeset
+  wayTags(first: Int, offset: Int, orderBy: [WayTagsOrderBy!], condition: WayTagCondition, filter: WayTagFilter): [Tag!]!
+}
+
+type Relation {
+  id: ID!
+  version: Int!
+  tags: JSON
+  members(first: Int, offset: Int, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter): [RelationMember!]!
+  changesetId: ID!
+  timestamp: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  relationTags(first: Int, offset: Int, orderBy: [RelationTagsOrderBy!], condition: RelationTagCondition, filter: RelationTagFilter): [Tag!]!
+}
+
+union NWR = Node | Way | Relation;
+
+interface RelationMember {
+  memberType: NwrEnum!
+  memberId: ID!
+  memberRole: String
+  sequenceId: Int!
+  ref: NWR
+}
+
+type RelationMemberNode {
+  memberType: NwrEnum!
+  memberId: ID!
+  memberRole: String
+  sequenceId: Int!
+  ref: Node
+  node: Node
+}
+
+type RelationMemberWay {
+  memberType: NwrEnum!
+  memberId: ID!
+  memberRole: String
+  sequenceId: Int!
+  ref: Way
+  way: Way
+}
+
+type RelationMemberRelation {
+  memberType: NwrEnum!
+  memberId: ID!
+  memberRole: String
+  sequenceId: Int!
+  ref: Relation
+  relation: Relation
+}
+
+enum NwrEnum {
+  node
+  way
+  relation
+}
+
+type Changeset {
+  id: ID!
+  userId: ID!
+  createdAt: Datetime!
+  minLat: Float
+  maxLat: Float
+  minLon: Float
+  maxLon: Float
+  closedAt: Datetime!
+  numChanges: Int!
+  ways(first: Int, offset: Int, orderBy: [WaysOrderBy!], condition: WayCondition, filter: WayFilter): [Way!]!
+  nodes(first: Int, offset: Int, orderBy: [NodesOrderBy!], condition: NodeCondition, filter: NodeFilter): [Node!]!
+  relations(first: Int, offset: Int, orderBy: [RelationsOrderBy!], condition: RelationCondition, filter: RelationFilter): [Relation!]!
+  tags: JSON
+  user: User
+  changesetTags(first: Int, offset: Int, orderBy: [ChangesetTagsOrderBy!], condition: ChangesetTagCondition, filter: ChangesetTagFilter): [ChangesetTag!]!
+  comments(first: Int, offset: Int, orderBy: [ChangesetCommentsOrderBy!], condition: ChangesetCommentCondition, filter: ChangesetCommentFilter): [ChangesetComment!]!
+  redactions(first: Int, offset: Int, orderBy: [RedactionsOrderBy!], condition: RedactionCondition, filter: RedactionFilter): [Redaction!]!
+}
+
+type ChangesetComment {
+  id: Int!
+  changesetId: ID!
+  authorId: ID!
+  body: String!
+  createdAt: Datetime!
+  visible: Boolean!
+  changeset: Changeset
+  author: User
+}
+
+
+"""
+A point in time as described by the [ISO
+8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+"""
+scalar Datetime
+
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+
+type User {
+  email: String!
+  id: ID!
+  displayName: String!
+  dataPublic: Boolean!
+  description: String!
+  languages: String  status: UserStatusEnum!
+  descriptionFormat: FormatEnum!
+  changesetsCount: Int!
+  tracesCount: Int!
+  imageUseGravatar: Boolean!
+  changesets(first: Int, offset: Int, orderBy: [ChangesetsOrderBy!], condition: ChangesetCondition, filter: ChangesetFilter): [Changeset!]!
+}
+
+enum UserStatusEnum {
+  PENDING
+  ACTIVE
+  CONFIRMED
+  SUSPENDED
+  DELETED
+}
+
+enum FormatEnum {
+  HTML
+  MARKDOWN
+  TEXT
+}
+
+type Language {
+  code: String!
+  englishName: String!
+  nativeName: String
+  diaryEntriesByLanguageCode(first: Int, offset: Int, orderBy: [DiaryEntriesOrderBy!], condition: DiaryEntryCondition, filter: DiaryEntryFilter): [DiaryEntry!]!
+  usersByDiaryEntryLanguageCodeAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
+}
+
+
+type Issue {
+  id: Int!
+  reportableType: String!
+  reportableId: Int!
+  reportedUserId: Int
+  status: IssueStatusEnum!
+  assignedRole: UserRoleEnum!
+  resolvedAt: Datetime
+  resolvedBy: Int
+  updatedBy: Int
+  reportsCount: Int
+  createdAt: Datetime!
+  updatedAt: Datetime!
+  reportedUser: User
+  userByResolvedBy: User
+  userByUpdatedBy: User
+  reports(first: Int, offset: Int, orderBy: [ReportsOrderBy!], condition: ReportCondition, filter: ReportFilter): [Report!]!
+  issueComments(first: Int, offset: Int, orderBy: [IssueCommentsOrderBy!], condition: IssueCommentCondition, filter: IssueCommentFilter): [IssueComment!]!
+  usersByReportIssueIdAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
+  usersByIssueCommentIssueIdAndUserIdList(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
+}
+
+enum IssueStatusEnum {
+  OPEN
+  IGNORED
+  RESOLVED
+}
+
+type IssueComment {
+  id: Int!
+  issueId: Int!
+  userId: Int!
+  body: String!
+  createdAt: Datetime!
+  updatedAt: Datetime!
+  issue: Issue
+  author: User
+}
+
+
+enum UserRoleEnum {
+  ADMINISTRATOR
+  MODERATOR
+}
+
+
+
+"""An IPv4 or IPv6 host address, and optionally its subnet."""
+scalar InternetAddress
+
+enum NoteEventEnum {
+  OPENED
+  CLOSED
+  REOPENED
+  COMMENTED
+  HIDDEN
+}
+
+type Note {
+  id: ID!
+  latitude: Float!
+  longitude: Float!
+  updatedAt: Datetime!
+  createdAt: Datetime!
+  status: NoteStatusEnum!
+  closedAt: Datetime
+  comments(first: Int, offset: Int, orderBy: [NoteCommentsOrderBy!], condition: NoteCommentCondition, filter: NoteCommentFilter): [NoteComment!]!
+  authors(first: Int, offset: Int, orderBy: [UsersOrderBy!], condition: UserCondition, filter: UserFilter): [User!]!
+}
+
+type NoteComment {
+  id: ID!
+  noteId: ID!
+  visible: Boolean!
+  createdAt: Datetime!
+  authorId: ID
+  body: String
+  event: NoteEventEnum
+  note: Note
+  author: User
+}
+
+enum NoteStatusEnum {
+  OPEN
+  CLOSED
+  HIDDEN
+}
+
+type Redaction {
+  id: ID!
+  title: String
+  description: String
+  createdAt: Datetime
+  updatedAt: Datetime
+  userId: ID!
+  descriptionFormat: FormatEnum!
+  user: User
+  nodesHistories(first: Int, offset: Int, orderBy: [NodesHistoriesOrderBy!], condition: NodesHistoryCondition, filter: NodesHistoryFilter): [NodesHistory!]!
+  changesetsByNodesHistoryRedactionIdAndChangesetIdList(first: Int, offset: Int, orderBy: [ChangesetsOrderBy!], condition: ChangesetCondition, filter: ChangesetFilter): [Changeset!]!
+}
+
+
+
+
+
+"""
+A filter to be used against ID fields. All fields are combined with a logical ‘and.’
+"""
+input IDFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: ID
+
+  """Not equal to the specified value."""
+  notEqualTo: ID
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: ID
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: ID
+
+  """Included in the specified list."""
+  in: [ID!]
+
+  """Not included in the specified list."""
+  notIn: [ID!]
+
+  """Less than the specified value."""
+  lessThan: ID
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: ID
+
+  """Greater than the specified value."""
+  greaterThan: ID
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: ID
+}
+
+"""
+A filter to be used against String fields. All fields are combined with a logical ‘and.’
+"""
+input StringFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: String
+
+  """Not equal to the specified value."""
+  notEqualTo: String
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: String
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: String
+
+  """Included in the specified list."""
+  in: [String!]
+
+  """Not included in the specified list."""
+  notIn: [String!]
+
+  """Less than the specified value."""
+  lessThan: String
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: String
+
+  """Greater than the specified value."""
+  greaterThan: String
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: String
+
+  """Contains the specified string (case-sensitive)."""
+  includes: String
+
+  """Does not contain the specified string (case-sensitive)."""
+  notIncludes: String
+
+  """Contains the specified string (case-insensitive)."""
+  includesInsensitive: String
+
+  """Does not contain the specified string (case-insensitive)."""
+  notIncludesInsensitive: String
+
+  """Starts with the specified string (case-sensitive)."""
+  startsWith: String
+
+  """Does not start with the specified string (case-sensitive)."""
+  notStartsWith: String
+
+  """Starts with the specified string (case-insensitive)."""
+  startsWithInsensitive: String
+
+  """Does not start with the specified string (case-insensitive)."""
+  notStartsWithInsensitive: String
+
+  """Ends with the specified string (case-sensitive)."""
+  endsWith: String
+
+  """Does not end with the specified string (case-sensitive)."""
+  notEndsWith: String
+
+  """Ends with the specified string (case-insensitive)."""
+  endsWithInsensitive: String
+
+  """Does not end with the specified string (case-insensitive)."""
+  notEndsWithInsensitive: String
+
+  """
+  Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  like: String
+
+  """
+  Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  notLike: String
+
+  """
+  Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  likeInsensitive: String
+
+  """
+  Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  notLikeInsensitive: String
+
+  """Equal to the specified value (case-insensitive)."""
+  equalToInsensitive: String
+
+  """Not equal to the specified value (case-insensitive)."""
+  notEqualToInsensitive: String
+
+  """
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  """
+  distinctFromInsensitive: String
+
+  """
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  """
+  notDistinctFromInsensitive: String
+
+  """Included in the specified list (case-insensitive)."""
+  inInsensitive: [String!]
+
+  """Not included in the specified list (case-insensitive)."""
+  notInInsensitive: [String!]
+
+  """Less than the specified value (case-insensitive)."""
+  lessThanInsensitive: String
+
+  """Less than or equal to the specified value (case-insensitive)."""
+  lessThanOrEqualToInsensitive: String
+
+  """Greater than the specified value (case-insensitive)."""
+  greaterThanInsensitive: String
+
+  """Greater than or equal to the specified value (case-insensitive)."""
+  greaterThanOrEqualToInsensitive: String
+}
+
+"""
+A filter to be used against Datetime fields. All fields are combined with a logical ‘and.’
+"""
+input DatetimeFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: Datetime
+
+  """Not equal to the specified value."""
+  notEqualTo: Datetime
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Datetime
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Datetime
+
+  """Included in the specified list."""
+  in: [Datetime!]
+
+  """Not included in the specified list."""
+  notIn: [Datetime!]
+
+  """Less than the specified value."""
+  lessThan: Datetime
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: Datetime
+
+  """Greater than the specified value."""
+  greaterThan: Datetime
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: Datetime
+}
+
+"""
+A filter to be used against Float fields. All fields are combined with a logical ‘and.’
+"""
+input FloatFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: Float
+
+  """Not equal to the specified value."""
+  notEqualTo: Float
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Float
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Float
+
+  """Included in the specified list."""
+  in: [Float!]
+
+  """Not included in the specified list."""
+  notIn: [Float!]
+
+  """Less than the specified value."""
+  lessThan: Float
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: Float
+
+  """Greater than the specified value."""
+  greaterThan: Float
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: Float
+}
+
+"""
+A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
+"""
+input BooleanFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: Boolean
+
+  """Not equal to the specified value."""
+  notEqualTo: Boolean
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Boolean
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Boolean
+
+  """Included in the specified list."""
+  in: [Boolean!]
+
+  """Not included in the specified list."""
+  notIn: [Boolean!]
+
+  """Less than the specified value."""
+  lessThan: Boolean
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: Boolean
+
+  """Greater than the specified value."""
+  greaterThan: Boolean
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: Boolean
+}
+
+"""
+A filter to be used against FormatEnum fields. All fields are combined with a logical ‘and.’
+"""
+input FormatEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: FormatEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: FormatEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: FormatEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: FormatEnum
+
+  """Included in the specified list."""
+  in: [FormatEnum!]
+
+  """Not included in the specified list."""
+  notIn: [FormatEnum!]
+
+  """Less than the specified value."""
+  lessThan: FormatEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: FormatEnum
+
+  """Greater than the specified value."""
+  greaterThan: FormatEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: FormatEnum
+}
+
+"""Methods to use when ordering `User`."""
+enum UsersOrderBy {
+  NATURAL
+  CREATION_TIME_ASC
+  CREATION_TIME_DESC
+  DISPLAY_NAME_ASC
+  DISPLAY_NAME_DESC
+  LANGUAGES_ASC
+  LANGUAGES_DESC
+  STATUS_ASC
+  STATUS_DESC
+  CHANGESETS_COUNT_ASC
+  CHANGESETS_COUNT_DESC
+}
+
+
+
+"""
+A filter to be used against Int fields. All fields are combined with a logical ‘and.’
+"""
+input IntFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: Int
+
+  """Not equal to the specified value."""
+  notEqualTo: Int
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Int
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Int
+
+  """Included in the specified list."""
+  in: [Int!]
+
+  """Not included in the specified list."""
+  notIn: [Int!]
+
+  """Less than the specified value."""
+  lessThan: Int
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: Int
+
+  """Greater than the specified value."""
+  greaterThan: Int
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: Int
+}
+
+"""
+A filter to be used against UserStatusEnum fields. All fields are combined with a logical ‘and.’
+"""
+input UserStatusEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: UserStatusEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: UserStatusEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: UserStatusEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: UserStatusEnum
+
+  """Included in the specified list."""
+  in: [UserStatusEnum!]
+
+  """Not included in the specified list."""
+  notIn: [UserStatusEnum!]
+
+  """Less than the specified value."""
+  lessThan: UserStatusEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: UserStatusEnum
+
+  """Greater than the specified value."""
+  greaterThan: UserStatusEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: UserStatusEnum
+}
+
+"""Methods to use when ordering `Changeset`."""
+enum ChangesetsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  USER_ID_ASC
+  USER_ID_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  MIN_LAT_ASC
+  MIN_LAT_DESC
+  MAX_LAT_ASC
+  MAX_LAT_DESC
+  MIN_LON_ASC
+  MIN_LON_DESC
+  MAX_LON_ASC
+  MAX_LON_DESC
+  CLOSED_AT_ASC
+  CLOSED_AT_DESC
+  NUM_CHANGES_ASC
+  NUM_CHANGES_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Changeset` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input ChangesetCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: ID
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `minLat` field."""
+  minLat: Int
+
+  """Checks for equality with the object’s `maxLat` field."""
+  maxLat: Int
+
+  """Checks for equality with the object’s `minLon` field."""
+  minLon: Int
+
+  """Checks for equality with the object’s `maxLon` field."""
+  maxLon: Int
+
+  """Checks for equality with the object’s `closedAt` field."""
+  closedAt: Datetime
+
+  """Checks for equality with the object’s `numChanges` field."""
+  numChanges: Int
+}
+
+"""
+A filter to be used against `Changeset` object types. All fields are combined with a logical ‘and.’
+"""
+input ChangesetFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `userId` field."""
+  userId: IDFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `minLat` field."""
+  minLat: FloatFilter
+
+  """Filter by the object’s `maxLat` field."""
+  maxLat: FloatFilter
+
+  """Filter by the object’s `minLon` field."""
+  minLon: FloatFilter
+
+  """Filter by the object’s `maxLon` field."""
+  maxLon: FloatFilter
+
+  """Filter by the object’s `closedAt` field."""
+  closedAt: DatetimeFilter
+
+  """Checks for all expressions in this list."""
+  and: [ChangesetFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [ChangesetFilter!]
+
+  """Negates the expression."""
+  not: ChangesetFilter
+}
+
+
+
+"""Methods to use when ordering `NoteComment`."""
+enum NoteCommentsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  NOTE_ID_ASC
+  NOTE_ID_DESC
+  VISIBLE_ASC
+  VISIBLE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  AUTHOR_IP_ASC
+  AUTHOR_IP_DESC
+  AUTHOR_ID_ASC
+  AUTHOR_ID_DESC
+  BODY_ASC
+  BODY_DESC
+  EVENT_ASC
+  EVENT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `NoteComment` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input NoteCommentCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `noteId` field."""
+  noteId: ID
+
+  """Checks for equality with the object’s `visible` field."""
+  visible: Boolean
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `authorIp` field."""
+  authorIp: InternetAddress
+
+  """Checks for equality with the object’s `authorId` field."""
+  authorId: ID
+
+  """Checks for equality with the object’s `body` field."""
+  body: String
+
+  """Checks for equality with the object’s `event` field."""
+  event: NoteEventEnum
+}
+
+"""
+A filter to be used against `NoteComment` object types. All fields are combined with a logical ‘and.’
+"""
+input NoteCommentFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `noteId` field."""
+  noteId: IDFilter
+
+  """Filter by the object’s `visible` field."""
+  visible: BooleanFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `authorIp` field."""
+  authorIp: InternetAddressFilter
+
+  """Filter by the object’s `authorId` field."""
+  authorId: IDFilter
+
+  """Filter by the object’s `body` field."""
+  body: StringFilter
+
+  """Filter by the object’s `event` field."""
+  event: NoteEventEnumFilter
+
+  """Checks for all expressions in this list."""
+  and: [NoteCommentFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [NoteCommentFilter!]
+
+  """Negates the expression."""
+  not: NoteCommentFilter
+}
+
+"""
+A filter to be used against InternetAddress fields. All fields are combined with a logical ‘and.’
+"""
+input InternetAddressFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: InternetAddress
+
+  """Not equal to the specified value."""
+  notEqualTo: InternetAddress
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: InternetAddress
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: InternetAddress
+
+  """Included in the specified list."""
+  in: [InternetAddress!]
+
+  """Not included in the specified list."""
+  notIn: [InternetAddress!]
+
+  """Less than the specified value."""
+  lessThan: InternetAddress
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: InternetAddress
+
+  """Greater than the specified value."""
+  greaterThan: InternetAddress
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: InternetAddress
+
+  """Contains the specified internet address."""
+  contains: InternetAddress
+
+  """Contains or equal to the specified internet address."""
+  containsOrEqualTo: InternetAddress
+
+  """Contained by the specified internet address."""
+  containedBy: InternetAddress
+
+  """Contained by or equal to the specified internet address."""
+  containedByOrEqualTo: InternetAddress
+
+  """Contains or contained by the specified internet address."""
+  containsOrContainedBy: InternetAddress
+}
+
+"""
+A filter to be used against NoteEventEnum fields. All fields are combined with a logical ‘and.’
+"""
+input NoteEventEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: NoteEventEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: NoteEventEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: NoteEventEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: NoteEventEnum
+
+  """Included in the specified list."""
+  in: [NoteEventEnum!]
+
+  """Not included in the specified list."""
+  notIn: [NoteEventEnum!]
+
+  """Less than the specified value."""
+  lessThan: NoteEventEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: NoteEventEnum
+
+  """Greater than the specified value."""
+  greaterThan: NoteEventEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: NoteEventEnum
+}
+
+"""Methods to use when ordering `ChangesetComment`."""
+enum ChangesetCommentsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  CHANGESET_ID_ASC
+  CHANGESET_ID_DESC
+  AUTHOR_ID_ASC
+  AUTHOR_ID_DESC
+  BODY_ASC
+  BODY_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  VISIBLE_ASC
+  VISIBLE_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `ChangesetComment` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+"""
+input ChangesetCommentCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `changesetId` field."""
+  changesetId: ID
+
+  """Checks for equality with the object’s `authorId` field."""
+  authorId: ID
+
+  """Checks for equality with the object’s `body` field."""
+  body: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `visible` field."""
+  visible: Boolean
+}
+
+"""
+A filter to be used against `ChangesetComment` object types. All fields are combined with a logical ‘and.’
+"""
+input ChangesetCommentFilter {
+  """Filter by the object’s `id` field."""
+  id: IntFilter
+
+  """Filter by the object’s `changesetId` field."""
+  changesetId: IDFilter
+
+  """Filter by the object’s `authorId` field."""
+  authorId: IDFilter
+
+  """Filter by the object’s `body` field."""
+  body: StringFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `visible` field."""
+  visible: BooleanFilter
+
+  """Checks for all expressions in this list."""
+  and: [ChangesetCommentFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [ChangesetCommentFilter!]
+
+  """Negates the expression."""
+  not: ChangesetCommentFilter
+}
+
+"""Methods to use when ordering `IssueComment`."""
+enum IssueCommentsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  ISSUE_ID_ASC
+  ISSUE_ID_DESC
+  USER_ID_ASC
+  USER_ID_DESC
+  BODY_ASC
+  BODY_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `IssueComment` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+"""
+input IssueCommentCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `issueId` field."""
+  issueId: Int
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: Int
+
+  """Checks for equality with the object’s `body` field."""
+  body: String
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+}
+
+"""
+A filter to be used against `IssueComment` object types. All fields are combined with a logical ‘and.’
+"""
+input IssueCommentFilter {
+  """Filter by the object’s `id` field."""
+  id: IntFilter
+
+  """Filter by the object’s `issueId` field."""
+  issueId: IntFilter
+
+  """Filter by the object’s `userId` field."""
+  userId: IntFilter
+
+  """Filter by the object’s `body` field."""
+  body: StringFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `updatedAt` field."""
+  updatedAt: DatetimeFilter
+
+  """Checks for all expressions in this list."""
+  and: [IssueCommentFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [IssueCommentFilter!]
+
+  """Negates the expression."""
+  not: IssueCommentFilter
+}
+
+"""Methods to use when ordering `Issue`."""
+enum IssuesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  REPORTABLE_TYPE_ASC
+  REPORTABLE_TYPE_DESC
+  REPORTABLE_ID_ASC
+  REPORTABLE_ID_DESC
+  REPORTED_USER_ID_ASC
+  REPORTED_USER_ID_DESC
+  STATUS_ASC
+  STATUS_DESC
+  ASSIGNED_ROLE_ASC
+  ASSIGNED_ROLE_DESC
+  RESOLVED_AT_ASC
+  RESOLVED_AT_DESC
+  RESOLVED_BY_ASC
+  RESOLVED_BY_DESC
+  UPDATED_BY_ASC
+  UPDATED_BY_DESC
+  REPORTS_COUNT_ASC
+  REPORTS_COUNT_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Issue` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input IssueCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `reportableType` field."""
+  reportableType: String
+
+  """Checks for equality with the object’s `reportableId` field."""
+  reportableId: Int
+
+  """Checks for equality with the object’s `reportedUserId` field."""
+  reportedUserId: Int
+
+  """Checks for equality with the object’s `status` field."""
+  status: IssueStatusEnum
+
+  """Checks for equality with the object’s `assignedRole` field."""
+  assignedRole: UserRoleEnum
+
+  """Checks for equality with the object’s `resolvedAt` field."""
+  resolvedAt: Datetime
+
+  """Checks for equality with the object’s `resolvedBy` field."""
+  resolvedBy: Int
+
+  """Checks for equality with the object’s `updatedBy` field."""
+  updatedBy: Int
+
+  """Checks for equality with the object’s `reportsCount` field."""
+  reportsCount: Int
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+}
+
+"""
+A filter to be used against `Issue` object types. All fields are combined with a logical ‘and.’
+"""
+input IssueFilter {
+  """Filter by the object’s `id` field."""
+  id: IntFilter
+
+  """Filter by the object’s `reportableType` field."""
+  reportableType: StringFilter
+
+  """Filter by the object’s `reportableId` field."""
+  reportableId: IntFilter
+
+  """Filter by the object’s `reportedUserId` field."""
+  reportedUserId: IntFilter
+
+  """Filter by the object’s `status` field."""
+  status: IssueStatusEnumFilter
+
+  """Filter by the object’s `assignedRole` field."""
+  assignedRole: UserRoleEnumFilter
+
+  """Filter by the object’s `resolvedAt` field."""
+  resolvedAt: DatetimeFilter
+
+  """Filter by the object’s `resolvedBy` field."""
+  resolvedBy: IntFilter
+
+  """Filter by the object’s `updatedBy` field."""
+  updatedBy: IntFilter
+
+  """Filter by the object’s `reportsCount` field."""
+  reportsCount: IntFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `updatedAt` field."""
+  updatedAt: DatetimeFilter
+
+  """Checks for all expressions in this list."""
+  and: [IssueFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [IssueFilter!]
+
+  """Negates the expression."""
+  not: IssueFilter
+}
+
+"""
+A filter to be used against IssueStatusEnum fields. All fields are combined with a logical ‘and.’
+"""
+input IssueStatusEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: IssueStatusEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: IssueStatusEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: IssueStatusEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: IssueStatusEnum
+
+  """Included in the specified list."""
+  in: [IssueStatusEnum!]
+
+  """Not included in the specified list."""
+  notIn: [IssueStatusEnum!]
+
+  """Less than the specified value."""
+  lessThan: IssueStatusEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: IssueStatusEnum
+
+  """Greater than the specified value."""
+  greaterThan: IssueStatusEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: IssueStatusEnum
+}
+
+"""Methods to use when ordering `Language`."""
+enum LanguagesOrderBy {
+  NATURAL
+  CODE_ASC
+  CODE_DESC
+  ENGLISH_NAME_ASC
+  ENGLISH_NAME_DESC
+  NATIVE_NAME_ASC
+  NATIVE_NAME_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Language` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input LanguageCondition {
+  """Checks for equality with the object’s `code` field."""
+  code: String
+
+  """Checks for equality with the object’s `englishName` field."""
+  englishName: String
+
+  """Checks for equality with the object’s `nativeName` field."""
+  nativeName: String
+}
+
+"""
+A filter to be used against `Language` object types. All fields are combined with a logical ‘and.’
+"""
+input LanguageFilter {
+  """Filter by the object’s `code` field."""
+  code: StringFilter
+
+  """Filter by the object’s `englishName` field."""
+  englishName: StringFilter
+
+  """Filter by the object’s `nativeName` field."""
+  nativeName: StringFilter
+
+  """Checks for all expressions in this list."""
+  and: [LanguageFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [LanguageFilter!]
+
+  """Negates the expression."""
+  not: LanguageFilter
+}
+
+"""Methods to use when ordering `Note`."""
+enum NotesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  LATITUDE_ASC
+  LATITUDE_DESC
+  LONGITUDE_ASC
+  LONGITUDE_DESC
+  TILE_ASC
+  TILE_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  STATUS_ASC
+  STATUS_DESC
+  CLOSED_AT_ASC
+  CLOSED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Note` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input NoteCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `latitude` field."""
+  latitude: Int
+
+  """Checks for equality with the object’s `longitude` field."""
+  longitude: Int
+
+  """Checks for equality with the object’s `tile` field."""
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `status` field."""
+  status: NoteStatusEnum
+
+  """Checks for equality with the object’s `closedAt` field."""
+  closedAt: Datetime
+}
+
+"""
+A filter to be used against `Note` object types. All fields are combined with a logical ‘and.’
+"""
+input NoteFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `latitude` field."""
+  latitude: IntFilter
+
+  """Filter by the object’s `longitude` field."""
+  longitude: IntFilter
+
+  """Filter by the object’s `tile` field."""ilter
+
+  """Filter by the object’s `updatedAt` field."""
+  updatedAt: DatetimeFilter
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `status` field."""
+  status: NoteStatusEnumFilter
+
+  """Filter by the object’s `closedAt` field."""
+  closedAt: DatetimeFilter
+
+  """Checks for all expressions in this list."""
+  and: [NoteFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [NoteFilter!]
+
+  """Negates the expression."""
+  not: NoteFilter
+}
+
+"""
+A filter to be used against NoteStatusEnum fields. All fields are combined with a logical ‘and.’
+"""
+input NoteStatusEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: NoteStatusEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: NoteStatusEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: NoteStatusEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: NoteStatusEnum
+
+  """Included in the specified list."""
+  in: [NoteStatusEnum!]
+
+  """Not included in the specified list."""
+  notIn: [NoteStatusEnum!]
+
+  """Less than the specified value."""
+  lessThan: NoteStatusEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: NoteStatusEnum
+
+  """Greater than the specified value."""
+  greaterThan: NoteStatusEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: NoteStatusEnum
+}
+
+
+"""Methods to use when ordering `WayTag`."""
+enum WayTagsOrderBy {
+  NATURAL
+  WAY_ID_ASC
+  WAY_ID_DESC
+  K_ASC
+  K_DESC
+  V_ASC
+  V_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `WayTag` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input WayTagCondition {
+  """Checks for equality with the object’s `wayId` field."""
+  wayId: ID
+
+  """Checks for equality with the object’s `k` field."""
+  k: String
+
+  """Checks for equality with the object’s `v` field."""
+  v: String
+}
+
+"""
+A filter to be used against `WayTag` object types. All fields are combined with a logical ‘and.’
+"""
+input WayTagFilter {
+  """Filter by the object’s `wayId` field."""
+  wayId: IDFilter
+
+  """Filter by the object’s `k` field."""
+  k: StringFilter
+
+  """Filter by the object’s `v` field."""
+  v: StringFilter
+
+  """Checks for all expressions in this list."""
+  and: [WayTagFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [WayTagFilter!]
+
+  """Negates the expression."""
+  not: WayTagFilter
+}
+
+
+"""Methods to use when ordering `Way`."""
+enum WaysOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  CHANGESET_ID_ASC
+  CHANGESET_ID_DESC
+  TIMESTAMP_ASC
+  TIMESTAMP_DESC
+  VISIBLE_ASC
+  VISIBLE_DESC
+  VERSION_ASC
+  VERSION_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Way` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input WayCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `changesetId` field."""
+  changesetId: ID
+
+  """Checks for equality with the object’s `timestamp` field."""
+  timestamp: Datetime
+
+  """Checks for equality with the object’s `visible` field."""
+  visible: Boolean
+
+  """Checks for equality with the object’s `version` field."""
+  version: Int
+}
+
+"""
+A filter to be used against `Way` object types. All fields are combined with a logical ‘and.’
+"""
+input WayFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `changesetId` field."""
+  changesetId: IDFilter
+
+  """Filter by the object’s `timestamp` field."""
+  timestamp: DatetimeFilter
+
+  """Filter by the object’s `visible` field."""
+  visible: BooleanFilter
+
+  """Filter by the object’s `version` field."""
+  version: IntFilter
+
+  """Checks for all expressions in this list."""
+  and: [WayFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [WayFilter!]
+
+  """Negates the expression."""
+  not: WayFilter
+}
+
+"""Methods to use when ordering `Node`."""
+enum NodesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  LATITUDE_ASC
+  LATITUDE_DESC
+  LONGITUDE_ASC
+  LONGITUDE_DESC
+  CHANGESET_ID_ASC
+  CHANGESET_ID_DESC
+  VISIBLE_ASC
+  VISIBLE_DESC
+  TIMESTAMP_ASC
+  TIMESTAMP_DESC
+  TILE_ASC
+  TILE_DESC
+  VERSION_ASC
+  VERSION_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Node` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input NodeCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `latitude` field."""
+  latitude: Int
+
+  """Checks for equality with the object’s `longitude` field."""
+  longitude: Int
+
+  """Checks for equality with the object’s `changesetId` field."""
+  changesetId: ID
+
+  """Checks for equality with the object’s `visible` field."""
+  visible: Boolean
+
+  """Checks for equality with the object’s `timestamp` field."""
+  timestamp: Datetime
+
+  """Checks for equality with the object’s `tile` field."""
+  """Checks for equality with the object’s `version` field."""
+  version: Int
+}
+
+"""
+A filter to be used against `Node` object types. All fields are combined with a logical ‘and.’
+"""
+input NodeFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `latitude` field."""
+  latitude: IntFilter
+
+  """Filter by the object’s `longitude` field."""
+  longitude: IntFilter
+
+  """Filter by the object’s `changesetId` field."""
+  changesetId: IDFilter
+
+  """Filter by the object’s `visible` field."""
+  visible: BooleanFilter
+
+  """Filter by the object’s `timestamp` field."""
+  timestamp: DatetimeFilter
+
+  """Filter by the object’s `tile` field."""ilter
+
+  """Filter by the object’s `version` field."""
+  version: IntFilter
+
+  """Checks for all expressions in this list."""
+  and: [NodeFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [NodeFilter!]
+
+  """Negates the expression."""
+  not: NodeFilter
+}
+
+
+
+"""Methods to use when ordering `RelationMember`."""
+enum RelationMembersOrderBy {
+  NATURAL
+  RELATION_ID_ASC
+  RELATION_ID_DESC
+  MEMBER_TYPE_ASC
+  MEMBER_TYPE_DESC
+  MEMBER_ID_ASC
+  MEMBER_ID_DESC
+  MEMBER_ROLE_ASC
+  MEMBER_ROLE_DESC
+  SEQUENCE_ID_ASC
+  SEQUENCE_ID_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `RelationMember` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+"""
+input RelationMemberCondition {
+  """Checks for equality with the object’s `relationId` field."""
+  relationId: ID
+
+  """Checks for equality with the object’s `memberType` field."""
+  memberType: NwrEnum
+
+  """Checks for equality with the object’s `memberId` field."""
+  memberId: ID
+
+  """Checks for equality with the object’s `memberRole` field."""
+  memberRole: String
+
+  """Checks for equality with the object’s `sequenceId` field."""
+  sequenceId: Int
+}
+
+"""
+A filter to be used against `RelationMember` object types. All fields are combined with a logical ‘and.’
+"""
+input RelationMemberFilter {
+  """Filter by the object’s `relationId` field."""
+  relationId: IDFilter
+
+  """Filter by the object’s `memberType` field."""
+  memberType: NwrEnumFilter
+
+  """Filter by the object’s `memberId` field."""
+  memberId: IDFilter
+
+  """Filter by the object’s `memberRole` field."""
+  memberRole: StringFilter
+
+  """Filter by the object’s `sequenceId` field."""
+  sequenceId: IntFilter
+
+  """Checks for all expressions in this list."""
+  and: [RelationMemberFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [RelationMemberFilter!]
+
+  """Negates the expression."""
+  not: RelationMemberFilter
+}
+
+"""
+A filter to be used against NwrEnum fields. All fields are combined with a logical ‘and.’
+"""
+input NwrEnumFilter {
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value."""
+  equalTo: NwrEnum
+
+  """Not equal to the specified value."""
+  notEqualTo: NwrEnum
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: NwrEnum
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: NwrEnum
+
+  """Included in the specified list."""
+  in: [NwrEnum!]
+
+  """Not included in the specified list."""
+  notIn: [NwrEnum!]
+
+  """Less than the specified value."""
+  lessThan: NwrEnum
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: NwrEnum
+
+  """Greater than the specified value."""
+  greaterThan: NwrEnum
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: NwrEnum
+}
+
+
+"""
+A filter to be used against `RelationTag` object types. All fields are combined with a logical ‘and.’
+"""
+input TagFilter {
+  """Filter by the object’s `k` field."""
+  k: StringFilter
+
+  """Filter by the object’s `v` field."""
+  v: StringFilter
+
+  """Checks for all expressions in this list."""
+  and: [RelationTagFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [RelationTagFilter!]
+
+  """Negates the expression."""
+  not: RelationTagFilter
+}
+
+"""Methods to use when ordering `Relation`."""
+enum RelationsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  CHANGESET_ID_ASC
+  CHANGESET_ID_DESC
+  TIMESTAMP_ASC
+  TIMESTAMP_DESC
+  VISIBLE_ASC
+  VISIBLE_DESC
+  VERSION_ASC
+  VERSION_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+A condition to be used against `Relation` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input RelationCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: ID
+
+  """Checks for equality with the object’s `changesetId` field."""
+  changesetId: ID
+
+  """Checks for equality with the object’s `timestamp` field."""
+  timestamp: Datetime
+
+  """Checks for equality with the object’s `visible` field."""
+  visible: Boolean
+
+  """Checks for equality with the object’s `version` field."""
+  version: Int
+}
+
+"""
+A filter to be used against `Relation` object types. All fields are combined with a logical ‘and.’
+"""
+input RelationFilter {
+  """Filter by the object’s `id` field."""
+  id: IDFilter
+
+  """Filter by the object’s `changesetId` field."""
+  changesetId: IDFilter
+
+  """Filter by the object’s `timestamp` field."""
+  timestamp: DatetimeFilter
+
+  """Filter by the object’s `visible` field."""
+  visible: BooleanFilter
+
+  """Filter by the object’s `version` field."""
+  version: IntFilter
+
+  """Checks for all expressions in this list."""
+  and: [RelationFilter!]
+
+  """Checks for any expressions in this list."""
+  or: [RelationFilter!]
+
+  """Negates the expression."""
+  not: RelationFilter
+}
