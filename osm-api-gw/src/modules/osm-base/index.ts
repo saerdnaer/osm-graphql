@@ -74,17 +74,46 @@ export const osmBaseTypes = gql`
 
 `;
 
+const tag = (parent: any, { key }: { key: string }) => {
+	return parent.tags[key];
+}
+
 
 export const osm = createModule({
 	id: "osm-base",
 	dirname: __dirname,
 	typeDefs: [
 		osmBaseTypes,
+		...loadFilesSync(join(__dirname, '../../../../schema.graphql')),
 		// loadFiles('../../../../schema.graphql')
 	],
 	resolvers: {
 		Query: {
 			hello: () => "world",
+		},
+		Node: {
+			tag,
+			tags: ({ tags }: any) => {
+				// remove/hide obsolete tags
+				if ('created_by' in tags) {
+					let t = { ...tags };
+					delete t.created_by;
+					return t;
+				}
+				return tags;
+			},
+			geom: ({ lon, lat }: any) => {
+				return {
+					type: 'Point',
+					coordinates: [lon, lat]
+				}
+			}
+		},
+		Way: {
+			tag
+		},
+		GenericRelation: {
+			tag
 		},
 	},
 });

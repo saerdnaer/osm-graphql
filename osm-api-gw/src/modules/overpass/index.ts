@@ -2,14 +2,16 @@ import { createModule, gql } from "graphql-modules";
 import { version } from "os";
 import { OverpassElement, OverpassJson, overpassJson } from "overpass-ts";
 
-import { Resolvers } from "../generated/graphql";
+import { BBox, OverpassResponseFormat, Query, QueryOverpassArgs, Resolvers } from "../generated/graphql";
 import { osmBaseTypes } from "../osm-base";
 
 const resolvers: Resolvers = {
 	Query: {
-		overpass: async (_, { query, format, timeout, ...options }, context, _info) => {
-			// TODO: Implement timeout
-			const response = await overpassJson(`[out:${format.toLowerCase()}];${query}`, options);
+		overpass: async (_, { bbox, query, out, format, timeout, ...options }, context, _info) => {
+			const response = await overpassJson(
+				buildQuery({ bbox, query, out, format }),
+				options
+			);
 
 			context.nodes = response.elements
 				.filter((element) => element.type === "node")
@@ -118,7 +120,10 @@ export const overpass = createModule({
 
 			type Query {
 				overpass(
+					"bbox can be comma seperated string, a list \`[south,west,north,east]\`, or object \`{south: 1, west: 2, north: 3, east: 4}\`"
+					bbox: JSON,
 					query: String!,
+					out: String,
 					timeout: Int,
     			verbose: Boolean = false
 					format: OverpassResponseFormat = JSON,
@@ -142,6 +147,35 @@ export const overpass = createModule({
 	],
 	resolvers
 });
+
+function buildQuery(options: QueryOverpassArgs) {
+	const { query, bbox, out, format } = options;
+	let headers: string[] = [];
+
+	headers.push(`[out:${format?.toLowerCase() ?? 'json'}]`);
+	if ( options.timeout ) {
+		headers.push(`[timeout:${options.timeout}]`);
+	}
+	if (bbox) {
+		headers.push(`[bbox:${formatBBox(bbox)}]`);
+	}
+
+	return `${headers.join('')};${query}; out ${out || ''};`.replace(/;;+/g, ';');
+}
+
+// https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Global_bounding_box_.28bbox.29
+function formatBBox(bbox: BBox | string | number[]) {
+	// when bbox is string, directly return it
+	if (typeof bbox === "string") {
+		return bbox;
+	}
+	// when bbox is array, build [bbox[0],bbox[1],bbox[2],bbox[3]]
+	if (Array.isArray(bbox)) {
+		return bbox.join(",");
+	}
+	// otherwise, build south,west,north,east
+	return [bbox.south, bbox.west, bbox.north, bbox.east].join(",");
+}
 
 function ucfirst(type: string) {
 	return type.charAt(0).toUpperCase() + type.slice(1);

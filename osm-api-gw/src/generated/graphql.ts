@@ -4,87 +4,89 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  BBox: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  BBox: { input: any; output: any; }
   /**
    * A point in time as described by the [ISO
    * 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
    */
-  Datetime: any;
-  Geometry: any;
+  Datetime: { input: any; output: any; }
+  Geometry: { input: any; output: any; }
   /** An IPv4 or IPv6 host address, and optionally its subnet. */
-  InternetAddress: any;
+  InternetAddress: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: any;
-  LineString: any;
-  Point: any;
-  Polygon: any;
-  RelationType: any;
+  JSON: { input: any; output: any; }
+  LineString: { input: any; output: any; }
+  Point: { input: any; output: any; }
+  Polygon: { input: any; output: any; }
+  RelationType: { input: any; output: any; }
 };
 
 export type AllRelations = Boundary | GenericRelation | Network | PublicTransport | Route | Site;
 
 export type Area = {
   __typename?: 'Area';
-  geom?: Maybe<Scalars['Polygon']>;
-  id: Scalars['ID'];
-  tags?: Maybe<Scalars['JSON']>;
-  version: Scalars['Int'];
+  geom?: Maybe<Scalars['Polygon']['output']>;
+  id: Scalars['ID']['output'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  version: Scalars['Int']['output'];
 };
 
 /** A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’ */
 export type BooleanFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['Boolean']>;
+  distinctFrom?: InputMaybe<Scalars['Boolean']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['Boolean']>;
+  equalTo?: InputMaybe<Scalars['Boolean']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['Boolean']>;
+  greaterThan?: InputMaybe<Scalars['Boolean']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['Boolean']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['Boolean']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['Boolean']>>;
+  in?: InputMaybe<Array<Scalars['Boolean']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['Boolean']>;
+  lessThan?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['Boolean']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['Boolean']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['Boolean']>;
+  notDistinctFrom?: InputMaybe<Scalars['Boolean']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['Boolean']>;
+  notEqualTo?: InputMaybe<Scalars['Boolean']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['Boolean']>>;
+  notIn?: InputMaybe<Array<Scalars['Boolean']['input']>>;
 };
 
 export type Boundary = Relation & {
   __typename?: 'Boundary';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type BoundaryMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -92,28 +94,28 @@ export type BoundaryMembersArgs = {
 export type BoundaryRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 export type Changeset = {
   __typename?: 'Changeset';
   changesetTags: Array<Tag>;
-  closedAt: Scalars['Datetime'];
+  closedAt: Scalars['Datetime']['output'];
   comments: Array<ChangesetComment>;
-  createdAt: Scalars['Datetime'];
-  id: Scalars['ID'];
-  maxLat?: Maybe<Scalars['Float']>;
-  maxLon?: Maybe<Scalars['Float']>;
-  minLat?: Maybe<Scalars['Float']>;
-  minLon?: Maybe<Scalars['Float']>;
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['ID']['output'];
+  maxLat?: Maybe<Scalars['Float']['output']>;
+  maxLon?: Maybe<Scalars['Float']['output']>;
+  minLat?: Maybe<Scalars['Float']['output']>;
+  minLon?: Maybe<Scalars['Float']['output']>;
   nodes: Array<Node>;
-  numChanges: Scalars['Int'];
+  numChanges: Scalars['Int']['output'];
   relations: Array<Relation>;
-  tags?: Maybe<Scalars['JSON']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
   user?: Maybe<User>;
-  userId: Scalars['ID'];
+  userId: Scalars['ID']['output'];
   ways: Array<Way>;
 };
 
@@ -121,8 +123,8 @@ export type Changeset = {
 export type ChangesetChangesetTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
@@ -130,8 +132,8 @@ export type ChangesetChangesetTagsArgs = {
 export type ChangesetCommentsArgs = {
   condition?: InputMaybe<ChangesetCommentCondition>;
   filter?: InputMaybe<ChangesetCommentFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ChangesetCommentsOrderBy>>;
 };
 
@@ -139,8 +141,8 @@ export type ChangesetCommentsArgs = {
 export type ChangesetNodesArgs = {
   condition?: InputMaybe<NodeCondition>;
   filter?: InputMaybe<NodeFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<NodesOrderBy>>;
 };
 
@@ -148,8 +150,8 @@ export type ChangesetNodesArgs = {
 export type ChangesetRelationsArgs = {
   condition?: InputMaybe<RelationCondition>;
   filter?: InputMaybe<RelationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationsOrderBy>>;
 };
 
@@ -157,21 +159,21 @@ export type ChangesetRelationsArgs = {
 export type ChangesetWaysArgs = {
   condition?: InputMaybe<WayCondition>;
   filter?: InputMaybe<WayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<WaysOrderBy>>;
 };
 
 export type ChangesetComment = {
   __typename?: 'ChangesetComment';
   author?: Maybe<User>;
-  authorId: Scalars['ID'];
-  body: Scalars['String'];
+  authorId: Scalars['ID']['output'];
+  body: Scalars['String']['output'];
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  createdAt: Scalars['Datetime'];
-  id: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  changesetId: Scalars['ID']['output'];
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 /**
@@ -180,15 +182,15 @@ export type ChangesetComment = {
  */
 export type ChangesetCommentCondition = {
   /** Checks for equality with the object’s `authorId` field. */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `body` field. */
-  body?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `changesetId` field. */
-  changesetId?: InputMaybe<Scalars['ID']>;
+  changesetId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: InputMaybe<Scalars['Datetime']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `visible` field. */
-  visible?: InputMaybe<Scalars['Boolean']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** A filter to be used against `ChangesetComment` object types. All fields are combined with a logical ‘and.’ */
@@ -236,23 +238,23 @@ export enum ChangesetCommentsOrderBy {
  */
 export type ChangesetCondition = {
   /** Checks for equality with the object’s `closedAt` field. */
-  closedAt?: InputMaybe<Scalars['Datetime']>;
+  closedAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: InputMaybe<Scalars['Datetime']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `maxLat` field. */
-  maxLat?: InputMaybe<Scalars['Int']>;
+  maxLat?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `maxLon` field. */
-  maxLon?: InputMaybe<Scalars['Int']>;
+  maxLon?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `minLat` field. */
-  minLat?: InputMaybe<Scalars['Int']>;
+  minLat?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `minLon` field. */
-  minLon?: InputMaybe<Scalars['Int']>;
+  minLon?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `numChanges` field. */
-  numChanges?: InputMaybe<Scalars['Int']>;
+  numChanges?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `userId` field. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** A filter to be used against `Changeset` object types. All fields are combined with a logical ‘and.’ */
@@ -309,53 +311,53 @@ export enum ChangesetsOrderBy {
 /** A filter to be used against Datetime fields. All fields are combined with a logical ‘and.’ */
 export type DatetimeFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['Datetime']>;
+  distinctFrom?: InputMaybe<Scalars['Datetime']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['Datetime']>;
+  equalTo?: InputMaybe<Scalars['Datetime']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['Datetime']>;
+  greaterThan?: InputMaybe<Scalars['Datetime']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['Datetime']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['Datetime']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['Datetime']>>;
+  in?: InputMaybe<Array<Scalars['Datetime']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['Datetime']>;
+  lessThan?: InputMaybe<Scalars['Datetime']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['Datetime']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['Datetime']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['Datetime']>;
+  notDistinctFrom?: InputMaybe<Scalars['Datetime']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['Datetime']>;
+  notEqualTo?: InputMaybe<Scalars['Datetime']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['Datetime']>>;
+  notIn?: InputMaybe<Array<Scalars['Datetime']['input']>>;
 };
 
 /** A filter to be used against Float fields. All fields are combined with a logical ‘and.’ */
 export type FloatFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['Float']>;
+  distinctFrom?: InputMaybe<Scalars['Float']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['Float']>;
+  equalTo?: InputMaybe<Scalars['Float']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['Float']>;
+  greaterThan?: InputMaybe<Scalars['Float']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['Float']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['Float']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['Float']>>;
+  in?: InputMaybe<Array<Scalars['Float']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['Float']>;
+  lessThan?: InputMaybe<Scalars['Float']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['Float']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['Float']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['Float']>;
+  notDistinctFrom?: InputMaybe<Scalars['Float']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['Float']>;
+  notEqualTo?: InputMaybe<Scalars['Float']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['Float']>>;
+  notIn?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
 
 export enum FormatEnum {
@@ -377,7 +379,7 @@ export type FormatEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<FormatEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<FormatEnum>;
   /** Less than or equal to the specified value. */
@@ -393,24 +395,24 @@ export type FormatEnumFilter = {
 export type GenericRelation = Relation & {
   __typename?: 'GenericRelation';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tag?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type GenericRelationMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -418,118 +420,118 @@ export type GenericRelationMembersArgs = {
 export type GenericRelationRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 
 export type GenericRelationTagArgs = {
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
 };
 
 /** A filter to be used against ID fields. All fields are combined with a logical ‘and.’ */
 export type IdFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['ID']>;
+  distinctFrom?: InputMaybe<Scalars['ID']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['ID']>;
+  equalTo?: InputMaybe<Scalars['ID']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['ID']>;
+  greaterThan?: InputMaybe<Scalars['ID']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['ID']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['ID']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['ID']>>;
+  in?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['ID']>;
+  lessThan?: InputMaybe<Scalars['ID']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['ID']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['ID']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['ID']>;
+  notDistinctFrom?: InputMaybe<Scalars['ID']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['ID']>;
+  notEqualTo?: InputMaybe<Scalars['ID']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['ID']>>;
+  notIn?: InputMaybe<Array<Scalars['ID']['input']>>;
 };
 
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
 export type IntFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['Int']>;
+  distinctFrom?: InputMaybe<Scalars['Int']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['Int']>;
+  equalTo?: InputMaybe<Scalars['Int']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['Int']>;
+  greaterThan?: InputMaybe<Scalars['Int']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['Int']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['Int']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['Int']>>;
+  in?: InputMaybe<Array<Scalars['Int']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['Int']>;
+  lessThan?: InputMaybe<Scalars['Int']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['Int']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['Int']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['Int']>;
+  notDistinctFrom?: InputMaybe<Scalars['Int']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['Int']>;
+  notEqualTo?: InputMaybe<Scalars['Int']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['Int']>>;
+  notIn?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** A filter to be used against InternetAddress fields. All fields are combined with a logical ‘and.’ */
 export type InternetAddressFilter = {
   /** Contained by the specified internet address. */
-  containedBy?: InputMaybe<Scalars['InternetAddress']>;
+  containedBy?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Contained by or equal to the specified internet address. */
-  containedByOrEqualTo?: InputMaybe<Scalars['InternetAddress']>;
+  containedByOrEqualTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Contains the specified internet address. */
-  contains?: InputMaybe<Scalars['InternetAddress']>;
+  contains?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Contains or contained by the specified internet address. */
-  containsOrContainedBy?: InputMaybe<Scalars['InternetAddress']>;
+  containsOrContainedBy?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Contains or equal to the specified internet address. */
-  containsOrEqualTo?: InputMaybe<Scalars['InternetAddress']>;
+  containsOrEqualTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['InternetAddress']>;
+  distinctFrom?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['InternetAddress']>;
+  equalTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['InternetAddress']>;
+  greaterThan?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['InternetAddress']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['InternetAddress']>>;
+  in?: InputMaybe<Array<Scalars['InternetAddress']['input']>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['InternetAddress']>;
+  lessThan?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['InternetAddress']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['InternetAddress']>;
+  notDistinctFrom?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['InternetAddress']>;
+  notEqualTo?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['InternetAddress']>>;
+  notIn?: InputMaybe<Array<Scalars['InternetAddress']['input']>>;
 };
 
 export type Issue = {
   __typename?: 'Issue';
   assignedRole: UserRoleEnum;
   comments: Array<IssueComment>;
-  createdAt: Scalars['Datetime'];
-  id: Scalars['Int'];
-  reportableId: Scalars['ID'];
-  reportableType: Scalars['String'];
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['Int']['output'];
+  reportableId: Scalars['ID']['output'];
+  reportableType: Scalars['String']['output'];
   reportedUser?: Maybe<User>;
-  reportsCount?: Maybe<Scalars['Int']>;
-  resolvedAt?: Maybe<Scalars['Datetime']>;
+  reportsCount?: Maybe<Scalars['Int']['output']>;
+  resolvedAt?: Maybe<Scalars['Datetime']['output']>;
   resolvedBy?: Maybe<User>;
   status: IssueStatusEnum;
-  updatedAt: Scalars['Datetime'];
+  updatedAt: Scalars['Datetime']['output'];
   updatedBy?: Maybe<User>;
 };
 
@@ -537,21 +539,21 @@ export type Issue = {
 export type IssueCommentsArgs = {
   condition?: InputMaybe<IssueCommentCondition>;
   filter?: InputMaybe<IssueCommentFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<IssueCommentsOrderBy>>;
 };
 
 export type IssueComment = {
   __typename?: 'IssueComment';
   author?: Maybe<User>;
-  body: Scalars['String'];
-  createdAt: Scalars['Datetime'];
-  id: Scalars['Int'];
+  body: Scalars['String']['output'];
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['Int']['output'];
   issue?: Maybe<Issue>;
-  issueId: Scalars['Int'];
-  updatedAt: Scalars['Datetime'];
-  userId: Scalars['Int'];
+  issueId: Scalars['Int']['output'];
+  updatedAt: Scalars['Datetime']['output'];
+  userId: Scalars['Int']['output'];
 };
 
 /**
@@ -560,11 +562,11 @@ export type IssueComment = {
  */
 export type IssueCommentCondition = {
   /** Checks for equality with the object’s `body` field. */
-  body?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `issueId` field. */
-  issueId?: InputMaybe<Scalars['Int']>;
+  issueId?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `userId` field. */
-  userId?: InputMaybe<Scalars['Int']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** A filter to be used against `IssueComment` object types. All fields are combined with a logical ‘and.’ */
@@ -611,19 +613,19 @@ export type IssueCondition = {
   /** Checks for equality with the object’s `assignedRole` field. */
   assignedRole?: InputMaybe<UserRoleEnum>;
   /** Checks for equality with the object’s `reportableId` field. */
-  reportableId?: InputMaybe<Scalars['Int']>;
+  reportableId?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `reportableType` field. */
-  reportableType?: InputMaybe<Scalars['String']>;
+  reportableType?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `reportedUserId` field. */
-  reportedUserId?: InputMaybe<Scalars['Int']>;
+  reportedUserId?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `reportsCount` field. */
-  reportsCount?: InputMaybe<Scalars['Int']>;
+  reportsCount?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `resolvedBy` field. */
-  resolvedBy?: InputMaybe<Scalars['Int']>;
+  resolvedBy?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `status` field. */
   status?: InputMaybe<IssueStatusEnum>;
   /** Checks for equality with the object’s `updatedBy` field. */
-  updatedBy?: InputMaybe<Scalars['Int']>;
+  updatedBy?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** A filter to be used against `Issue` object types. All fields are combined with a logical ‘and.’ */
@@ -675,7 +677,7 @@ export type IssueStatusEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<IssueStatusEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<IssueStatusEnum>;
   /** Less than or equal to the specified value. */
@@ -721,9 +723,9 @@ export enum IssuesOrderBy {
 
 export type Language = {
   __typename?: 'Language';
-  code: Scalars['String'];
-  englishName: Scalars['String'];
-  nativeName?: Maybe<Scalars['String']>;
+  code: Scalars['String']['output'];
+  englishName: Scalars['String']['output'];
+  nativeName?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -732,11 +734,11 @@ export type Language = {
  */
 export type LanguageCondition = {
   /** Checks for equality with the object’s `code` field. */
-  code?: InputMaybe<Scalars['String']>;
+  code?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `englishName` field. */
-  englishName?: InputMaybe<Scalars['String']>;
+  englishName?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `nativeName` field. */
-  nativeName?: InputMaybe<Scalars['String']>;
+  nativeName?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A filter to be used against `Language` object types. All fields are combined with a logical ‘and.’ */
@@ -775,23 +777,23 @@ export type Nwr = GenericRelation | Node | Way;
 export type Network = Relation & {
   __typename?: 'Network';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type NetworkMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -799,148 +801,148 @@ export type NetworkMembersArgs = {
 export type NetworkRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 export type Node = {
   __typename?: 'Node';
   changeset?: Maybe<Changeset>;
-  geom?: Maybe<Scalars['Point']>;
-  id: Scalars['ID'];
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
+  geom?: Maybe<Scalars['Point']['output']>;
+  id: Scalars['ID']['output'];
+  lat: Scalars['Float']['output'];
+  lon: Scalars['Float']['output'];
   nodeTags: Array<Tag>;
-  tag?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
   ways: Array<Way>;
 };
 
 
 export type NodeNodeTagsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 
 export type NodeTagArgs = {
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
 };
 
 
 export type NodeWaysArgs = {
   condition?: InputMaybe<WayCondition>;
   filter?: InputMaybe<WayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<WaysOrderBy>>;
 };
 
 /** A condition to be used against `Node` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type NodeCondition = {
-  access?: InputMaybe<Scalars['String']>;
-  admin_level?: InputMaybe<Scalars['String']>;
-  aerialway?: InputMaybe<Scalars['String']>;
-  aeroway?: InputMaybe<Scalars['String']>;
-  amenity?: InputMaybe<Scalars['String']>;
-  barrier?: InputMaybe<Scalars['String']>;
-  bench?: InputMaybe<Scalars['String']>;
-  bicycle?: InputMaybe<Scalars['String']>;
-  bicycle_parking?: InputMaybe<Scalars['String']>;
-  brand?: InputMaybe<Scalars['String']>;
-  building?: InputMaybe<Scalars['String']>;
-  bus?: InputMaybe<Scalars['String']>;
-  capacity?: InputMaybe<Scalars['String']>;
+  access?: InputMaybe<Scalars['String']['input']>;
+  admin_level?: InputMaybe<Scalars['String']['input']>;
+  aerialway?: InputMaybe<Scalars['String']['input']>;
+  aeroway?: InputMaybe<Scalars['String']['input']>;
+  amenity?: InputMaybe<Scalars['String']['input']>;
+  barrier?: InputMaybe<Scalars['String']['input']>;
+  bench?: InputMaybe<Scalars['String']['input']>;
+  bicycle?: InputMaybe<Scalars['String']['input']>;
+  bicycle_parking?: InputMaybe<Scalars['String']['input']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
+  building?: InputMaybe<Scalars['String']['input']>;
+  bus?: InputMaybe<Scalars['String']['input']>;
+  capacity?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `changesetId` field. */
-  changesetId?: InputMaybe<Scalars['ID']>;
-  colour?: InputMaybe<Scalars['String']>;
-  construction?: InputMaybe<Scalars['String']>;
-  covered?: InputMaybe<Scalars['String']>;
-  craft?: InputMaybe<Scalars['String']>;
-  crossing?: InputMaybe<Scalars['String']>;
-  cuisine?: InputMaybe<Scalars['String']>;
-  delivery?: InputMaybe<Scalars['String']>;
-  denomination?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  direction?: InputMaybe<Scalars['String']>;
-  door?: InputMaybe<Scalars['String']>;
-  drinking_water?: InputMaybe<Scalars['String']>;
-  ele?: InputMaybe<Scalars['String']>;
-  emergency?: InputMaybe<Scalars['String']>;
-  entrance?: InputMaybe<Scalars['String']>;
-  fee?: InputMaybe<Scalars['String']>;
-  fixme?: InputMaybe<Scalars['String']>;
-  foot?: InputMaybe<Scalars['String']>;
-  healthcare?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['String']>;
-  highway?: InputMaybe<Scalars['String']>;
-  historic?: InputMaybe<Scalars['String']>;
-  horse?: InputMaybe<Scalars['String']>;
+  changesetId?: InputMaybe<Scalars['ID']['input']>;
+  colour?: InputMaybe<Scalars['String']['input']>;
+  construction?: InputMaybe<Scalars['String']['input']>;
+  covered?: InputMaybe<Scalars['String']['input']>;
+  craft?: InputMaybe<Scalars['String']['input']>;
+  crossing?: InputMaybe<Scalars['String']['input']>;
+  cuisine?: InputMaybe<Scalars['String']['input']>;
+  delivery?: InputMaybe<Scalars['String']['input']>;
+  denomination?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  direction?: InputMaybe<Scalars['String']['input']>;
+  door?: InputMaybe<Scalars['String']['input']>;
+  drinking_water?: InputMaybe<Scalars['String']['input']>;
+  ele?: InputMaybe<Scalars['String']['input']>;
+  emergency?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['String']['input']>;
+  fixme?: InputMaybe<Scalars['String']['input']>;
+  foot?: InputMaybe<Scalars['String']['input']>;
+  healthcare?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['String']['input']>;
+  highway?: InputMaybe<Scalars['String']['input']>;
+  historic?: InputMaybe<Scalars['String']['input']>;
+  horse?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['ID']>;
-  indoor?: InputMaybe<Scalars['String']>;
-  information?: InputMaybe<Scalars['String']>;
-  inscription?: InputMaybe<Scalars['String']>;
-  internet_access?: InputMaybe<Scalars['String']>;
-  junction?: InputMaybe<Scalars['String']>;
-  kerb?: InputMaybe<Scalars['String']>;
-  landuse?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  indoor?: InputMaybe<Scalars['String']['input']>;
+  information?: InputMaybe<Scalars['String']['input']>;
+  inscription?: InputMaybe<Scalars['String']['input']>;
+  internet_access?: InputMaybe<Scalars['String']['input']>;
+  junction?: InputMaybe<Scalars['String']['input']>;
+  kerb?: InputMaybe<Scalars['String']['input']>;
+  landuse?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `lat` field. */
-  lat?: InputMaybe<Scalars['Int']>;
-  layer?: InputMaybe<Scalars['String']>;
-  leisure?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['String']>;
-  lit?: InputMaybe<Scalars['String']>;
-  location?: InputMaybe<Scalars['String']>;
+  lat?: InputMaybe<Scalars['Int']['input']>;
+  layer?: InputMaybe<Scalars['String']['input']>;
+  leisure?: InputMaybe<Scalars['String']['input']>;
+  level?: InputMaybe<Scalars['String']['input']>;
+  lit?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `lon` field. */
-  lon?: InputMaybe<Scalars['Int']>;
-  man_made?: InputMaybe<Scalars['String']>;
-  material?: InputMaybe<Scalars['String']>;
-  maxspeed?: InputMaybe<Scalars['String']>;
-  memorial?: InputMaybe<Scalars['String']>;
-  military?: InputMaybe<Scalars['String']>;
-  motor_vehicle?: InputMaybe<Scalars['String']>;
-  motorcar?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  natural?: InputMaybe<Scalars['String']>;
-  network?: InputMaybe<Scalars['String']>;
-  office?: InputMaybe<Scalars['String']>;
-  operator?: InputMaybe<Scalars['String']>;
-  parking?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  place?: InputMaybe<Scalars['String']>;
-  power?: InputMaybe<Scalars['String']>;
-  public_transport?: InputMaybe<Scalars['String']>;
-  railway?: InputMaybe<Scalars['String']>;
-  recycling_type?: InputMaybe<Scalars['String']>;
-  ref?: InputMaybe<Scalars['String']>;
-  religion?: InputMaybe<Scalars['String']>;
-  shelter?: InputMaybe<Scalars['String']>;
-  shop?: InputMaybe<Scalars['String']>;
-  sport?: InputMaybe<Scalars['String']>;
-  surface?: InputMaybe<Scalars['String']>;
-  tactile_paving?: InputMaybe<Scalars['String']>;
-  takeaway?: InputMaybe<Scalars['String']>;
+  lon?: InputMaybe<Scalars['Int']['input']>;
+  man_made?: InputMaybe<Scalars['String']['input']>;
+  material?: InputMaybe<Scalars['String']['input']>;
+  maxspeed?: InputMaybe<Scalars['String']['input']>;
+  memorial?: InputMaybe<Scalars['String']['input']>;
+  military?: InputMaybe<Scalars['String']['input']>;
+  motor_vehicle?: InputMaybe<Scalars['String']['input']>;
+  motorcar?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  natural?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  office?: InputMaybe<Scalars['String']['input']>;
+  operator?: InputMaybe<Scalars['String']['input']>;
+  parking?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  power?: InputMaybe<Scalars['String']['input']>;
+  public_transport?: InputMaybe<Scalars['String']['input']>;
+  railway?: InputMaybe<Scalars['String']['input']>;
+  recycling_type?: InputMaybe<Scalars['String']['input']>;
+  ref?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  shelter?: InputMaybe<Scalars['String']['input']>;
+  shop?: InputMaybe<Scalars['String']['input']>;
+  sport?: InputMaybe<Scalars['String']['input']>;
+  surface?: InputMaybe<Scalars['String']['input']>;
+  tactile_paving?: InputMaybe<Scalars['String']['input']>;
+  takeaway?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `timestamp` field. */
-  timestamp?: InputMaybe<Scalars['Datetime']>;
-  tourism?: InputMaybe<Scalars['String']>;
-  traffic_sign?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  vending?: InputMaybe<Scalars['String']>;
+  timestamp?: InputMaybe<Scalars['Datetime']['input']>;
+  tourism?: InputMaybe<Scalars['String']['input']>;
+  traffic_sign?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  vending?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `version` field. */
-  version?: InputMaybe<Scalars['Int']>;
+  version?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `visible` field. */
-  visible?: InputMaybe<Scalars['Boolean']>;
-  waterway?: InputMaybe<Scalars['String']>;
-  website?: InputMaybe<Scalars['String']>;
-  wheelchair?: InputMaybe<Scalars['String']>;
-  wikidata?: InputMaybe<Scalars['String']>;
-  wikipedia?: InputMaybe<Scalars['String']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
+  waterway?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
+  wheelchair?: InputMaybe<Scalars['String']['input']>;
+  wikidata?: InputMaybe<Scalars['String']['input']>;
+  wikipedia?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A filter to be used against `Node` object types. All fields are combined with a logical ‘and.’ */
@@ -1057,8 +1059,10 @@ export enum NodesOrderBy {
   ChangesetIdDesc = 'CHANGESET_ID_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
+  LatAsc = 'LAT_ASC',
   LongitudeAsc = 'LONGITUDE_ASC',
   LongitudeDesc = 'LONGITUDE_DESC',
+  LonDesc = 'LON_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
@@ -1067,49 +1071,47 @@ export enum NodesOrderBy {
   VersionAsc = 'VERSION_ASC',
   VersionDesc = 'VERSION_DESC',
   VisibleAsc = 'VISIBLE_ASC',
-  VisibleDesc = 'VISIBLE_DESC',
-  LatAsc = 'lat_ASC',
-  LatDesc = 'lat_DESC'
+  VisibleDesc = 'VISIBLE_DESC'
 }
 
 export type Note = {
   __typename?: 'Note';
   authors: Array<User>;
-  closedAt?: Maybe<Scalars['Datetime']>;
+  closedAt?: Maybe<Scalars['Datetime']['output']>;
   comments: Array<NoteComment>;
-  createdAt: Scalars['Datetime'];
-  id: Scalars['ID'];
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
+  createdAt: Scalars['Datetime']['output'];
+  id: Scalars['ID']['output'];
+  lat: Scalars['Float']['output'];
+  lon: Scalars['Float']['output'];
   status: NoteStatusEnum;
-  updatedAt: Scalars['Datetime'];
+  updatedAt: Scalars['Datetime']['output'];
 };
 
 
 export type NoteAuthorsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
 
 export type NoteCommentsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<NoteCommentsOrderBy>>;
 };
 
 export type NoteComment = {
   __typename?: 'NoteComment';
   author?: Maybe<User>;
-  authorId?: Maybe<Scalars['ID']>;
-  body?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Datetime'];
+  authorId?: Maybe<Scalars['ID']['output']>;
+  body?: Maybe<Scalars['String']['output']>;
+  createdAt: Scalars['Datetime']['output'];
   event?: Maybe<NoteEventEnum>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   note?: Maybe<Note>;
-  noteId: Scalars['ID'];
-  visible: Scalars['Boolean'];
+  noteId: Scalars['ID']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 /**
@@ -1118,21 +1120,21 @@ export type NoteComment = {
  */
 export type NoteCommentCondition = {
   /** Checks for equality with the object’s `authorId` field. */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `authorIp` field. */
-  authorIp?: InputMaybe<Scalars['InternetAddress']>;
+  authorIp?: InputMaybe<Scalars['InternetAddress']['input']>;
   /** Checks for equality with the object’s `body` field. */
-  body?: InputMaybe<Scalars['String']>;
+  body?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `createdAt` field. */
-  createdAt?: InputMaybe<Scalars['Datetime']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `event` field. */
   event?: InputMaybe<NoteEventEnum>;
   /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `noteId` field. */
-  noteId?: InputMaybe<Scalars['ID']>;
+  noteId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `visible` field. */
-  visible?: InputMaybe<Scalars['Boolean']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** A filter to be used against `NoteComment` object types. All fields are combined with a logical ‘and.’ */
@@ -1211,7 +1213,7 @@ export type NoteEventEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<NoteEventEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<NoteEventEnum>;
   /** Less than or equal to the specified value. */
@@ -1267,7 +1269,7 @@ export type NoteStatusEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<NoteStatusEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<NoteStatusEnum>;
   /** Less than or equal to the specified value. */
@@ -1288,17 +1290,17 @@ export enum NotesOrderBy {
   CreatedAtDesc = 'CREATED_AT_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
-  LongitudeAsc = 'LONGITUDE_ASC',
-  LongitudeDesc = 'LONGITUDE_DESC',
+  LatAsc = 'LAT_ASC',
+  LatDesc = 'LAT_DESC',
+  LonAsc = 'LON_ASC',
+  LonDesc = 'LON_DESC',
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
   StatusAsc = 'STATUS_ASC',
   StatusDesc = 'STATUS_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
-  UpdatedAtDesc = 'UPDATED_AT_DESC',
-  LatAsc = 'lat_ASC',
-  LatDesc = 'lat_DESC'
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
 export enum NwrEnum {
@@ -1320,7 +1322,7 @@ export type NwrEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<NwrEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<NwrEnum>;
   /** Less than or equal to the specified value. */
@@ -1336,23 +1338,23 @@ export type NwrEnumFilter = {
 export type PublicTransport = Relation & {
   __typename?: 'PublicTransport';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type PublicTransportMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -1360,8 +1362,8 @@ export type PublicTransportMembersArgs = {
 export type PublicTransportRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
@@ -1392,35 +1394,35 @@ export type Query = {
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryAreaArgs = {
-  name: Scalars['String'];
-  ref?: InputMaybe<Scalars['String']>;
+  name: Scalars['String']['input'];
+  ref?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryAroundArgs = {
-  m?: InputMaybe<Scalars['Float']>;
+  m?: InputMaybe<Scalars['Float']['input']>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryBboxArgs = {
-  e: Scalars['Float'];
-  n: Scalars['Float'];
-  s: Scalars['Float'];
-  w: Scalars['Float'];
+  e: Scalars['Float']['input'];
+  n: Scalars['Float']['input'];
+  s: Scalars['Float']['input'];
+  w: Scalars['Float']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryChangesetArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryIssueArgs = {
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 };
 
 
@@ -1428,8 +1430,8 @@ export type QueryIssueArgs = {
 export type QueryIssuesArgs = {
   condition?: InputMaybe<IssueCondition>;
   filter?: InputMaybe<IssueFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<IssuesOrderBy>>;
 };
 
@@ -1438,115 +1440,115 @@ export type QueryIssuesArgs = {
 export type QueryLanguagesArgs = {
   condition?: InputMaybe<LanguageCondition>;
   filter?: InputMaybe<LanguageFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<LanguagesOrderBy>>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNodeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNodesArgs = {
-  access?: InputMaybe<Scalars['String']>;
-  admin_level?: InputMaybe<Scalars['String']>;
-  aerialway?: InputMaybe<Scalars['String']>;
-  aeroway?: InputMaybe<Scalars['String']>;
-  amenity?: InputMaybe<Scalars['String']>;
-  barrier?: InputMaybe<Scalars['String']>;
-  bench?: InputMaybe<Scalars['String']>;
-  bicycle?: InputMaybe<Scalars['String']>;
-  bicycle_parking?: InputMaybe<Scalars['String']>;
-  brand?: InputMaybe<Scalars['String']>;
-  building?: InputMaybe<Scalars['String']>;
-  bus?: InputMaybe<Scalars['String']>;
-  capacity?: InputMaybe<Scalars['String']>;
-  colour?: InputMaybe<Scalars['String']>;
+  access?: InputMaybe<Scalars['String']['input']>;
+  admin_level?: InputMaybe<Scalars['String']['input']>;
+  aerialway?: InputMaybe<Scalars['String']['input']>;
+  aeroway?: InputMaybe<Scalars['String']['input']>;
+  amenity?: InputMaybe<Scalars['String']['input']>;
+  barrier?: InputMaybe<Scalars['String']['input']>;
+  bench?: InputMaybe<Scalars['String']['input']>;
+  bicycle?: InputMaybe<Scalars['String']['input']>;
+  bicycle_parking?: InputMaybe<Scalars['String']['input']>;
+  brand?: InputMaybe<Scalars['String']['input']>;
+  building?: InputMaybe<Scalars['String']['input']>;
+  bus?: InputMaybe<Scalars['String']['input']>;
+  capacity?: InputMaybe<Scalars['String']['input']>;
+  colour?: InputMaybe<Scalars['String']['input']>;
   condition?: InputMaybe<NodeCondition>;
-  construction?: InputMaybe<Scalars['String']>;
-  covered?: InputMaybe<Scalars['String']>;
-  craft?: InputMaybe<Scalars['String']>;
-  crossing?: InputMaybe<Scalars['String']>;
-  cuisine?: InputMaybe<Scalars['String']>;
-  delivery?: InputMaybe<Scalars['String']>;
-  denomination?: InputMaybe<Scalars['String']>;
-  description?: InputMaybe<Scalars['String']>;
-  direction?: InputMaybe<Scalars['String']>;
-  door?: InputMaybe<Scalars['String']>;
-  drinking_water?: InputMaybe<Scalars['String']>;
-  ele?: InputMaybe<Scalars['String']>;
-  emergency?: InputMaybe<Scalars['String']>;
-  entrance?: InputMaybe<Scalars['String']>;
-  fee?: InputMaybe<Scalars['String']>;
+  construction?: InputMaybe<Scalars['String']['input']>;
+  covered?: InputMaybe<Scalars['String']['input']>;
+  craft?: InputMaybe<Scalars['String']['input']>;
+  crossing?: InputMaybe<Scalars['String']['input']>;
+  cuisine?: InputMaybe<Scalars['String']['input']>;
+  delivery?: InputMaybe<Scalars['String']['input']>;
+  denomination?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  direction?: InputMaybe<Scalars['String']['input']>;
+  door?: InputMaybe<Scalars['String']['input']>;
+  drinking_water?: InputMaybe<Scalars['String']['input']>;
+  ele?: InputMaybe<Scalars['String']['input']>;
+  emergency?: InputMaybe<Scalars['String']['input']>;
+  entrance?: InputMaybe<Scalars['String']['input']>;
+  fee?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<NodeFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  fixme?: InputMaybe<Scalars['String']>;
-  foot?: InputMaybe<Scalars['String']>;
-  healthcare?: InputMaybe<Scalars['String']>;
-  height?: InputMaybe<Scalars['String']>;
-  highway?: InputMaybe<Scalars['String']>;
-  historic?: InputMaybe<Scalars['String']>;
-  horse?: InputMaybe<Scalars['String']>;
-  indoor?: InputMaybe<Scalars['String']>;
-  information?: InputMaybe<Scalars['String']>;
-  inscription?: InputMaybe<Scalars['String']>;
-  internet_access?: InputMaybe<Scalars['String']>;
-  junction?: InputMaybe<Scalars['String']>;
-  kerb?: InputMaybe<Scalars['String']>;
-  landuse?: InputMaybe<Scalars['String']>;
-  layer?: InputMaybe<Scalars['String']>;
-  leisure?: InputMaybe<Scalars['String']>;
-  level?: InputMaybe<Scalars['String']>;
-  lit?: InputMaybe<Scalars['String']>;
-  location?: InputMaybe<Scalars['String']>;
-  man_made?: InputMaybe<Scalars['String']>;
-  material?: InputMaybe<Scalars['String']>;
-  maxspeed?: InputMaybe<Scalars['String']>;
-  memorial?: InputMaybe<Scalars['String']>;
-  military?: InputMaybe<Scalars['String']>;
-  motor_vehicle?: InputMaybe<Scalars['String']>;
-  motorcar?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  natural?: InputMaybe<Scalars['String']>;
-  network?: InputMaybe<Scalars['String']>;
-  office?: InputMaybe<Scalars['String']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  operator?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  fixme?: InputMaybe<Scalars['String']['input']>;
+  foot?: InputMaybe<Scalars['String']['input']>;
+  healthcare?: InputMaybe<Scalars['String']['input']>;
+  height?: InputMaybe<Scalars['String']['input']>;
+  highway?: InputMaybe<Scalars['String']['input']>;
+  historic?: InputMaybe<Scalars['String']['input']>;
+  horse?: InputMaybe<Scalars['String']['input']>;
+  indoor?: InputMaybe<Scalars['String']['input']>;
+  information?: InputMaybe<Scalars['String']['input']>;
+  inscription?: InputMaybe<Scalars['String']['input']>;
+  internet_access?: InputMaybe<Scalars['String']['input']>;
+  junction?: InputMaybe<Scalars['String']['input']>;
+  kerb?: InputMaybe<Scalars['String']['input']>;
+  landuse?: InputMaybe<Scalars['String']['input']>;
+  layer?: InputMaybe<Scalars['String']['input']>;
+  leisure?: InputMaybe<Scalars['String']['input']>;
+  level?: InputMaybe<Scalars['String']['input']>;
+  lit?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  man_made?: InputMaybe<Scalars['String']['input']>;
+  material?: InputMaybe<Scalars['String']['input']>;
+  maxspeed?: InputMaybe<Scalars['String']['input']>;
+  memorial?: InputMaybe<Scalars['String']['input']>;
+  military?: InputMaybe<Scalars['String']['input']>;
+  motor_vehicle?: InputMaybe<Scalars['String']['input']>;
+  motorcar?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  natural?: InputMaybe<Scalars['String']['input']>;
+  network?: InputMaybe<Scalars['String']['input']>;
+  office?: InputMaybe<Scalars['String']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  operator?: InputMaybe<Scalars['String']['input']>;
   orderBy?: InputMaybe<Array<NodesOrderBy>>;
-  parking?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
-  place?: InputMaybe<Scalars['String']>;
-  power?: InputMaybe<Scalars['String']>;
-  public_transport?: InputMaybe<Scalars['String']>;
-  railway?: InputMaybe<Scalars['String']>;
-  recycling_type?: InputMaybe<Scalars['String']>;
-  ref?: InputMaybe<Scalars['String']>;
-  religion?: InputMaybe<Scalars['String']>;
-  shelter?: InputMaybe<Scalars['String']>;
-  shop?: InputMaybe<Scalars['String']>;
-  sport?: InputMaybe<Scalars['String']>;
-  surface?: InputMaybe<Scalars['String']>;
-  tactile_paving?: InputMaybe<Scalars['String']>;
-  takeaway?: InputMaybe<Scalars['String']>;
-  tourism?: InputMaybe<Scalars['String']>;
-  traffic_sign?: InputMaybe<Scalars['String']>;
-  type?: InputMaybe<Scalars['String']>;
-  vending?: InputMaybe<Scalars['String']>;
-  waterway?: InputMaybe<Scalars['String']>;
-  website?: InputMaybe<Scalars['String']>;
-  wheelchair?: InputMaybe<Scalars['String']>;
-  wikidata?: InputMaybe<Scalars['String']>;
-  wikipedia?: InputMaybe<Scalars['String']>;
+  parking?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
+  place?: InputMaybe<Scalars['String']['input']>;
+  power?: InputMaybe<Scalars['String']['input']>;
+  public_transport?: InputMaybe<Scalars['String']['input']>;
+  railway?: InputMaybe<Scalars['String']['input']>;
+  recycling_type?: InputMaybe<Scalars['String']['input']>;
+  ref?: InputMaybe<Scalars['String']['input']>;
+  religion?: InputMaybe<Scalars['String']['input']>;
+  shelter?: InputMaybe<Scalars['String']['input']>;
+  shop?: InputMaybe<Scalars['String']['input']>;
+  sport?: InputMaybe<Scalars['String']['input']>;
+  surface?: InputMaybe<Scalars['String']['input']>;
+  tactile_paving?: InputMaybe<Scalars['String']['input']>;
+  takeaway?: InputMaybe<Scalars['String']['input']>;
+  tourism?: InputMaybe<Scalars['String']['input']>;
+  traffic_sign?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  vending?: InputMaybe<Scalars['String']['input']>;
+  waterway?: InputMaybe<Scalars['String']['input']>;
+  website?: InputMaybe<Scalars['String']['input']>;
+  wheelchair?: InputMaybe<Scalars['String']['input']>;
+  wikidata?: InputMaybe<Scalars['String']['input']>;
+  wikipedia?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryNoteArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1554,28 +1556,28 @@ export type QueryNoteArgs = {
 export type QueryNotesArgs = {
   condition?: InputMaybe<NoteCondition>;
   filter?: InputMaybe<NoteFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<NotesOrderBy>>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryPointArgs = {
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
+  lat: Scalars['Float']['input'];
+  lon: Scalars['Float']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryQueryArgs = {
-  bbox?: InputMaybe<Array<Scalars['Float']>>;
+  bbox?: InputMaybe<Array<Scalars['Float']['input']>>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryRelationArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1583,28 +1585,28 @@ export type QueryRelationArgs = {
 export type QueryRelationsArgs = {
   condition?: InputMaybe<RelationCondition>;
   filter?: InputMaybe<RelationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationsOrderBy>>;
-  type?: InputMaybe<Scalars['RelationType']>;
+  type?: InputMaybe<Scalars['RelationType']['input']>;
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryThingArgs = {
-  uri: Scalars['ID'];
+  uri: Scalars['ID']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryWayArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1612,31 +1614,31 @@ export type QueryWayArgs = {
 export type QueryWaysArgs = {
   condition?: InputMaybe<WayCondition>;
   filter?: InputMaybe<WayFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<WaysOrderBy>>;
 };
 
 export type Redaction = {
   __typename?: 'Redaction';
   changesets: Array<Changeset>;
-  createdAt?: Maybe<Scalars['Datetime']>;
-  description?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
   descriptionFormat: FormatEnum;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   nodes: Array<Node>;
-  title?: Maybe<Scalars['String']>;
-  updatedAt?: Maybe<Scalars['Datetime']>;
+  title?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
   user?: Maybe<User>;
-  userId: Scalars['ID'];
+  userId: Scalars['ID']['output'];
 };
 
 
 export type RedactionChangesetsArgs = {
   condition?: InputMaybe<ChangesetCondition>;
   filter?: InputMaybe<ChangesetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ChangesetsOrderBy>>;
 };
 
@@ -1644,25 +1646,25 @@ export type RedactionChangesetsArgs = {
 export type RedactionNodesArgs = {
   condition?: InputMaybe<NodeCondition>;
   filter?: InputMaybe<NodeFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<NodesOrderBy>>;
 };
 
 export type Relation = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
-  tags?: Maybe<Scalars['JSON']>;
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
 };
 
 
 export type RelationMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -1672,15 +1674,15 @@ export type RelationMembersArgs = {
  */
 export type RelationCondition = {
   /** Checks for equality with the object’s `changesetId` field. */
-  changesetId?: InputMaybe<Scalars['ID']>;
+  changesetId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `timestamp` field. */
-  timestamp?: InputMaybe<Scalars['Datetime']>;
+  timestamp?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `version` field. */
-  version?: InputMaybe<Scalars['Int']>;
+  version?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `visible` field. */
-  visible?: InputMaybe<Scalars['Boolean']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** A filter to be used against `Relation` object types. All fields are combined with a logical ‘and.’ */
@@ -1704,11 +1706,11 @@ export type RelationFilter = {
 };
 
 export type RelationMember = {
-  memberId: Scalars['ID'];
-  memberRole?: Maybe<Scalars['String']>;
-  memberType: NwrEnum;
+  memberId: Scalars['ID']['output'];
   ref?: Maybe<Nwr>;
-  sequenceId: Scalars['Int'];
+  role?: Maybe<Scalars['String']['output']>;
+  sequenceId: Scalars['Int']['output'];
+  type: NwrEnum;
 };
 
 /**
@@ -1717,15 +1719,15 @@ export type RelationMember = {
  */
 export type RelationMemberCondition = {
   /** Checks for equality with the object’s `memberId` field. */
-  memberId?: InputMaybe<Scalars['ID']>;
+  memberId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `memberRole` field. */
-  memberRole?: InputMaybe<Scalars['String']>;
+  memberRole?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `memberType` field. */
   memberType?: InputMaybe<NwrEnum>;
   /** Checks for equality with the object’s `relationId` field. */
-  relationId?: InputMaybe<Scalars['ID']>;
+  relationId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `sequenceId` field. */
-  sequenceId?: InputMaybe<Scalars['Int']>;
+  sequenceId?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** A filter to be used against `RelationMember` object types. All fields are combined with a logical ‘and.’ */
@@ -1750,31 +1752,31 @@ export type RelationMemberFilter = {
 
 export type RelationMemberNode = RelationMember & {
   __typename?: 'RelationMemberNode';
-  memberId: Scalars['ID'];
-  memberRole?: Maybe<Scalars['String']>;
-  memberType: NwrEnum;
+  memberId: Scalars['ID']['output'];
   node?: Maybe<Node>;
   ref?: Maybe<Node>;
-  sequenceId: Scalars['Int'];
+  role?: Maybe<Scalars['String']['output']>;
+  sequenceId: Scalars['Int']['output'];
+  type: NwrEnum;
 };
 
 export type RelationMemberRelation = RelationMember & {
   __typename?: 'RelationMemberRelation';
-  memberId: Scalars['ID'];
-  memberRole?: Maybe<Scalars['String']>;
-  memberType: NwrEnum;
+  memberId: Scalars['ID']['output'];
   ref?: Maybe<GenericRelation>;
   relation?: Maybe<GenericRelation>;
-  sequenceId: Scalars['Int'];
+  role?: Maybe<Scalars['String']['output']>;
+  sequenceId: Scalars['Int']['output'];
+  type: NwrEnum;
 };
 
 export type RelationMemberWay = RelationMember & {
   __typename?: 'RelationMemberWay';
-  memberId: Scalars['ID'];
-  memberRole?: Maybe<Scalars['String']>;
-  memberType: NwrEnum;
+  memberId: Scalars['ID']['output'];
   ref?: Maybe<Way>;
-  sequenceId: Scalars['Int'];
+  role?: Maybe<Scalars['String']['output']>;
+  sequenceId: Scalars['Int']['output'];
+  type: NwrEnum;
   way?: Maybe<Way>;
 };
 
@@ -1815,23 +1817,23 @@ export enum RelationsOrderBy {
 export type Route = Relation & {
   __typename?: 'Route';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type RouteMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -1839,31 +1841,31 @@ export type RouteMembersArgs = {
 export type RouteRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 export type Site = Relation & {
   __typename?: 'Site';
   changeset?: Maybe<Changeset>;
-  changesetId: Scalars['ID'];
-  id: Scalars['ID'];
+  changesetId: Scalars['ID']['output'];
+  id: Scalars['ID']['output'];
   members: Array<RelationMember>;
   relationTags: Array<Tag>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  type?: Maybe<Scalars['RelationType']>;
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type SiteMembersArgs = {
   condition?: InputMaybe<RelationMemberCondition>;
   filter?: InputMaybe<RelationMemberFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<RelationMembersOrderBy>>;
 };
 
@@ -1871,101 +1873,101 @@ export type SiteMembersArgs = {
 export type SiteRelationTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 /** A filter to be used against String fields. All fields are combined with a logical ‘and.’ */
 export type StringFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
-  distinctFrom?: InputMaybe<Scalars['String']>;
+  distinctFrom?: InputMaybe<Scalars['String']['input']>;
   /** Not equal to the specified value, treating null like an ordinary value (case-insensitive). */
-  distinctFromInsensitive?: InputMaybe<Scalars['String']>;
+  distinctFromInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Ends with the specified string (case-sensitive). */
-  endsWith?: InputMaybe<Scalars['String']>;
+  endsWith?: InputMaybe<Scalars['String']['input']>;
   /** Ends with the specified string (case-insensitive). */
-  endsWithInsensitive?: InputMaybe<Scalars['String']>;
+  endsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Equal to the specified value. */
-  equalTo?: InputMaybe<Scalars['String']>;
+  equalTo?: InputMaybe<Scalars['String']['input']>;
   /** Equal to the specified value (case-insensitive). */
-  equalToInsensitive?: InputMaybe<Scalars['String']>;
+  equalToInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Greater than the specified value. */
-  greaterThan?: InputMaybe<Scalars['String']>;
+  greaterThan?: InputMaybe<Scalars['String']['input']>;
   /** Greater than the specified value (case-insensitive). */
-  greaterThanInsensitive?: InputMaybe<Scalars['String']>;
+  greaterThanInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Greater than or equal to the specified value. */
-  greaterThanOrEqualTo?: InputMaybe<Scalars['String']>;
+  greaterThanOrEqualTo?: InputMaybe<Scalars['String']['input']>;
   /** Greater than or equal to the specified value (case-insensitive). */
-  greaterThanOrEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  greaterThanOrEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Included in the specified list. */
-  in?: InputMaybe<Array<Scalars['String']>>;
+  in?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Included in the specified list (case-insensitive). */
-  inInsensitive?: InputMaybe<Array<Scalars['String']>>;
+  inInsensitive?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Contains the specified string (case-sensitive). */
-  includes?: InputMaybe<Scalars['String']>;
+  includes?: InputMaybe<Scalars['String']['input']>;
   /** Contains the specified string (case-insensitive). */
-  includesInsensitive?: InputMaybe<Scalars['String']>;
+  includesInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
-  lessThan?: InputMaybe<Scalars['String']>;
+  lessThan?: InputMaybe<Scalars['String']['input']>;
   /** Less than the specified value (case-insensitive). */
-  lessThanInsensitive?: InputMaybe<Scalars['String']>;
+  lessThanInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Less than or equal to the specified value. */
-  lessThanOrEqualTo?: InputMaybe<Scalars['String']>;
+  lessThanOrEqualTo?: InputMaybe<Scalars['String']['input']>;
   /** Less than or equal to the specified value (case-insensitive). */
-  lessThanOrEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  lessThanOrEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
-  like?: InputMaybe<Scalars['String']>;
+  like?: InputMaybe<Scalars['String']['input']>;
   /** Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
-  likeInsensitive?: InputMaybe<Scalars['String']>;
+  likeInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Equal to the specified value, treating null like an ordinary value. */
-  notDistinctFrom?: InputMaybe<Scalars['String']>;
+  notDistinctFrom?: InputMaybe<Scalars['String']['input']>;
   /** Equal to the specified value, treating null like an ordinary value (case-insensitive). */
-  notDistinctFromInsensitive?: InputMaybe<Scalars['String']>;
+  notDistinctFromInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Does not end with the specified string (case-sensitive). */
-  notEndsWith?: InputMaybe<Scalars['String']>;
+  notEndsWith?: InputMaybe<Scalars['String']['input']>;
   /** Does not end with the specified string (case-insensitive). */
-  notEndsWithInsensitive?: InputMaybe<Scalars['String']>;
+  notEndsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Not equal to the specified value. */
-  notEqualTo?: InputMaybe<Scalars['String']>;
+  notEqualTo?: InputMaybe<Scalars['String']['input']>;
   /** Not equal to the specified value (case-insensitive). */
-  notEqualToInsensitive?: InputMaybe<Scalars['String']>;
+  notEqualToInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Not included in the specified list. */
-  notIn?: InputMaybe<Array<Scalars['String']>>;
+  notIn?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Not included in the specified list (case-insensitive). */
-  notInInsensitive?: InputMaybe<Array<Scalars['String']>>;
+  notInInsensitive?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Does not contain the specified string (case-sensitive). */
-  notIncludes?: InputMaybe<Scalars['String']>;
+  notIncludes?: InputMaybe<Scalars['String']['input']>;
   /** Does not contain the specified string (case-insensitive). */
-  notIncludesInsensitive?: InputMaybe<Scalars['String']>;
+  notIncludesInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
-  notLike?: InputMaybe<Scalars['String']>;
+  notLike?: InputMaybe<Scalars['String']['input']>;
   /** Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. */
-  notLikeInsensitive?: InputMaybe<Scalars['String']>;
+  notLikeInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Does not start with the specified string (case-sensitive). */
-  notStartsWith?: InputMaybe<Scalars['String']>;
+  notStartsWith?: InputMaybe<Scalars['String']['input']>;
   /** Does not start with the specified string (case-insensitive). */
-  notStartsWithInsensitive?: InputMaybe<Scalars['String']>;
+  notStartsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
   /** Starts with the specified string (case-sensitive). */
-  startsWith?: InputMaybe<Scalars['String']>;
+  startsWith?: InputMaybe<Scalars['String']['input']>;
   /** Starts with the specified string (case-insensitive). */
-  startsWithInsensitive?: InputMaybe<Scalars['String']>;
+  startsWithInsensitive?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Tag = {
   __typename?: 'Tag';
-  k: Scalars['String'];
-  v: Scalars['String'];
+  k: Scalars['String']['output'];
+  v: Scalars['String']['output'];
   wikidata?: Maybe<WikidataEntity>;
 };
 
 export type TagCondition = {
   /** Checks for equality with the tag's key field. */
-  k?: InputMaybe<Scalars['String']>;
+  k?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the tags’s value field. */
-  v?: InputMaybe<Scalars['String']>;
+  v?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** A filter to be used against `Tag` object types. All fields are combined with a logical ‘and.’ */
@@ -1996,25 +1998,25 @@ export enum TagsOrderBy {
 export type User = {
   __typename?: 'User';
   changesets: Array<Changeset>;
-  changesetsCount: Scalars['Int'];
-  dataPublic: Scalars['Boolean'];
-  description: Scalars['String'];
+  changesetsCount: Scalars['Int']['output'];
+  dataPublic: Scalars['Boolean']['output'];
+  description: Scalars['String']['output'];
   descriptionFormat: FormatEnum;
-  displayName: Scalars['String'];
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  imageUseGravatar: Scalars['Boolean'];
-  languages?: Maybe<Scalars['String']>;
+  displayName: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  imageUseGravatar: Scalars['Boolean']['output'];
+  languages?: Maybe<Scalars['String']['output']>;
   status: UserStatusEnum;
-  tracesCount: Scalars['Int'];
+  tracesCount: Scalars['Int']['output'];
 };
 
 
 export type UserChangesetsArgs = {
   condition?: InputMaybe<ChangesetCondition>;
   filter?: InputMaybe<ChangesetFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ChangesetsOrderBy>>;
 };
 
@@ -2044,7 +2046,7 @@ export type UserStatusEnumFilter = {
   /** Included in the specified list. */
   in?: InputMaybe<Array<UserStatusEnum>>;
   /** Is null (if `true` is specified) or is not null (if `false` is specified). */
-  isNull?: InputMaybe<Scalars['Boolean']>;
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
   /** Less than the specified value. */
   lessThan?: InputMaybe<UserStatusEnum>;
   /** Less than or equal to the specified value. */
@@ -2077,14 +2079,14 @@ export type Wr = Boundary | GenericRelation | Way;
 export type Way = {
   __typename?: 'Way';
   changeset?: Maybe<Changeset>;
-  geom?: Maybe<Scalars['LineString']>;
-  id: Scalars['ID'];
+  geom?: Maybe<Scalars['LineString']['output']>;
+  id: Scalars['ID']['output'];
   nodes: Array<Node>;
-  tag?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
   wayTags: Array<Tag>;
 };
 
@@ -2092,37 +2094,37 @@ export type Way = {
 export type WayNodesArgs = {
   condition?: InputMaybe<NodeCondition>;
   filter?: InputMaybe<NodeFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<NodesOrderBy>>;
 };
 
 
 export type WayTagArgs = {
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
 };
 
 
 export type WayWayTagsArgs = {
   condition?: InputMaybe<TagCondition>;
   filter?: InputMaybe<TagFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 /** A condition to be used against `Way` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type WayCondition = {
   /** Checks for equality with the object’s `changesetId` field. */
-  changesetId?: InputMaybe<Scalars['ID']>;
+  changesetId?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** Checks for equality with the object’s `timestamp` field. */
-  timestamp?: InputMaybe<Scalars['Datetime']>;
+  timestamp?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `version` field. */
-  version?: InputMaybe<Scalars['Int']>;
+  version?: InputMaybe<Scalars['Int']['input']>;
   /** Checks for equality with the object’s `visible` field. */
-  visible?: InputMaybe<Scalars['Boolean']>;
+  visible?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** A filter to be used against `Way` object types. All fields are combined with a logical ‘and.’ */
@@ -2180,7 +2182,7 @@ export enum WaysOrderBy {
 
 export type WikidataEntity = {
   __typename?: 'WikidataEntity';
-  uri?: Maybe<Scalars['ID']>;
+  uri?: Maybe<Scalars['ID']['output']>;
 };
 
 
@@ -2250,12 +2252,26 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+/** Mapping of union types */
+export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
+  AllRelations: ( Boundary ) | ( GenericRelation ) | ( Network ) | ( PublicTransport ) | ( Route ) | ( Site );
+  NW: ( Node ) | ( Way );
+  NWR: ( GenericRelation ) | ( Node ) | ( Way );
+  WR: ( Boundary ) | ( GenericRelation ) | ( Way );
+};
+
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = {
+  Relation: ( Boundary ) | ( GenericRelation ) | ( Network ) | ( PublicTransport ) | ( Route ) | ( Site );
+  RelationMember: ( RelationMemberNode ) | ( RelationMemberRelation ) | ( RelationMemberWay );
+};
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  AllRelations: ResolversTypes['Boundary'] | ResolversTypes['GenericRelation'] | ResolversTypes['Network'] | ResolversTypes['PublicTransport'] | ResolversTypes['Route'] | ResolversTypes['Site'];
+  AllRelations: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['AllRelations']>;
   Area: ResolverTypeWrapper<Area>;
-  BBox: ResolverTypeWrapper<Scalars['BBox']>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  BBox: ResolverTypeWrapper<Scalars['BBox']['output']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   BooleanFilter: BooleanFilter;
   Boundary: ResolverTypeWrapper<Boundary>;
   Changeset: ResolverTypeWrapper<Changeset>;
@@ -2266,19 +2282,19 @@ export type ResolversTypes = {
   ChangesetCondition: ChangesetCondition;
   ChangesetFilter: ChangesetFilter;
   ChangesetsOrderBy: ChangesetsOrderBy;
-  Datetime: ResolverTypeWrapper<Scalars['Datetime']>;
+  Datetime: ResolverTypeWrapper<Scalars['Datetime']['output']>;
   DatetimeFilter: DatetimeFilter;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
   FloatFilter: FloatFilter;
   FormatEnum: FormatEnum;
   FormatEnumFilter: FormatEnumFilter;
   GenericRelation: ResolverTypeWrapper<GenericRelation>;
-  Geometry: ResolverTypeWrapper<Scalars['Geometry']>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Geometry: ResolverTypeWrapper<Scalars['Geometry']['output']>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   IDFilter: IdFilter;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   IntFilter: IntFilter;
-  InternetAddress: ResolverTypeWrapper<Scalars['InternetAddress']>;
+  InternetAddress: ResolverTypeWrapper<Scalars['InternetAddress']['output']>;
   InternetAddressFilter: InternetAddressFilter;
   Issue: ResolverTypeWrapper<Issue>;
   IssueComment: ResolverTypeWrapper<IssueComment>;
@@ -2290,14 +2306,14 @@ export type ResolversTypes = {
   IssueStatusEnum: IssueStatusEnum;
   IssueStatusEnumFilter: IssueStatusEnumFilter;
   IssuesOrderBy: IssuesOrderBy;
-  JSON: ResolverTypeWrapper<Scalars['JSON']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
   Language: ResolverTypeWrapper<Language>;
   LanguageCondition: LanguageCondition;
   LanguageFilter: LanguageFilter;
   LanguagesOrderBy: LanguagesOrderBy;
-  LineString: ResolverTypeWrapper<Scalars['LineString']>;
-  NW: ResolversTypes['Node'] | ResolversTypes['Way'];
-  NWR: ResolversTypes['GenericRelation'] | ResolversTypes['Node'] | ResolversTypes['Way'];
+  LineString: ResolverTypeWrapper<Scalars['LineString']['output']>;
+  NW: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['NW']>;
+  NWR: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['NWR']>;
   Network: ResolverTypeWrapper<Network>;
   Node: ResolverTypeWrapper<Node>;
   NodeCondition: NodeCondition;
@@ -2317,26 +2333,26 @@ export type ResolversTypes = {
   NotesOrderBy: NotesOrderBy;
   NwrEnum: NwrEnum;
   NwrEnumFilter: NwrEnumFilter;
-  Point: ResolverTypeWrapper<Scalars['Point']>;
-  Polygon: ResolverTypeWrapper<Scalars['Polygon']>;
+  Point: ResolverTypeWrapper<Scalars['Point']['output']>;
+  Polygon: ResolverTypeWrapper<Scalars['Polygon']['output']>;
   PublicTransport: ResolverTypeWrapper<PublicTransport>;
   Query: ResolverTypeWrapper<{}>;
   Redaction: ResolverTypeWrapper<Redaction>;
-  Relation: ResolversTypes['Boundary'] | ResolversTypes['GenericRelation'] | ResolversTypes['Network'] | ResolversTypes['PublicTransport'] | ResolversTypes['Route'] | ResolversTypes['Site'];
+  Relation: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Relation']>;
   RelationCondition: RelationCondition;
   RelationFilter: RelationFilter;
-  RelationMember: ResolversTypes['RelationMemberNode'] | ResolversTypes['RelationMemberRelation'] | ResolversTypes['RelationMemberWay'];
+  RelationMember: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['RelationMember']>;
   RelationMemberCondition: RelationMemberCondition;
   RelationMemberFilter: RelationMemberFilter;
   RelationMemberNode: ResolverTypeWrapper<RelationMemberNode>;
   RelationMemberRelation: ResolverTypeWrapper<RelationMemberRelation>;
   RelationMemberWay: ResolverTypeWrapper<RelationMemberWay>;
   RelationMembersOrderBy: RelationMembersOrderBy;
-  RelationType: ResolverTypeWrapper<Scalars['RelationType']>;
+  RelationType: ResolverTypeWrapper<Scalars['RelationType']['output']>;
   RelationsOrderBy: RelationsOrderBy;
   Route: ResolverTypeWrapper<Route>;
   Site: ResolverTypeWrapper<Site>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   StringFilter: StringFilter;
   Tag: ResolverTypeWrapper<Tag>;
   TagCondition: TagCondition;
@@ -2347,7 +2363,7 @@ export type ResolversTypes = {
   UserStatusEnum: UserStatusEnum;
   UserStatusEnumFilter: UserStatusEnumFilter;
   UsersOrderBy: UsersOrderBy;
-  WR: ResolversTypes['Boundary'] | ResolversTypes['GenericRelation'] | ResolversTypes['Way'];
+  WR: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['WR']>;
   Way: ResolverTypeWrapper<Way>;
   WayCondition: WayCondition;
   WayFilter: WayFilter;
@@ -2358,10 +2374,10 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  AllRelations: ResolversParentTypes['Boundary'] | ResolversParentTypes['GenericRelation'] | ResolversParentTypes['Network'] | ResolversParentTypes['PublicTransport'] | ResolversParentTypes['Route'] | ResolversParentTypes['Site'];
+  AllRelations: ResolversUnionTypes<ResolversParentTypes>['AllRelations'];
   Area: Area;
-  BBox: Scalars['BBox'];
-  Boolean: Scalars['Boolean'];
+  BBox: Scalars['BBox']['output'];
+  Boolean: Scalars['Boolean']['output'];
   BooleanFilter: BooleanFilter;
   Boundary: Boundary;
   Changeset: Changeset;
@@ -2370,18 +2386,18 @@ export type ResolversParentTypes = {
   ChangesetCommentFilter: ChangesetCommentFilter;
   ChangesetCondition: ChangesetCondition;
   ChangesetFilter: ChangesetFilter;
-  Datetime: Scalars['Datetime'];
+  Datetime: Scalars['Datetime']['output'];
   DatetimeFilter: DatetimeFilter;
-  Float: Scalars['Float'];
+  Float: Scalars['Float']['output'];
   FloatFilter: FloatFilter;
   FormatEnumFilter: FormatEnumFilter;
   GenericRelation: GenericRelation;
-  Geometry: Scalars['Geometry'];
-  ID: Scalars['ID'];
+  Geometry: Scalars['Geometry']['output'];
+  ID: Scalars['ID']['output'];
   IDFilter: IdFilter;
-  Int: Scalars['Int'];
+  Int: Scalars['Int']['output'];
   IntFilter: IntFilter;
-  InternetAddress: Scalars['InternetAddress'];
+  InternetAddress: Scalars['InternetAddress']['output'];
   InternetAddressFilter: InternetAddressFilter;
   Issue: Issue;
   IssueComment: IssueComment;
@@ -2390,13 +2406,13 @@ export type ResolversParentTypes = {
   IssueCondition: IssueCondition;
   IssueFilter: IssueFilter;
   IssueStatusEnumFilter: IssueStatusEnumFilter;
-  JSON: Scalars['JSON'];
+  JSON: Scalars['JSON']['output'];
   Language: Language;
   LanguageCondition: LanguageCondition;
   LanguageFilter: LanguageFilter;
-  LineString: Scalars['LineString'];
-  NW: ResolversParentTypes['Node'] | ResolversParentTypes['Way'];
-  NWR: ResolversParentTypes['GenericRelation'] | ResolversParentTypes['Node'] | ResolversParentTypes['Way'];
+  LineString: Scalars['LineString']['output'];
+  NW: ResolversUnionTypes<ResolversParentTypes>['NW'];
+  NWR: ResolversUnionTypes<ResolversParentTypes>['NWR'];
   Network: Network;
   Node: Node;
   NodeCondition: NodeCondition;
@@ -2410,31 +2426,31 @@ export type ResolversParentTypes = {
   NoteFilter: NoteFilter;
   NoteStatusEnumFilter: NoteStatusEnumFilter;
   NwrEnumFilter: NwrEnumFilter;
-  Point: Scalars['Point'];
-  Polygon: Scalars['Polygon'];
+  Point: Scalars['Point']['output'];
+  Polygon: Scalars['Polygon']['output'];
   PublicTransport: PublicTransport;
   Query: {};
   Redaction: Redaction;
-  Relation: ResolversParentTypes['Boundary'] | ResolversParentTypes['GenericRelation'] | ResolversParentTypes['Network'] | ResolversParentTypes['PublicTransport'] | ResolversParentTypes['Route'] | ResolversParentTypes['Site'];
+  Relation: ResolversInterfaceTypes<ResolversParentTypes>['Relation'];
   RelationCondition: RelationCondition;
   RelationFilter: RelationFilter;
-  RelationMember: ResolversParentTypes['RelationMemberNode'] | ResolversParentTypes['RelationMemberRelation'] | ResolversParentTypes['RelationMemberWay'];
+  RelationMember: ResolversInterfaceTypes<ResolversParentTypes>['RelationMember'];
   RelationMemberCondition: RelationMemberCondition;
   RelationMemberFilter: RelationMemberFilter;
   RelationMemberNode: RelationMemberNode;
   RelationMemberRelation: RelationMemberRelation;
   RelationMemberWay: RelationMemberWay;
-  RelationType: Scalars['RelationType'];
+  RelationType: Scalars['RelationType']['output'];
   Route: Route;
   Site: Site;
-  String: Scalars['String'];
+  String: Scalars['String']['output'];
   StringFilter: StringFilter;
   Tag: Tag;
   TagCondition: TagCondition;
   TagFilter: TagFilter;
   User: User;
   UserStatusEnumFilter: UserStatusEnumFilter;
-  WR: ResolversParentTypes['Boundary'] | ResolversParentTypes['GenericRelation'] | ResolversParentTypes['Way'];
+  WR: ResolversUnionTypes<ResolversParentTypes>['WR'];
   Way: Way;
   WayCondition: WayCondition;
   WayFilter: WayFilter;
@@ -2709,38 +2725,38 @@ export type RelationResolvers<ContextType = any, ParentType extends ResolversPar
 export type RelationMemberResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationMember'] = ResolversParentTypes['RelationMember']> = {
   __resolveType: TypeResolveFn<'RelationMemberNode' | 'RelationMemberRelation' | 'RelationMemberWay', ParentType, ContextType>;
   memberId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  memberRole?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  memberType?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   ref?: Resolver<Maybe<ResolversTypes['NWR']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sequenceId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
 };
 
 export type RelationMemberNodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationMemberNode'] = ResolversParentTypes['RelationMemberNode']> = {
   memberId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  memberRole?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  memberType?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType>;
   ref?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sequenceId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type RelationMemberRelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationMemberRelation'] = ResolversParentTypes['RelationMemberRelation']> = {
   memberId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  memberRole?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  memberType?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   ref?: Resolver<Maybe<ResolversTypes['GenericRelation']>, ParentType, ContextType>;
   relation?: Resolver<Maybe<ResolversTypes['GenericRelation']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sequenceId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type RelationMemberWayResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationMemberWay'] = ResolversParentTypes['RelationMemberWay']> = {
   memberId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  memberRole?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  memberType?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   ref?: Resolver<Maybe<ResolversTypes['Way']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sequenceId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['NwrEnum'], ParentType, ContextType>;
   way?: Resolver<Maybe<ResolversTypes['Way']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

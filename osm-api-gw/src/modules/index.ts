@@ -1,3 +1,4 @@
+import { osm } from './osm-base';
 import { overpass } from './overpass'
 import { taginfo } from './taginfo'
 
@@ -5,6 +6,7 @@ import { taginfo } from './taginfo'
 
 
 export const modules = [
+  osm,
   overpass,
   taginfo,
 ];
