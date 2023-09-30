@@ -64,13 +64,13 @@ const resolvers: Resolvers = {
 		uri:  ({ id, version }) => `https://osm.org/way/${id}` + (version ? `#v${version}` : ''),
 		_raw: (source) => source,
 	},
-	Relation: {
-		members: async (parent, _args, context, _info) => {
+	GenericRelation: {
+		/* members: async (parent, _args, context, _info) => {
 			return (parent.nodes as unknown as number[]).map((node_id) => context.nodes[node_id]) as any;
 		},
 		nodes: async (parent, _args, { nodes }, _info) => {
 			return (parent.nodes as unknown as number[]).map((node_id) => node_id in nodes ? nodes[node_id] : null);
-		},
+		}, */
 		uri:  ({ id, version }) => `https://osm.org/relation/${id}` + (version ? `#v${version}` : ''),
 		_raw: (source) => source,
 	},
@@ -91,7 +91,7 @@ export const overpass = createModule({
 			scalar URL
 			scalar JSON
 
-			union ElementUnion = Node | Way | Relation
+			union ElementUnion = Node | Way | GenericRelation
 			interface Element {
 				id: ID!
 				tags: JSON
@@ -105,7 +105,7 @@ export const overpass = createModule({
 				_raw: JSON	@deprecated(reason: "This field is for debugging only. Do not use in production.")
 				uri: URL!
 			}
-			extend type Relation implements Element {
+			extend type GenericRelation implements Element {
 				_raw: JSON	@deprecated(reason: "This field is for debugging only. Do not use in production.")
 				uri: URL!
 			}

@@ -48,19 +48,28 @@ export const osmBaseTypes = gql`
 	# TODO: should this be an dynamic Enum generated via taginfo.openstreetmap.org?
 	scalar RelationType
 
-	type Relation {
+	interface Relation {
 	  id: ID!
 	  version: Int!
 	  type: RelationType
 	  tags: JSON
-		#, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter)
-	  members(first: Int, offset: Int): [RelationMember!]!
-		nodes(first: Int, offset: Int): [Node!]!
-	  ways(first: Int, offset: Int): [Way!]!
-	  relations(first: Int, offset: Int): [Relation!]!
+		# tag(key: String!) : String ## TODO if we add this here, we need also add int to all types imlementing this interface
 	}
 
-	union NWR = Node | Way | Relation
+	type GenericRelation implements Relation {
+	  id: ID!
+	  version: Int!
+	  type: RelationType
+	  tags: JSON
+		tag(key: String!): String # | [String]
+		#, orderBy: [RelationMembersOrderBy!], condition: RelationMemberCondition, filter: RelationMemberFilter)
+	  #members(first: Int, offset: Int): [RelationMember!]!
+		#nodes(first: Int, offset: Int): [Node!]!
+	  #ways(first: Int, offset: Int): [Way!]!
+	  #relations(first: Int, offset: Int): [Relation!]!
+	}
+
+	union NWR = Node | Way | GenericRelation
 	enum NwrEnum {
 		node
 		way

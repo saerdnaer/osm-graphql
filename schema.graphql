@@ -24,6 +24,84 @@ type Query {
     ref: String
     operator: String
     highway: String
+    wikidata: String
+    wikipedia: String
+    leisure: String
+    access: String
+    website: String
+    tourism: String
+    shop: String
+    barrier: String
+    phone: String
+    natural: String
+    wheelchair: String
+    railway: String
+    landuse: String
+    building: String
+    sport: String
+    level: String
+    man_made: String
+    location: String
+    surface: String
+    historic: String
+    bicycle: String
+    waterway: String
+    emergency: String
+    maxspeed: String
+    network: String
+    aerialway: String
+    aeroway: String
+    vending: String
+    fee: String
+    place: String
+    internet_access: String
+    foot: String
+    traffic_sign: String
+    direction: String
+    colour: String
+    lit: String
+    office: String
+    power: String
+    information: String
+    public_transport: String
+    admin_level: String
+    junction: String
+    description: String
+    cuisine: String
+    religion: String
+    parking: String
+    capacity: String
+    brand: String
+    indoor: String
+    height: String
+    bus: String
+    entrance: String
+    craft: String
+    construction: String
+    military: String
+    layer: String
+    motor_vehicle: String
+    crossing: String
+    horse: String
+    healthcare: String
+    covered: String
+    ele: String
+    shelter: String
+    motorcar: String
+    takeaway: String
+    denomination: String
+    tactile_paving: String
+    bench: String
+    kerb: String
+    delivery: String
+    fixme: String
+    bicycle_parking: String
+    drinking_water: String
+    material: String
+    recycling_type: String
+    memorial: String
+    inscription: String
+    door: String
   ): [Node!]
 
   issue(id: Int!): Issue
@@ -193,35 +271,35 @@ union NWR = Node | Way | GenericRelation #Boundary | Route | Network | PublicTra
 union WR = Way | Boundary | GenericRelation #Route | Network | PublicTransport | Site | GenericRelation
 
 interface RelationMember {
-  memberType: NwrEnum!
+  type: NwrEnum!
   memberId: ID!
-  memberRole: String
+  role: String
   sequenceId: Int!
   ref: NWR
 }
 
 type RelationMemberNode implements RelationMember {
-  memberType: NwrEnum!
+  type: NwrEnum!
   memberId: ID!
-  memberRole: String
+  role: String
   sequenceId: Int!
   ref: Node
   node: Node
 }
 
 type RelationMemberWay implements RelationMember {
-  memberType: NwrEnum!
+  type: NwrEnum!
   memberId: ID!
-  memberRole: String
+  role: String
   sequenceId: Int!
   ref: Way
   way: Way
 }
 
 type RelationMemberRelation implements RelationMember {
-  memberType: NwrEnum!
+  type: NwrEnum!
   memberId: ID!
-  memberRole: String
+  role: String
   sequenceId: Int!
   ref: GenericRelation
   relation: GenericRelation
@@ -1480,10 +1558,10 @@ enum NotesOrderBy {
   NATURAL
   ID_ASC
   ID_DESC
-  LATITUDE_ASC
-  LATITUDE_DESC
-  LONGITUDE_ASC
-  LONGITUDE_DESC
+  LAT_ASC
+  LAT_DESC
+  LON_ASC
+  LON_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
   CREATED_AT_ASC
@@ -1709,8 +1787,8 @@ enum NodesOrderBy {
   NATURAL
   ID_ASC
   ID_DESC
-  LATITUDE_ASC
-  LATITUDE_DESC
+  LAT_ASC
+  LON_DESC
   LONGITUDE_ASC
   LONGITUDE_DESC
   CHANGESET_ID_ASC
@@ -1749,6 +1827,91 @@ input NodeCondition {
 
   """Checks for equality with the object’s `version` field."""
   version: Int
+
+  type: String
+  amenity: String
+  name: String
+  ref: String
+  operator: String
+  highway: String
+  wikidata: String
+  wikipedia: String
+  leisure: String
+  access: String
+  website: String
+  tourism: String
+  shop: String
+  barrier: String
+  phone: String
+  natural: String
+  wheelchair: String
+  railway: String
+  landuse: String
+  building: String
+  sport: String
+  level: String
+  man_made: String
+  location: String
+  surface: String
+  historic: String
+  bicycle: String
+  waterway: String
+  emergency: String
+  maxspeed: String
+  network: String
+  aerialway: String
+  aeroway: String
+  vending: String
+  fee: String
+  place: String
+  internet_access: String
+  foot: String
+  traffic_sign: String
+  direction: String
+  colour: String
+  lit: String
+  office: String
+  power: String
+  information: String
+  public_transport: String
+  admin_level: String
+  junction: String
+  description: String
+  cuisine: String
+  religion: String
+  parking: String
+  capacity: String
+  brand: String
+  indoor: String
+  height: String
+  bus: String
+  entrance: String
+  craft: String
+  construction: String
+  military: String
+  layer: String
+  motor_vehicle: String
+  crossing: String
+  horse: String
+  healthcare: String
+  covered: String
+  ele: String
+  shelter: String
+  motorcar: String
+  takeaway: String
+  denomination: String
+  tactile_paving: String
+  bench: String
+  kerb: String
+  delivery: String
+  fixme: String
+  bicycle_parking: String
+  drinking_water: String
+  material: String
+  recycling_type: String
+  memorial: String
+  inscription: String
+  door: String
 }
 
 """
@@ -1784,6 +1947,92 @@ input NodeFilter {
 
   """Negates the expression."""
   not: NodeFilter
+
+  # based on https://taginfo.openstreetmap.org/api/4/keys/all?sortname=count_nodes&sortorder=desc&page=1&rp=500
+  type: StringFilter
+  amenity: StringFilter
+  name: StringFilter
+  ref: StringFilter
+  operator: StringFilter
+  highway: StringFilter
+  wikidata: StringFilter
+  wikipedia: StringFilter
+  leisure: StringFilter
+  access: StringFilter
+  website: StringFilter
+  tourism: StringFilter
+  shop: StringFilter
+  barrier: StringFilter
+  phone: StringFilter
+  natural: StringFilter
+  wheelchair: StringFilter
+  railway: StringFilter
+  landuse: StringFilter
+  building: StringFilter
+  sport: StringFilter
+  level: StringFilter
+  man_made: StringFilter
+  location: StringFilter
+  surface: StringFilter
+  historic: StringFilter
+  bicycle: StringFilter
+  waterway: StringFilter
+  emergency: StringFilter
+  maxspeed: StringFilter
+  network: StringFilter
+  aerialway: StringFilter
+  aeroway: StringFilter
+  vending: StringFilter
+  fee: StringFilter
+  place: StringFilter
+  internet_access: StringFilter
+  foot: StringFilter
+  traffic_sign: StringFilter
+  direction: StringFilter
+  colour: StringFilter
+  lit: StringFilter
+  office: StringFilter
+  power: StringFilter
+  information: StringFilter
+  public_transport: StringFilter
+  admin_level: StringFilter
+  junction: StringFilter
+  description: StringFilter
+  cuisine: StringFilter
+  religion: StringFilter
+  parking: StringFilter
+  capacity: StringFilter
+  brand: StringFilter
+  indoor: StringFilter
+  height: StringFilter
+  bus: StringFilter
+  entrance: StringFilter
+  craft: StringFilter
+  construction: StringFilter
+  military: StringFilter
+  layer: StringFilter
+  motor_vehicle: StringFilter
+  crossing: StringFilter
+  horse: StringFilter
+  healthcare: StringFilter
+  covered: StringFilter
+  ele: StringFilter
+  shelter: StringFilter
+  motorcar: StringFilter
+  takeaway: StringFilter
+  denomination: StringFilter
+  tactile_paving: StringFilter
+  bench: StringFilter
+  kerb: StringFilter
+  delivery: StringFilter
+  fixme: StringFilter
+  bicycle_parking: StringFilter
+  drinking_water: StringFilter
+  material: StringFilter
+  recycling_type: StringFilter
+  memorial: StringFilter
+  inscription: StringFilter
+  door: StringFilter
 }
 
 
