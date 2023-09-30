@@ -1,5 +1,6 @@
+import { loadFilesSync } from "@graphql-tools/load-files";
 import { createModule, gql } from "graphql-modules";
-const { loadFiles } = require('@graphql-tools/load-files');
+import { join } from 'node:path';
 
 
 export const osmBaseTypes = gql`

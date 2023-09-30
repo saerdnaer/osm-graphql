@@ -15,6 +15,7 @@ class NominatimAPI extends RESTDataSource {
 
   async search(params: NominatimSearchParams) {
     const response = await this.get('/search', params);
+    return response;
   }
 
   async reverse(params: { lat: number; lon: number; zoom?: number }) {

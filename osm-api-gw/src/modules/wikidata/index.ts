@@ -1,6 +1,6 @@
+import gql from "graphql-tag";
 import { stitchSchemas } from "@graphql-tools/stitch";
 import { IResolvers } from "@graphql-tools/utils";
-import gql from "graphql-tag";
 import wikimediaSubschema from "./subschema";
 import { cleanupValue } from "./utils";
 
