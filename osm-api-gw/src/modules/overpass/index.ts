@@ -2,7 +2,7 @@ import { createModule, gql } from "graphql-modules";
 import { version } from "os";
 import { OverpassElement, OverpassJson, overpassJson } from "overpass-ts";
 
-import { BBox, OverpassResponseFormat, Query, QueryOverpassArgs, Resolvers } from "../generated/graphql";
+import { QueryOverpassArgs, Resolvers } from "../generated/graphql";
 import { osmBaseTypes } from "../osm-base";
 
 const resolvers: Resolvers = {
@@ -163,6 +163,8 @@ function buildQuery(options: QueryOverpassArgs) {
 	return `${headers.join('')};${query}; out ${out || ''};`.replace(/;;+/g, ';');
 }
 
+type BBox = any; // TODO: type this
+
 // https://wiki.openstreetmap.org/wiki/Overpass_API/Overpass_QL#Global_bounding_box_.28bbox.29
 function formatBBox(bbox: BBox | string | number[]) {
 	// when bbox is string, directly return it
@@ -173,8 +175,11 @@ function formatBBox(bbox: BBox | string | number[]) {
 	if (Array.isArray(bbox)) {
 		return bbox.join(",");
 	}
+	if ( 'south' in bbox ) {
+		return [bbox.south, bbox.west, bbox.north, bbox.east].join(",");
+	}
 	// otherwise, build south,west,north,east
-	return [bbox.south, bbox.west, bbox.north, bbox.east].join(",");
+	return [bbox.s, bbox.w, bbox.n, bbox.e].join(",");
 }
 
 function ucfirst(type: string) {

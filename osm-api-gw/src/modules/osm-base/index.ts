@@ -98,9 +98,6 @@ export const osm = createModule({
 		// loadFiles('../../../../schema.graphql')
 	],
 	resolvers: {
-		Query: {
-			hello: () => "world",
-		},
 		Node: {
 			tag,
 			tags: ({ tags }: any) => {
