@@ -5,76 +5,95 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  Datetime: any;
-  JSON: any;
-  OverpassElement: any;
-  RelationType: any;
-  URL: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  Datetime: { input: any; output: any; }
+  JSON: { input: any; output: any; }
+  OverpassElement: { input: any; output: any; }
+  RelationType: { input: any; output: any; }
+  URL: { input: any; output: any; }
 };
 
 export type Area = Element & {
   __typename?: 'Area';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
-  id: Scalars['ID'];
-  tags?: Maybe<Scalars['JSON']>;
-  version: Scalars['Int'];
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  version: Scalars['Int']['output'];
 };
 
 export type Claim = {
   __typename?: 'Claim';
-  datatype?: Maybe<Scalars['String']>;
-  key?: Maybe<Scalars['String']>;
-  qualifiers2?: Maybe<Scalars['JSON']>;
-  value?: Maybe<Scalars['JSON']>;
+  datatype?: Maybe<Scalars['String']['output']>;
+  key?: Maybe<Scalars['String']['output']>;
+  qualifiers2?: Maybe<Scalars['JSON']['output']>;
+  value?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type Element = {
-  _raw?: Maybe<Scalars['JSON']>;
-  id: Scalars['ID'];
-  tags?: Maybe<Scalars['JSON']>;
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  tags?: Maybe<Scalars['JSON']['output']>;
 };
 
-export type ElementUnion = Node | Relation | Way;
+export type ElementUnion = GenericRelation | Node | Way;
 
 export type Entity = {
   __typename?: 'Entity';
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
+};
+
+export type GenericRelation = Element & Relation & {
+  __typename?: 'GenericRelation';
+  /** @deprecated This field is for debugging only. Do not use in production. */
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  type?: Maybe<Scalars['RelationType']['output']>;
+  uri: Scalars['URL']['output'];
+  version: Scalars['Int']['output'];
+};
+
+
+export type GenericRelationTagArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type Image = {
   __typename?: 'Image';
-  url: Scalars['String'];
+  url: Scalars['String']['output'];
 };
 
-export type Nwr = Node | Relation | Way;
+export type Nwr = GenericRelation | Node | Way;
 
 export type Node = Element & {
   __typename?: 'Node';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
-  id: Scalars['ID'];
-  lat: Scalars['Float'];
-  lon: Scalars['Float'];
-  tag?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp?: Maybe<Scalars['Datetime']>;
-  uri: Scalars['URL'];
-  version?: Maybe<Scalars['Int']>;
-  visible?: Maybe<Scalars['Boolean']>;
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  lat: Scalars['Float']['output'];
+  lon: Scalars['Float']['output'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp?: Maybe<Scalars['Datetime']['output']>;
+  uri: Scalars['URL']['output'];
+  version?: Maybe<Scalars['Int']['output']>;
+  visible?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
 export type NodeTagArgs = {
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
 };
 
 export type NwrEnum =
@@ -85,7 +104,7 @@ export type NwrEnum =
 export type OverpassResponse = {
   __typename?: 'OverpassResponse';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
+  _raw?: Maybe<Scalars['JSON']['output']>;
   areas?: Maybe<Array<Area>>;
   /** generic OSM element, Overpass specific */
   elements?: Maybe<Array<Element>>;
@@ -103,22 +122,22 @@ export type OverpassResponseFormat =
 export type Project = {
   __typename?: 'Project';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
-  description?: Maybe<Scalars['String']>;
-  doc_url?: Maybe<Scalars['String']>;
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  doc_url?: Maybe<Scalars['String']['output']>;
   icon?: Maybe<Image>;
-  id: Scalars['ID'];
-  key_entries: Scalars['Int'];
-  name: Scalars['String'];
-  tag_entries: Scalars['Int'];
-  unique_keys: Scalars['Int'];
-  unique_tags: Scalars['Int'];
-  url: Scalars['String'];
+  id: Scalars['ID']['output'];
+  key_entries: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  tag_entries: Scalars['Int']['output'];
+  unique_keys: Scalars['Int']['output'];
+  unique_tags: Scalars['Int']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  hello: Scalars['String'];
+  hello: Scalars['String']['output'];
   overpass?: Maybe<OverpassResponse>;
   project?: Maybe<Project>;
   projects?: Maybe<Array<Project>>;
@@ -127,167 +146,139 @@ export type Query = {
 
 
 export type QueryOverpassArgs = {
-  endpoint?: InputMaybe<Scalars['URL']>;
+  bbox?: InputMaybe<Scalars['JSON']['input']>;
+  endpoint?: InputMaybe<Scalars['URL']['input']>;
   format?: InputMaybe<OverpassResponseFormat>;
-  query: Scalars['String'];
-  timeout?: InputMaybe<Scalars['Int']>;
-  verbose?: InputMaybe<Scalars['Boolean']>;
+  out?: InputMaybe<Scalars['String']['input']>;
+  query: Scalars['String']['input'];
+  timeout?: InputMaybe<Scalars['Int']['input']>;
+  verbose?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Relation = Element & {
-  __typename?: 'Relation';
-  /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
-  id: Scalars['ID'];
-  members: Array<RelationMember>;
-  nodes: Array<Node>;
-  relations: Array<Relation>;
-  tags?: Maybe<Scalars['JSON']>;
-  type?: Maybe<Scalars['RelationType']>;
-  uri: Scalars['URL'];
-  version: Scalars['Int'];
-  ways: Array<Way>;
-};
-
-
-export type RelationMembersArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type RelationNodesArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type RelationRelationsArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type RelationWaysArgs = {
-  first?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+export type Relation = {
+  id: Scalars['ID']['output'];
+  tags?: Maybe<Scalars['JSON']['output']>;
+  type?: Maybe<Scalars['RelationType']['output']>;
+  version: Scalars['Int']['output'];
 };
 
 export type RelationMember = {
   ref?: Maybe<Nwr>;
-  role?: Maybe<Scalars['String']>;
-  sequenceId: Scalars['Int'];
+  role?: Maybe<Scalars['String']['output']>;
+  sequenceId: Scalars['Int']['output'];
   type: NwrEnum;
 };
 
 export type Snak = {
   __typename?: 'Snak';
-  key?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['JSON']>;
+  key?: Maybe<Scalars['String']['output']>;
+  value?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValue = {
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueEntity = {
   __typename?: 'SnakValueEntity';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueGlobeCoordinate = {
   __typename?: 'SnakValueGlobeCoordinate';
   globe?: Maybe<Entity>;
-  latitude?: Maybe<Scalars['Float']>;
-  longitude?: Maybe<Scalars['Float']>;
-  precision?: Maybe<Scalars['Float']>;
-  raw?: Maybe<Scalars['JSON']>;
+  latitude?: Maybe<Scalars['Float']['output']>;
+  longitude?: Maybe<Scalars['Float']['output']>;
+  precision?: Maybe<Scalars['Float']['output']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueGlobeCoordinateValue = {
   __typename?: 'SnakValueGlobeCoordinateValue';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueMonolingualText = {
   __typename?: 'SnakValueMonolingualText';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueMonolingualTextValue = {
   __typename?: 'SnakValueMonolingualTextValue';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValuePage = {
   __typename?: 'SnakValuePage';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueQuantity = {
   __typename?: 'SnakValueQuantity';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueQuantityValue = {
   __typename?: 'SnakValueQuantityValue';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueString = {
   __typename?: 'SnakValueString';
-  raw?: Maybe<Scalars['JSON']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type SnakValueTime = {
   __typename?: 'SnakValueTime';
-  after?: Maybe<Scalars['Int']>;
-  before?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['Int']['output']>;
+  before?: Maybe<Scalars['Int']['output']>;
   calendarmodel?: Maybe<Entity>;
-  precision?: Maybe<Scalars['Int']>;
-  raw?: Maybe<Scalars['JSON']>;
-  time?: Maybe<Scalars['Datetime']>;
+  precision?: Maybe<Scalars['Int']['output']>;
+  raw?: Maybe<Scalars['JSON']['output']>;
+  time?: Maybe<Scalars['Datetime']['output']>;
 };
 
 export type Taginfo = {
   __typename?: 'Taginfo';
-  keys?: Maybe<Scalars['JSON']>;
-  tags?: Maybe<Scalars['JSON']>;
+  keys?: Maybe<Scalars['JSON']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
 };
 
 
 export type TaginfoKeysArgs = {
-  query?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 export type TaginfoTagsArgs = {
-  query?: InputMaybe<Scalars['String']>;
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Timeline = Element & {
   __typename?: 'Timeline';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  tags?: Maybe<Scalars['JSON']['output']>;
 };
 
 export type Way = Element & {
   __typename?: 'Way';
   /** @deprecated This field is for debugging only. Do not use in production. */
-  _raw?: Maybe<Scalars['JSON']>;
-  id: Scalars['ID'];
+  _raw?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
   nodes: Array<Node>;
-  tag?: Maybe<Scalars['String']>;
-  tags?: Maybe<Scalars['JSON']>;
-  timestamp: Scalars['Datetime'];
-  uri: Scalars['URL'];
-  version: Scalars['Int'];
-  visible: Scalars['Boolean'];
+  tag?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['JSON']['output']>;
+  timestamp: Scalars['Datetime']['output'];
+  uri: Scalars['URL']['output'];
+  version: Scalars['Int']['output'];
+  visible: Scalars['Boolean']['output'];
 };
 
 
 export type WayTagArgs = {
-  key: Scalars['String'];
+  key: Scalars['String']['input'];
 };
 
 
@@ -357,33 +348,48 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
+/** Mapping of union types */
+export type ResolversUnionTypes<RefType extends Record<string, unknown>> = {
+  ElementUnion: ( GenericRelation ) | ( Node ) | ( Way );
+  NWR: ( GenericRelation ) | ( Node ) | ( Way );
+};
+
+/** Mapping of interface types */
+export type ResolversInterfaceTypes<RefType extends Record<string, unknown>> = {
+  Element: ( Area ) | ( GenericRelation ) | ( Node ) | ( Timeline ) | ( Way );
+  Relation: ( GenericRelation );
+  RelationMember: never;
+  SnakValue: never;
+};
+
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Area: ResolverTypeWrapper<Area>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Claim: ResolverTypeWrapper<Claim>;
-  Datetime: ResolverTypeWrapper<Scalars['Datetime']>;
-  Element: ResolversTypes['Area'] | ResolversTypes['Node'] | ResolversTypes['Relation'] | ResolversTypes['Timeline'] | ResolversTypes['Way'];
-  ElementUnion: ResolversTypes['Node'] | ResolversTypes['Relation'] | ResolversTypes['Way'];
+  Datetime: ResolverTypeWrapper<Scalars['Datetime']['output']>;
+  Element: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Element']>;
+  ElementUnion: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['ElementUnion']>;
   Entity: ResolverTypeWrapper<Entity>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Float: ResolverTypeWrapper<Scalars['Float']['output']>;
+  GenericRelation: ResolverTypeWrapper<GenericRelation>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Image: ResolverTypeWrapper<Image>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  JSON: ResolverTypeWrapper<Scalars['JSON']>;
-  NWR: ResolversTypes['Node'] | ResolversTypes['Relation'] | ResolversTypes['Way'];
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  JSON: ResolverTypeWrapper<Scalars['JSON']['output']>;
+  NWR: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['NWR']>;
   Node: ResolverTypeWrapper<Node>;
   NwrEnum: NwrEnum;
-  OverpassElement: ResolverTypeWrapper<Scalars['OverpassElement']>;
+  OverpassElement: ResolverTypeWrapper<Scalars['OverpassElement']['output']>;
   OverpassResponse: ResolverTypeWrapper<OverpassResponse>;
   OverpassResponseFormat: OverpassResponseFormat;
   Project: ResolverTypeWrapper<Project>;
   Query: ResolverTypeWrapper<{}>;
-  Relation: ResolverTypeWrapper<Relation>;
-  RelationMember: never;
-  RelationType: ResolverTypeWrapper<Scalars['RelationType']>;
+  Relation: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['Relation']>;
+  RelationMember: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['RelationMember']>;
+  RelationType: ResolverTypeWrapper<Scalars['RelationType']['output']>;
   Snak: ResolverTypeWrapper<Snak>;
-  SnakValue: never;
+  SnakValue: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['SnakValue']>;
   SnakValueEntity: ResolverTypeWrapper<SnakValueEntity>;
   SnakValueGlobeCoordinate: ResolverTypeWrapper<SnakValueGlobeCoordinate>;
   SnakValueGlobeCoordinateValue: ResolverTypeWrapper<SnakValueGlobeCoordinateValue>;
@@ -394,38 +400,39 @@ export type ResolversTypes = {
   SnakValueQuantityValue: ResolverTypeWrapper<SnakValueQuantityValue>;
   SnakValueString: ResolverTypeWrapper<SnakValueString>;
   SnakValueTime: ResolverTypeWrapper<SnakValueTime>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   Taginfo: ResolverTypeWrapper<Taginfo>;
   Timeline: ResolverTypeWrapper<Timeline>;
-  URL: ResolverTypeWrapper<Scalars['URL']>;
+  URL: ResolverTypeWrapper<Scalars['URL']['output']>;
   Way: ResolverTypeWrapper<Way>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Area: Area;
-  Boolean: Scalars['Boolean'];
+  Boolean: Scalars['Boolean']['output'];
   Claim: Claim;
-  Datetime: Scalars['Datetime'];
-  Element: ResolversParentTypes['Area'] | ResolversParentTypes['Node'] | ResolversParentTypes['Relation'] | ResolversParentTypes['Timeline'] | ResolversParentTypes['Way'];
-  ElementUnion: ResolversParentTypes['Node'] | ResolversParentTypes['Relation'] | ResolversParentTypes['Way'];
+  Datetime: Scalars['Datetime']['output'];
+  Element: ResolversInterfaceTypes<ResolversParentTypes>['Element'];
+  ElementUnion: ResolversUnionTypes<ResolversParentTypes>['ElementUnion'];
   Entity: Entity;
-  Float: Scalars['Float'];
-  ID: Scalars['ID'];
+  Float: Scalars['Float']['output'];
+  GenericRelation: GenericRelation;
+  ID: Scalars['ID']['output'];
   Image: Image;
-  Int: Scalars['Int'];
-  JSON: Scalars['JSON'];
-  NWR: ResolversParentTypes['Node'] | ResolversParentTypes['Relation'] | ResolversParentTypes['Way'];
+  Int: Scalars['Int']['output'];
+  JSON: Scalars['JSON']['output'];
+  NWR: ResolversUnionTypes<ResolversParentTypes>['NWR'];
   Node: Node;
-  OverpassElement: Scalars['OverpassElement'];
+  OverpassElement: Scalars['OverpassElement']['output'];
   OverpassResponse: OverpassResponse;
   Project: Project;
   Query: {};
-  Relation: Relation;
-  RelationMember: never;
-  RelationType: Scalars['RelationType'];
+  Relation: ResolversInterfaceTypes<ResolversParentTypes>['Relation'];
+  RelationMember: ResolversInterfaceTypes<ResolversParentTypes>['RelationMember'];
+  RelationType: Scalars['RelationType']['output'];
   Snak: Snak;
-  SnakValue: never;
+  SnakValue: ResolversInterfaceTypes<ResolversParentTypes>['SnakValue'];
   SnakValueEntity: SnakValueEntity;
   SnakValueGlobeCoordinate: SnakValueGlobeCoordinate;
   SnakValueGlobeCoordinateValue: SnakValueGlobeCoordinateValue;
@@ -436,10 +443,10 @@ export type ResolversParentTypes = {
   SnakValueQuantityValue: SnakValueQuantityValue;
   SnakValueString: SnakValueString;
   SnakValueTime: SnakValueTime;
-  String: Scalars['String'];
+  String: Scalars['String']['output'];
   Taginfo: Taginfo;
   Timeline: Timeline;
-  URL: Scalars['URL'];
+  URL: Scalars['URL']['output'];
   Way: Way;
 };
 
@@ -464,18 +471,29 @@ export interface DatetimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type ElementResolvers<ContextType = any, ParentType extends ResolversParentTypes['Element'] = ResolversParentTypes['Element']> = {
-  __resolveType: TypeResolveFn<'Area' | 'Node' | 'Relation' | 'Timeline' | 'Way', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'Area' | 'GenericRelation' | 'Node' | 'Timeline' | 'Way', ParentType, ContextType>;
   _raw?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   tags?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
 };
 
 export type ElementUnionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ElementUnion'] = ResolversParentTypes['ElementUnion']> = {
-  __resolveType: TypeResolveFn<'Node' | 'Relation' | 'Way', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'GenericRelation' | 'Node' | 'Way', ParentType, ContextType>;
 };
 
 export type EntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']> = {
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GenericRelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['GenericRelation'] = ResolversParentTypes['GenericRelation']> = {
+  _raw?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  tag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<GenericRelationTagArgs, 'key'>>;
+  tags?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['RelationType']>, ParentType, ContextType>;
+  uri?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
+  version?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -489,7 +507,7 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type NwrResolvers<ContextType = any, ParentType extends ResolversParentTypes['NWR'] = ResolversParentTypes['NWR']> = {
-  __resolveType: TypeResolveFn<'Node' | 'Relation' | 'Way', ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'GenericRelation' | 'Node' | 'Way', ParentType, ContextType>;
 };
 
 export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
@@ -545,17 +563,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type RelationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Relation'] = ResolversParentTypes['Relation']> = {
-  _raw?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  __resolveType: TypeResolveFn<'GenericRelation', ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  members?: Resolver<Array<ResolversTypes['RelationMember']>, ParentType, ContextType, Partial<RelationMembersArgs>>;
-  nodes?: Resolver<Array<ResolversTypes['Node']>, ParentType, ContextType, Partial<RelationNodesArgs>>;
-  relations?: Resolver<Array<ResolversTypes['Relation']>, ParentType, ContextType, Partial<RelationRelationsArgs>>;
   tags?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['RelationType']>, ParentType, ContextType>;
-  uri?: Resolver<ResolversTypes['URL'], ParentType, ContextType>;
   version?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  ways?: Resolver<Array<ResolversTypes['Way']>, ParentType, ContextType, Partial<RelationWaysArgs>>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type RelationMemberResolvers<ContextType = any, ParentType extends ResolversParentTypes['RelationMember'] = ResolversParentTypes['RelationMember']> = {
@@ -648,6 +660,8 @@ export type TaginfoResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type TimelineResolvers<ContextType = any, ParentType extends ResolversParentTypes['Timeline'] = ResolversParentTypes['Timeline']> = {
   _raw?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  tags?: Resolver<Maybe<ResolversTypes['JSON']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -675,6 +689,7 @@ export type Resolvers<ContextType = any> = {
   Element?: ElementResolvers<ContextType>;
   ElementUnion?: ElementUnionResolvers<ContextType>;
   Entity?: EntityResolvers<ContextType>;
+  GenericRelation?: GenericRelationResolvers<ContextType>;
   Image?: ImageResolvers<ContextType>;
   JSON?: GraphQLScalarType;
   NWR?: NwrResolvers<ContextType>;
