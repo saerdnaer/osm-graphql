@@ -21,12 +21,13 @@ export type NominatimSearchParams = {
 export type NominatimResult = {
   place_id: number;
   licence: string;
-  osm_type: string;
+  osm_type: 'node' | 'way' | 'relation';
   osm_id: number;
   boundingbox: [string, string, string, string];
   lat: string;
   lon: string;
   display_name: string;
+  address?: any;
   class: string;
   type: string;
   importance: number;

@@ -18,6 +18,7 @@
     "@graphql-tools/stitching-directives": "^3.0.0",
     "@graphql-yoga/render-graphiql": "^4.0.5",
     "cross-env": "^7.0.3",
+    "dataloader": "^2.2.2",
     "graphql": "^16.8.1",
     "graphql-modules": "^2.2.0",
     "graphql-tag": "^2.12.6",

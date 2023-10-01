@@ -23,6 +23,7 @@ class NominatimAPI extends RESTDataSource {
     return response;
   }
 
+  // https://nominatim.openstreetmap.org/lookup?osm_ids=n246571142&format=json
   async lookup(params: { osm_ids: string; format?: 'xml' | 'json' }) {
     const response = await this.get('/lookup', params);
     return response;
