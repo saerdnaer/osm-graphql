@@ -1,0 +1,29 @@
+query MyQuery {
+  bbox(w: 41.89593638861, s: 12.492055892944, e: 41.90348281166, n: 12.501990795135) {
+    nodes(amenity: "drinking_water") {
+      geom
+      tags
+    }
+  }
+  area(name:"München") {
+    #uri
+    #name
+    #ref
+    nodes(entrance: "yes") {
+      geom
+    }
+  }
+
+  overpass(
+    bbox: [41.89593638861,12.492055892944,41.90348281166,12.501990795135]
+    query:"node[amenity=drinking_water]"
+  ) {
+    nodes {
+      __typename
+      geom
+      amenity: tag(key: "amenity")
+      properties: tags
+
+    }
+  }
+}
