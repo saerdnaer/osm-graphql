@@ -1,4 +1,5 @@
 import { createModule, gql } from "graphql-modules";
+import addressFormatter, { CommonOptions as AddressFormatterOptions } from "@fragaria/address-formatter";
 
 export const nominatim = createModule({
 	id: "nominatim",
@@ -10,10 +11,22 @@ export const nominatim = createModule({
 				class: String
 				type: String
 				importance: Float
-				address: JSON
+				address(
+					format: Boolean
+					abbreviate: Boolean
+					appendCountry: Boolean
+					cleanupPostcode: Boolean
+					countryCode: String
+					fallbackCountryCode: String
+					output: AFOutput = array
+				): JSON
 				icon: String
 				boundingbox: BBox
 				_raw: JSON @deprecated(reason: "This field is for debugging only. Do not use in production.")
+			}
+			enum AFOutput {
+				string
+				array
 			}
 			type Nominatim {
 				hello: String!
@@ -29,6 +42,14 @@ export const nominatim = createModule({
 	resolvers: {
 		Nominatim: {
 			hello: () => "world",
+		},
+		NominatimResult: {
+			address: (parent: any, args: AddressFormatterOptions & { format?: Boolean; output?: 'array' | 'string' |'object' }) => {
+				if (!args || args?.format === false || args?.output === 'object' ) {
+					return parent.address;
+				}
+				return addressFormatter.format(parent.address, args as AddressFormatterOptions);
+			}
 		},
 		Node: {
 			nominatim: {

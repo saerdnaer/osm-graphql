@@ -13,6 +13,7 @@
     "@apollo/datasource-rest": "^5.1.1",
     "@envelop/core": "^4.0.3",
     "@envelop/graphql-modules": "^5.0.3",
+    "@fragaria/address-formatter": "^5.2.1",
     "@graphql-tools/load-files": "^7.0.0",
     "@graphql-tools/stitch": "^9.0.3",
     "@graphql-tools/stitching-directives": "^3.0.0",
