@@ -1577,7 +1577,9 @@ export type QueryQueryArgs = {
 
 /** The root query for an OSM API gateway which gives access points into the OSM universe. */
 export type QueryRelationArgs = {
-  id: Scalars['ID']['input'];
+  id?: InputMaybe<Scalars['ID']['input']>;
+  ref?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2691,7 +2693,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   notes?: Resolver<Maybe<Array<ResolversTypes['Note']>>, ParentType, ContextType, Partial<QueryNotesArgs>>;
   point?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, RequireFields<QueryPointArgs, 'lat' | 'lon'>>;
   query?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType, Partial<QueryQueryArgs>>;
-  relation?: Resolver<Maybe<ResolversTypes['Relation']>, ParentType, ContextType, RequireFields<QueryRelationArgs, 'id'>>;
+  relation?: Resolver<Maybe<ResolversTypes['Relation']>, ParentType, ContextType, Partial<QueryRelationArgs>>;
   relations?: Resolver<Maybe<Array<ResolversTypes['Relation']>>, ParentType, ContextType, Partial<QueryRelationsArgs>>;
   thing?: Resolver<Maybe<ResolversTypes['NWR']>, ParentType, ContextType, RequireFields<QueryThingArgs, 'uri'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;

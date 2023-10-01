@@ -7,11 +7,15 @@ export const taginfo = createModule({
 		gql`
 			type Query {
 				taginfo: Taginfo!
+				"""Projects from Taginfo"""
 				projects: [Project!]
+				"""Project from Taginfo"""
 				project: Project
 			}
 			type Taginfo {
+				"""Stats for this key(s) from Taginfo"""
 				keys(query: String): JSON
+				"""Stats for this key/value combinations from Taginfo"""
 				tags(query: String): JSON
 			}
 			type Image {

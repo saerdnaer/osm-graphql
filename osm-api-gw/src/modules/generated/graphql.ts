@@ -115,7 +115,6 @@ export type OverpassResponse = {
 };
 
 export type OverpassResponseFormat =
-  | 'GEOJSON'
   | 'JSON'
   | 'XML';
 
@@ -139,7 +138,9 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String']['output'];
   overpass?: Maybe<OverpassResponse>;
+  /** Project from Taginfo */
   project?: Maybe<Project>;
+  /** Projects from Taginfo */
   projects?: Maybe<Array<Project>>;
   taginfo: Taginfo;
 };
@@ -240,7 +241,9 @@ export type SnakValueTime = {
 
 export type Taginfo = {
   __typename?: 'Taginfo';
+  /** Stats for this key(s) from Taginfo */
   keys?: Maybe<Scalars['JSON']['output']>;
+  /** Stats for this key/value combinations from Taginfo */
   tags?: Maybe<Scalars['JSON']['output']>;
 };
 

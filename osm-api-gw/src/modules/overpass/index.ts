@@ -86,7 +86,7 @@ export const overpass = createModule({
 			enum OverpassResponseFormat {
 				JSON
 				XML
-				GEOJSON
+				# GEOJSON
 			}
 			scalar URL
 			scalar JSON
@@ -121,7 +121,8 @@ export const overpass = createModule({
 			type Query {
 				overpass(
 					"bbox can be comma seperated string, a list \`[south,west,north,east]\`, or object \`{south: 1, west: 2, north: 3, east: 4}\`"
-					bbox: JSON,
+					bbox: BBox,
+					"Overpass QL e.g. \`nwr[amenity=drinking_water]\` as "
 					query: String!,
 					out: String,
 					timeout: Int,
