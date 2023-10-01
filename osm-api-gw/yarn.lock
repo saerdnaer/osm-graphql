@@ -817,6 +817,13 @@
   dependencies:
     tslib "^2.5.0"
 
+"@fragaria/address-formatter@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@fragaria/address-formatter/-/address-formatter-5.2.1.tgz#c2900f4056538b6bc5704702801b86e88f70234d"
+  integrity sha512-wLRg9UZW5j5mOCIK1EWItozK1lJqvvZGhqJff91ifY+/HUQda/U+l5+bYnNm7haH6tiMFf/xgE4BXQ4rA+/55w==
+  dependencies:
+    mustache "^4.0.0"
+
 "@graphql-codegen/add@^5.0.0":
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/add/-/add-5.0.0.tgz#578ebaf4fa87c1e934c381cd679bcedcf79feaba"
@@ -1286,6 +1293,11 @@
   integrity sha512-JYoxwnPggH2BfO+dWlWZkDeFhyFZqaTRGLvFhy+Pjp2UxitEW6nDrw+pEDw/K9tJwMjIFMmTT9VfTqrnESmBHg==
   dependencies:
     tslib "^2.5.2"
+
+"@graphql-yoga/render-graphiql@^4.0.5":
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/@graphql-yoga/render-graphiql/-/render-graphiql-4.0.5.tgz#347836b5d2b5afdca5569ed14bec59688251ef35"
+  integrity sha512-BUS7M5QdZdBQVKl1xohOEAlM00uvaqogPsQEya5hm5jnuDsYUNGa7zYkD+wkR4caExVCjZg37KyUftoBNXxjyw==
 
 "@graphql-yoga/subscription@^4.0.0":
   version "4.0.0"
@@ -2797,6 +2809,11 @@ ms@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
+
+mustache@^4.0.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/mustache/-/mustache-4.2.0.tgz#e5892324d60a12ec9c2a73359edca52972bf6f64"
+  integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
 
 mute-stream@0.0.8:
   version "0.0.8"
